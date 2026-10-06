@@ -2,7 +2,7 @@
 // 알림 신청을 받을 주소. Formspree(https://formspree.io)에서 폼을 만들고 받은 주소를 넣으세요.
 // 예: "https://formspree.io/f/abcdwxyz"
 // 비어 있으면 테스트 모드입니다 — 신청 화면은 동작하지만 내용이 어디에도 저장되지 않습니다.
-const FORM_ENDPOINT = "";
+const FORM_ENDPOINT = "https://formspree.io/f/xyekzddv";
 
 // 선주문 결제 페이지 주소(자체몰·스마트스토어·텀블벅 등). 11월 11일 전까지 넣으면 됩니다.
 const PAYMENT_URL = "";

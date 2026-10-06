@@ -113,6 +113,17 @@ document.querySelectorAll(".card.pick").forEach((card) => {
   });
 });
 
+// ── 동의: 전체 동의 ↔ 개별 동의 ──
+const agreeAll = $("#agree-all");
+const agreeBoxes = [...document.querySelectorAll('#reserve-form input[name^="agree_"]')];
+agreeAll.addEventListener("change", () => agreeBoxes.forEach((b) => (b.checked = agreeAll.checked)));
+agreeBoxes.forEach((b) => b.addEventListener("change", () => (agreeAll.checked = agreeBoxes.every((x) => x.checked))));
+
+// ── 목차: 모바일에서는 앞단·1부만 펼쳐 둠 ──
+if (matchMedia("(max-width: 720px)").matches) {
+  document.querySelectorAll("details.toc-part:not([data-keep-open])").forEach((d) => (d.open = false));
+}
+
 // ── 약관 펼치기 ──
 document.querySelectorAll("[data-toggle]").forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -125,6 +136,20 @@ document.querySelectorAll("[data-toggle]").forEach((btn) => {
 
 // ── 신청서 ──
 const form = $("#reserve-form");
+let submittedEmail = "";
+
+async function send(data) {
+  if (!FORM_ENDPOINT) {
+    console.warn("[테스트 모드] FORM_ENDPOINT가 비어 있어 신청 내용이 저장되지 않았습니다.", data);
+    return;
+  }
+  const res = await fetch(FORM_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+}
 const errorBox = $("#form-error");
 const submitBtn = $("#submit-btn");
 
@@ -150,10 +175,7 @@ form.addEventListener("submit", async (e) => {
   const fd = new FormData(form);
   const data = {
     email: fd.get("email").trim(),
-    name: (fd.get("name") || "").trim(),
     part: fd.get("part") || "",
-    situation: (fd.get("situation") || "").trim(),
-    read: fd.get("read") || "",
     agree_privacy: "동의",
     agree_marketing: "동의",
     consent_at: new Date().toISOString(), // 수신동의 증빙용
@@ -167,16 +189,8 @@ form.addEventListener("submit", async (e) => {
   submitBtn.textContent = "보내는 중…";
 
   try {
-    if (FORM_ENDPOINT) {
-      const res = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    } else {
-      console.warn("[테스트 모드] FORM_ENDPOINT가 비어 있어 신청 내용이 저장되지 않았습니다.", data);
-    }
+    await send(data);
+    submittedEmail = data.email;
     form.hidden = true;
     $("#buy-block").hidden = true;
     $("#done").hidden = false;
@@ -187,6 +201,22 @@ form.addEventListener("submit", async (e) => {
     submitBtn.disabled = false;
     submitBtn.textContent = original;
   }
+});
+
+// ── 신청 후 선택 질문 ──
+$("#extra-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const situation = (fd.get("situation") || "").trim();
+  const read = fd.get("read") || "";
+  if (!situation && !read) { e.target.hidden = true; return; }
+  const btn = $("#extra-btn");
+  btn.disabled = true;
+  try {
+    await send({ email: submittedEmail, situation, read, _subject: "[말이 줄어든 다음] 신청자 추가 답변" });
+  } catch { /* 선택 질문이라 실패해도 신청 자체는 완료 */ }
+  e.target.hidden = true;
+  $("#extra-thanks").hidden = false;
 });
 
 // ── 공유 ──
@@ -224,7 +254,7 @@ markTimeline();
 
 // ── 스크롤 등장 효과 ──
 if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const targets = document.querySelectorAll(".card, .quote, .excerpt, .toc-part, .gate li, .price-card, .terms, .benefits li, .faq details");
+  const targets = document.querySelectorAll(".card, .excerpt, .toc-part, .gate li, .price-card, .faq details");
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {

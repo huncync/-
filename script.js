@@ -204,19 +204,32 @@ form.addEventListener("submit", async (e) => {
 });
 
 // ── 신청 후 선택 질문 ──
+const storyBox = $("#extra-form textarea[name=story]");
+storyBox.addEventListener("input", () => ($("#story-count").textContent = storyBox.value.length.toLocaleString()));
+
 $("#extra-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const fd = new FormData(e.target);
-  const situation = (fd.get("situation") || "").trim();
-  const read = fd.get("read") || "";
-  if (!situation && !read) { e.target.hidden = true; return; }
+  const story = (fd.get("story") || "").trim();
+  if (!story) { storyBox.focus(); return; }
   const btn = $("#extra-btn");
   btn.disabled = true;
+  btn.textContent = "보내는 중…";
   try {
-    await send({ email: submittedEmail, situation, read, _subject: "[말이 줄어든 다음] 신청자 추가 답변" });
-  } catch { /* 선택 질문이라 실패해도 신청 자체는 완료 */ }
-  e.target.hidden = true;
-  $("#extra-thanks").hidden = false;
+    await send({
+      email: submittedEmail,
+      story,
+      share_ok: fd.get("share_ok") ? "소개 동의" : "소개 안 함",
+      _replyto: submittedEmail,
+      _subject: "[말이 줄어든 다음] 사연",
+    });
+    e.target.hidden = true;
+    $("#extra-thanks").hidden = false;
+  } catch {
+    btn.disabled = false;
+    btn.textContent = "사연 보내기";
+    alert("보내는 중에 문제가 생겼습니다. 잠시 뒤 다시 눌러 주십시오. 쓰신 내용은 그대로 남아 있습니다.");
+  }
 });
 
 // ── 공유 ──

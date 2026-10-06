@@ -282,3 +282,43 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
     io.observe(el);
   });
 }
+
+// ── 앱 설치 (홈 화면에 추가) ──
+(function setupInstall() {
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+  }
+
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const box = $("#install");
+  const btn = $("#install-btn");
+  const hint = $("#install-hint");
+  if (!box || standalone) return; // 이미 앱으로 열었으면 숨김
+
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  let deferred = null;
+
+  if (isIOS) {
+    // iOS는 설치 창을 띄울 수 없어 방법을 안내합니다.
+    hint.textContent = "Safari 아래쪽 공유 버튼(□↑) → '홈 화면에 추가'를 누르세요.";
+    btn.hidden = true;
+    box.hidden = false;
+  }
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferred = e;
+    box.hidden = false;
+  });
+
+  btn.addEventListener("click", async () => {
+    if (!deferred) return;
+    deferred.prompt();
+    await deferred.userChoice;
+    deferred = null;
+    box.hidden = true;
+  });
+
+  window.addEventListener("appinstalled", () => { box.hidden = true; });
+})();

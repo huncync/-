@@ -472,3 +472,14 @@ details.toc-part[open] > summary::after { transform: rotate(45deg); }
 }
 details.toc-part:not([open]) > .pt { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* 앱 설치 안내 (푸터) */
+.install {
+  display: flex; align-items: center; gap: 14px; max-width: 440px; margin: 24px auto 0;
+  padding: 14px 16px; border-radius: var(--radius); background: rgba(255,255,255,.07);
+  text-align: left;
+}
+.install img { border-radius: 11px; flex: none; }
+.install-text { flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 13px; line-height: 1.45; }
+.install-text strong { color: var(--white); font-size: 15px; }
+.install .btn { flex: none; }

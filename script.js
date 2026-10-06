@@ -214,9 +214,28 @@ if ("IntersectionObserver" in window) {
     sticky.classList.toggle("hide", visible.size > 0);
   }, { threshold: 0.05 });
   io.observe($("#launch"));
+  io.observe($("#hero-cta"));
   io.observe($("#reserve"));
 }
 
 applyPhase();
 startCountdown();
 markTimeline();
+
+// ── 스크롤 등장 효과 ──
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const targets = document.querySelectorAll(".card, .quote, .excerpt, .toc-part, .gate li, .price-card, .terms, .benefits li, .faq details");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  targets.forEach((el, i) => {
+    el.classList.add("reveal");
+    el.style.transitionDelay = `${(i % 4) * 70}ms`;
+    io.observe(el);
+  });
+}

@@ -112,10 +112,10 @@ p { margin: 0; }
   filter: blur(6px);
 }
 .book {
-  --w: 280px; --h: 392px; --d: 30px;
+  --w: 280px; --h: 392px; --d: 58px; /* 약 200쪽 두께 */
   position: relative; width: var(--w); height: var(--h);
   transform-style: preserve-3d;
-  transform: rotateY(-30deg) rotateX(6deg);
+  transform: rotateY(-36deg) rotateX(6deg);
   animation: float 6s ease-in-out infinite;
 }
 .book-cover {
@@ -143,8 +143,8 @@ p { margin: 0; }
   width: calc(var(--d) - 3px); height: calc(var(--h) - 8px);
   transform: translateX(calc(var(--w) - var(--d) / 2 - 3px)) rotateY(90deg);
   background:
-    linear-gradient(90deg, rgba(0,0,0,.12), transparent 20%, transparent 80%, rgba(0,0,0,.18)),
-    repeating-linear-gradient(90deg, #fbf7f2 0 2px, #e9e1d8 2px 3px);
+    linear-gradient(90deg, rgba(0,0,0,.16), rgba(0,0,0,0) 12%, rgba(255,255,255,.35) 50%, rgba(0,0,0,0) 88%, rgba(0,0,0,.22)),
+    repeating-linear-gradient(90deg, #fcf8f3 0 2px, #e6ddd2 2px 3px);
 }
 .book-pages::after { /* 아랫면 종이 */
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #d9cfc4;
@@ -163,8 +163,8 @@ p { margin: 0; }
 .book-title { font-family: var(--serif); font-weight: 900; font-size: 36px; line-height: 1.25; }
 .book-sub { margin-top: 12px; font-size: 13px; color: var(--rose-light); }
 @keyframes float {
-  0%, 100% { transform: rotateY(-30deg) rotateX(6deg) translateY(0); }
-  50% { transform: rotateY(-24deg) rotateX(4deg) translateY(-10px); }
+  0%, 100% { transform: rotateY(-36deg) rotateX(6deg) translateY(0); }
+  50% { transform: rotateY(-31deg) rotateX(4deg) translateY(-10px); }
 }
 
 /* Countdown (작게, 칩 줄 아래 한 줄) */
@@ -426,7 +426,7 @@ details.toc-part[open] > summary::after { transform: rotate(45deg); }
   .hero-inner { grid-template-columns: 1fr; gap: 20px; }
   .hero-book { order: -1; }
   .hero-book { padding: 4px 0 18px; }
-  .book { --w: 132px; --h: 185px; --d: 14px; animation: none; transform: rotateY(-28deg) rotateX(4deg); }
+  .book { --w: 132px; --h: 185px; --d: 27px; animation: none; transform: rotateY(-34deg) rotateX(4deg); }
   .book-cover { padding: 12px 10px 12px 16px; }
   .book-cover::before { left: 5px; width: 4px; }
   .book-label { top: 10px; left: 16px; font-size: 7px; letter-spacing: .2em; }

@@ -1,0 +1,16 @@
+{
+  "name": "counsel-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "남자들끼리 하는 말 — 1:1 채팅 상담 예약·결제 웹앱",
+  "type": "module",
+  "main": "server.js",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

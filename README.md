@@ -34,3 +34,6 @@ GitHub Pages처럼 `https://` 주소에 올리면 휴대폰에서 앱처럼 설�
 설치한 앱으로 들어온 신청은 유입 경로가 `app`으로 저장됩니다.
 아이콘은 `icons/`, 앱 이름·색은 `manifest.webmanifest`에서 바꿀 수 있습니다.
 `style.css`·`script.js`를 고쳐도 앱은 다음 실행 때 새 버전을 자동으로 받아옵니다.
+
+## 1:1 채팅 상담 앱
+`counsel/` 폴더에 있습니다. 예약·결제·실시간 채팅·상담사 화면까지 들어 있고, 실행·배포 방법은 [`counsel/README.md`](counsel/README.md)를 보세요.

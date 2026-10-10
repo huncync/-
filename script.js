@@ -7,6 +7,10 @@ const FORM_ENDPOINT = "https://formspree.io/f/xyekzddv";
 // 선주문 결제 페이지 주소(자체몰·스마트스토어·텀블벅 등). 11월 11일 전까지 넣으면 됩니다.
 const PAYMENT_URL = "";
 
+// 가격. 정가(11/18~)가 정해지면 REGULAR_PRICE에 "39,000원"처럼 넣으세요. 비어 있으면 금액 없이 "정가"로만 표시합니다.
+const PRESALE_PRICE = "29,000원";
+const REGULAR_PRICE = "";
+
 // 일정 (한국 시간)
 const OPEN_AT = new Date("2026-11-11T00:00:00+09:00");     // 선주문 오픈
 const PRESALE_END = new Date("2026-11-18T00:00:00+09:00"); // 11/17 화요일 밤까지 → 18일 0시부터 정가
@@ -38,13 +42,13 @@ function applyPhase() {
 
   if (phase === "before") return; // 기본 마크업이 오픈 전 화면
 
-  const price = phase === "presale" ? "22,000원" : "29,000원";
-  const label = phase === "presale" ? `선주문하기 · ${price}` : `구매하기 · ${price}`;
+  const price = phase === "presale" ? PRESALE_PRICE : REGULAR_PRICE;
+  const label = phase === "presale" ? `선주문하기 · ${price}` : price ? `구매하기 · ${price}` : "구매하기";
 
   buy.hidden = false;
   $("#buy-title").textContent = label;
   $("#buy-desc").textContent = phase === "presale"
-    ? "11월 17일 화요일 밤까지입니다. 18일부터 29,000원."
+    ? `11월 17일 화요일 밤까지입니다. 18일부터는 정가${REGULAR_PRICE ? " " + REGULAR_PRICE : ""}로 판매합니다.`
     : "선주문 기간이 끝나 정가로 판매합니다. 12월 2일부터 순서대로 발송됩니다.";
   buyLink.textContent = label;
   if (PAYMENT_URL) buyLink.href = PAYMENT_URL;
@@ -259,6 +263,13 @@ if ("IntersectionObserver" in window) {
   io.observe($("#launch"));
   io.observe($("#hero-cta"));
   io.observe($("#reserve"));
+}
+
+if (REGULAR_PRICE) {
+  const amt = $("#regular-amt");
+  amt.classList.remove("amt-tbd");
+  amt.innerHTML = REGULAR_PRICE.replace("원", "<small>원</small>");
+  $("#tl-regular").textContent = `정가 ${REGULAR_PRICE}`;
 }
 
 applyPhase();

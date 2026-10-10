@@ -112,7 +112,7 @@ p { margin: 0; }
   filter: blur(6px);
 }
 .book {
-  --w: 280px; --h: 392px; --d: 58px; /* 약 200쪽 두께 */
+  --w: 280px; --h: 392px; --d: 76px; /* 400쪽 이상 두께 */
   position: relative; width: var(--w); height: var(--h);
   transform-style: preserve-3d;
   transform: rotateY(-36deg) rotateX(6deg);
@@ -298,6 +298,7 @@ details.toc-part[open] > summary::after { transform: rotate(45deg); }
 .amt { margin: 16px 0 6px; font-family: var(--serif); font-weight: 900; font-size: 40px; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
 .price-card.now .amt { color: var(--plum); }
 .amt small { font-size: 18px; margin-left: 2px; }
+.amt-tbd { font-size: 26px; line-height: 1.5; color: var(--ink-soft); }
 .price-card p { font-size: 14px; color: var(--ink-soft); }
 .checks { list-style: none; margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--line); display: grid; gap: 8px; }
 .checks li { position: relative; padding-left: 26px; font-size: 14.5px; color: var(--ink); }
@@ -426,7 +427,7 @@ details.toc-part[open] > summary::after { transform: rotate(45deg); }
   .hero-inner { grid-template-columns: 1fr; gap: 20px; }
   .hero-book { order: -1; }
   .hero-book { padding: 4px 0 18px; }
-  .book { --w: 132px; --h: 185px; --d: 27px; animation: none; transform: rotateY(-34deg) rotateX(4deg); }
+  .book { --w: 132px; --h: 185px; --d: 36px; animation: none; transform: rotateY(-34deg) rotateX(4deg); }
   .book-cover { padding: 12px 10px 12px 16px; }
   .book-cover::before { left: 5px; width: 4px; }
   .book-label { top: 10px; left: 16px; font-size: 7px; letter-spacing: .2em; }

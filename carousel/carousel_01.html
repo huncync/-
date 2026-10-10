@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=block">
+<style>
+  :root { --bg:#0b0b0c; --ink:#f4f1ea; --dim:#8e8a83; --accent:#e0b46a; --cold:#7fa7c9; --line:#2a2a2d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { word-break:keep-all; background:#222; font-family:'Noto Sans KR', sans-serif; color:var(--ink); }
+  .slide { width:1080px; height:1350px; background:var(--bg); position:relative; overflow:hidden;
+           padding:120px 96px; display:flex; flex-direction:column; justify-content:center; margin-bottom:20px; }
+  .pen { font-family:'Nanum Pen Script', cursive; font-weight:400; line-height:1.15; }
+  .h1 { font-size:150px; }
+  .h2 { font-size:112px; }
+  .h3 { font-size:86px; }
+  .body { font-size:46px; line-height:1.65; font-weight:500; }
+  .small { font-size:34px; color:var(--dim); line-height:1.6; }
+  .dim { color:var(--dim); }
+  .accent { color:var(--accent); }
+  .cold { color:var(--cold); }
+  .series { position:absolute; right:96px; bottom:72px; font-size:28px; color:var(--dim); letter-spacing:.04em; }
+  .handle { position:absolute; left:96px; bottom:72px; font-size:28px; color:var(--dim); }
+  .num { position:absolute; left:96px; top:80px; font-size:30px; color:var(--dim); letter-spacing:.08em; }
+  .swipe { position:absolute; right:96px; top:80px; font-size:30px; color:var(--dim); }
+  .mt-s { margin-top:28px; } .mt-m { margin-top:56px; } .mt-l { margin-top:96px; }
+  .rule { height:2px; background:var(--line); margin:56px 0; }
+  /* cover */
+  .photo { position:absolute; inset:0; background:
+           radial-gradient(ellipse at 50% 38%, #3a3a3e 0%, #161617 55%, #0b0b0c 80%); }
+  .photo-note { position:absolute; top:330px; left:0; right:0; text-align:center; font-size:30px; color:#55555a;
+                border:3px dashed #3a3a3e; margin:0 220px; padding:150px 0; border-radius:24px; }
+  .cover-text { position:absolute; left:96px; right:96px; bottom:200px; }
+  .shade { position:absolute; left:0; right:0; bottom:0; height:700px; background:linear-gradient(transparent, rgba(0,0,0,.92) 45%); }
+  /* compare */
+  .topic { font-size:40px; font-weight:700; color:var(--dim); letter-spacing:.06em; }
+  .row { display:flex; flex-direction:column; gap:36px; margin-top:64px; }
+  .card { border-radius:28px; padding:44px 52px; }
+  .card.cold { background:#111a22; border:2px solid #24384a; }
+  .card.warm { background:#1d1710; border:2px solid #4a3a20; }
+  .tag { font-size:32px; font-weight:900; margin-bottom:16px; }
+  .card .pen { font-size:80px; margin-bottom:20px; color:var(--ink); }
+  .card p { font-size:36px; line-height:1.6; color:#cfcac1; }
+  .key { margin-top:64px; font-size:40px; line-height:1.6; font-weight:700; }
+  /* share slide */
+  .msg { background:#1c1c1f; border-radius:36px; padding:52px 56px; font-size:46px; line-height:1.6; position:relative; }
+  .msg:after { content:''; position:absolute; left:60px; bottom:-26px; border:16px solid transparent; border-top:20px solid #1c1c1f; }
+  .btns { display:flex; gap:24px; margin-top:72px; }
+  .btn { flex:1; text-align:center; padding:34px 0; border-radius:20px; font-size:36px; font-weight:700; }
+  .btn.share { background:var(--accent); color:#111; }
+  .btn.save { border:2px solid #444; color:var(--ink); }
+  .sub { margin-top:60px; font-size:32px; color:var(--dim); line-height:1.6; }
+</style>
+</head>
+<body>
+
+<!-- 1. 표지 -->
+<section class="slide" id="s1">
+  <div class="photo"></div>
+  <div class="photo-note">박지훈 야간 셀카 컷<br>(릴스 썸네일과 같은 톤)</div>
+  <div class="shade"></div>
+  <div class="cover-text">
+    <div class="small" style="color:#bdb8af">연락이 줄었을 때, 남자 입장에서 알려드립니다</div>
+    <div class="pen h1 mt-s">식은 걸까,<br><span class="accent">지친 걸까</span></div>
+  </div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+<!-- 2. 공감 -->
+<section class="slide" id="s2">
+  <div class="num">02</div>
+  <div class="pen h2">답장은 와요.</div>
+  <div class="pen h2 mt-s">근데 뭔가<br>달라졌죠.</div>
+  <div class="rule"></div>
+  <div class="body">"무슨 일 있어?"<br>"아니, 아무 일 없어."</div>
+  <div class="body dim mt-m">그 대답이 오히려<br>더 불안하게 만들고요.</div>
+  <div class="series">넘겨보세요 →</div>
+</section>
+
+<!-- 3. 결론 -->
+<section class="slide" id="s3">
+  <div class="num">03</div>
+  <div class="body dim">결론부터 말할게요.</div>
+  <div class="pen h2 mt-m">식은 남자와 지친 남자는<br><span class="accent">줄어드는 게</span> 다릅니다.</div>
+  <div class="body mt-l"><span class="cold">식은 남자</span>는 <b>'관심'</b>이 줄고,<br><span class="accent">지친 남자</span>는 <b>'여유'</b>가 줄어요.</div>
+  <div class="small mt-m">겉으로는 똑같이 연락이 줄어든 것처럼 보여도<br>아래 네 가지를 보면 구별됩니다.</div>
+  <div class="series">넘겨보세요 →</div>
+</section>
+
+<!-- 4. 연락 -->
+<section class="slide" id="s4">
+  <div class="num">04 · 연락</div>
+  <div class="row" style="margin-top:0">
+    <div class="card cold">
+      <div class="tag cold">식은 남자</div>
+      <div class="pen">질문이 사라져요</div>
+      <p>"밥 먹었어?" "오늘 어땠어?"<br>당신에 대해 묻는 말이 없어집니다.<br>대답만 하고, 묻지 않아요.</p>
+    </div>
+    <div class="card warm">
+      <div class="tag accent">지친 남자</div>
+      <div class="pen">짧아져도 "너는?"은 남아요</div>
+      <p>답장은 "ㅇㅇ", "피곤해"뿐이어도<br>끝에 당신 안부를 붙입니다.<br>길이가 아니라 방향을 보세요.</p>
+    </div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+<!-- 5. 약속 -->
+<section class="slide" id="s5">
+  <div class="num">05 · 약속</div>
+  <div class="row" style="margin-top:0">
+    <div class="card cold">
+      <div class="tag cold">식은 남자</div>
+      <div class="pen">다음을 안 잡아요</div>
+      <p>"언제 볼까?"는 늘 당신 몫.<br>약속이 깨져도<br>다시 잡자는 말이 없습니다.</p>
+    </div>
+    <div class="card warm">
+      <div class="tag accent">지친 남자</div>
+      <div class="pen">미뤄도 날짜를 다시 말해요</div>
+      <p>"이번 주는 진짜 안 되겠다,<br>다음 주 토요일 어때?"<br>미루는 것과 피하는 건 달라요.</p>
+    </div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+<!-- 6. 미래 -->
+<section class="slide" id="s6">
+  <div class="num">06 · 미래 이야기</div>
+  <div class="row" style="margin-top:0">
+    <div class="card cold">
+      <div class="tag cold">식은 남자</div>
+      <div class="pen">'우리'가 '나'로 바뀌어요</div>
+      <p>"우리 겨울에 어디 가자"가<br>"나 겨울에 일 많을 듯"이 됩니다.<br>계획 속에 당신 자리가 없어요.</p>
+    </div>
+    <div class="card warm">
+      <div class="tag accent">지친 남자</div>
+      <div class="pen">힘은 없어도 '우리'는 그대로</div>
+      <p>"이거 끝나면 우리 쉬러 가자."<br>지금은 버티는 중이라<br>미래에 기대고 있는 거예요.</p>
+    </div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+<!-- 7. 다툼 -->
+<section class="slide" id="s7">
+  <div class="num">07 · 다툴 때</div>
+  <div class="row" style="margin-top:0">
+    <div class="card cold">
+      <div class="tag cold">식은 남자</div>
+      <div class="pen">싸우지도 않아요</div>
+      <p>"그래, 네 말이 맞아."<br>설명할 이유가 없으니까요.<br>조용한 게 더 무서운 신호입니다.</p>
+    </div>
+    <div class="card warm">
+      <div class="tag accent">지친 남자</div>
+      <div class="pen">짜증 내고 결국 돌아와요</div>
+      <p>예민하게 굴다가도<br>"아까 미안. 요즘 좀 그래."<br>먼저 다시 말을 겁니다.</p>
+    </div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+<!-- 8. 고백 -->
+<section class="slide" id="s8">
+  <div class="num">08</div>
+  <div class="body dim">솔직히 말하면,</div>
+  <div class="pen h2 mt-s">저도 지쳤던 적이<br>있습니다.</div>
+  <div class="rule"></div>
+  <div class="body">그때 제일 고마웠던 말은<br>"왜 그래?"가 아니었어요.</div>
+  <div class="pen h3 accent mt-m">"오늘 많이 힘들었지."</div>
+  <div class="body dim mt-m">이 한마디에 다시<br>연락하고 싶어졌습니다.</div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+<!-- 9. 정리 -->
+<section class="slide" id="s9">
+  <div class="num">09 · 그래서 이렇게</div>
+  <div class="tag accent" style="font-size:40px">지친 남자에게는</div>
+  <div class="pen h2">질문보다<br>쉴 자리를.</div>
+  <div class="rule"></div>
+  <div class="tag cold" style="font-size:40px">식은 남자에게는</div>
+  <div class="pen h2">붙잡기보다<br>나를 지키는 선을.</div>
+  <div class="small mt-l">어느 쪽이든, 당신 잘못으로 시작된 일은 아닐 가능성이 커요.</div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+<!-- 10. 공유 CTA -->
+<section class="slide" id="s10">
+  <div class="num">10</div>
+  <div class="pen h2">말로 꺼내기<br>어렵다면</div>
+  <div class="body mt-m">이 글을 그 사람에게 보내세요.</div>
+  <div class="msg mt-m">나 요즘 이런 생각이 들어.<br><span class="dim">너는 지친 쪽이야, 아니면…</span></div>
+  <div class="btns">
+    <div class="btn share">↗ 그 사람에게 보내기</div>
+    <div class="btn save">저장해두기</div>
+  </div>
+  <div class="sub">내 상황은 좀 다르다면 → 구독자 사연 해석에서 직접 답합니다.<br>프로필 상단 '구독' 버튼</div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #01</div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=block">
+<style>
+  :root { --bg:#0b0b0c; --ink:#f4f1ea; --dim:#8e8a83; --accent:#e0b46a; --cold:#7fa7c9; --line:#2a2a2d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { word-break:keep-all; background:#222; font-family:'Noto Sans KR', sans-serif; color:var(--ink); }
+  .slide { width:1080px; height:1350px; background:var(--bg); position:relative; overflow:hidden;
+           padding:120px 96px; display:flex; flex-direction:column; justify-content:center; margin-bottom:20px; }
+  .pen { font-family:'Nanum Pen Script', cursive; font-weight:400; line-height:1.15; }
+  .h1 { font-size:150px; }
+  .h2 { font-size:112px; }
+  .h3 { font-size:86px; }
+  .body { font-size:46px; line-height:1.65; font-weight:500; }
+  .small { font-size:34px; color:var(--dim); line-height:1.6; }
+  .dim { color:var(--dim); }
+  .accent { color:var(--accent); }
+  .cold { color:var(--cold); }
+  .series { position:absolute; right:96px; bottom:72px; font-size:28px; color:var(--dim); letter-spacing:.04em; }
+  .handle { position:absolute; left:96px; bottom:72px; font-size:28px; color:var(--dim); }
+  .num { position:absolute; left:96px; top:80px; font-size:30px; color:var(--dim); letter-spacing:.08em; }
+  .swipe { position:absolute; right:96px; top:80px; font-size:30px; color:var(--dim); }
+  .mt-s { margin-top:28px; } .mt-m { margin-top:56px; } .mt-l { margin-top:96px; }
+  .rule { height:2px; background:var(--line); margin:56px 0; }
+  /* cover */
+  .photo { position:absolute; inset:0; background:
+           radial-gradient(ellipse at 50% 38%, #3a3a3e 0%, #161617 55%, #0b0b0c 80%); }
+  .photo-note { position:absolute; top:330px; left:0; right:0; text-align:center; font-size:30px; color:#55555a;
+                border:3px dashed #3a3a3e; margin:0 220px; padding:150px 0; border-radius:24px; }
+  .cover-text { position:absolute; left:96px; right:96px; bottom:200px; }
+  .shade { position:absolute; left:0; right:0; bottom:0; height:700px; background:linear-gradient(transparent, rgba(0,0,0,.92) 45%); }
+  /* compare */
+  .topic { font-size:40px; font-weight:700; color:var(--dim); letter-spacing:.06em; }
+  .row { display:flex; flex-direction:column; gap:36px; margin-top:64px; }
+  .card { border-radius:28px; padding:44px 52px; }
+  .card.cold { background:#111a22; border:2px solid #24384a; }
+  .card.warm { background:#1d1710; border:2px solid #4a3a20; }
+  .tag { font-size:32px; font-weight:900; margin-bottom:16px; }
+  .card .pen { font-size:80px; margin-bottom:20px; color:var(--ink); }
+  .card p { font-size:36px; line-height:1.6; color:#cfcac1; }
+  .key { margin-top:64px; font-size:40px; line-height:1.6; font-weight:700; }
+  /* share slide */
+  .msg { background:#1c1c1f; border-radius:36px; padding:52px 56px; font-size:46px; line-height:1.6; position:relative; }
+  .msg:after { content:''; position:absolute; left:60px; bottom:-26px; border:16px solid transparent; border-top:20px solid #1c1c1f; }
+  .btns { display:flex; gap:24px; margin-top:72px; }
+  .btn { flex:1; text-align:center; padding:34px 0; border-radius:20px; font-size:36px; font-weight:700; }
+  .btn.share { background:var(--accent); color:#111; }
+  .btn.save { border:2px solid #444; color:var(--ink); }
+  .sub { margin-top:60px; font-size:32px; color:var(--dim); line-height:1.6; }
+</style>
+<style>
+  .phrase { font-family:'Nanum Pen Script'; font-size:150px; line-height:1.1; }
+  .tr { margin-top:64px; border-top:2px solid var(--line); }
+  .tr .r { padding:34px 0; border-bottom:2px solid var(--line); }
+  .tr .k { font-size:30px; font-weight:900; letter-spacing:.06em; margin-bottom:12px; }
+  .tr .v { font-size:42px; line-height:1.55; font-weight:500; }
+  .do { margin-top:48px; font-size:36px; line-height:1.6; color:#cfcac1; }
+  .do b { color:var(--accent); }
+</style>
+</head>
+<body>
+<section class="slide" id="s1">
+  <img src="cover_photo_02.jpg" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; filter:brightness(.85) contrast(1.05)">
+  <div class="shade"></div>
+  <div class="cover-text" style="bottom:150px">
+    <div class="pen" style="font-size:136px; line-height:1.1">남자가 이 말을 하면,<br><span class="accent">진짜 뜻은 이겁니다</span></div>
+    <div class="small mt-s" style="color:#d6d1c8">남자들끼리는 이 말을 다르게 씁니다</div>
+  </div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="num">02</div>
+  <div class="pen h2">같은 말인데,</div>
+  <div class="pen h2 mt-s">듣는 뜻과<br><span class="accent">하는 뜻</span>이 달라요.</div>
+  <div class="rule"></div>
+  <div class="body">그래서 그 한 줄을 붙잡고<br>밤새 해석하게 되죠.</div>
+  <div class="body dim mt-m">남자 입장에서 번역해 드릴게요.<br>들어본 말이 있는지 보세요.</div>
+  <div class="series">넘겨보세요 →</div>
+</section>
+
+<section class="slide" id="s3">
+  <div class="num">03 · 남자가 하는 말</div>
+  <div class="phrase">"바빴어"</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">당신이 듣는 뜻</div><div class="v dim">나한테 관심이 없어졌구나</div></div>
+    <div class="r"><div class="k accent">남자가 하는 뜻</div><div class="v">지금 내 1순위가 일이라는 뜻.<br>마음이 식은 것과는 따로예요.</div></div>
+  </div>
+  <div class="do"><b>이렇게 하세요</b> · '바빴어' 뒤에 <b>다음 약속</b>이 붙는지만 보세요.</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+<section class="slide" id="s4">
+  <div class="num">04 · 남자가 하는 말</div>
+  <div class="phrase">"생각할 시간이 필요해"</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">당신이 듣는 뜻</div><div class="v dim">시간을 주면 돌아오겠지</div></div>
+    <div class="r"><div class="k accent">남자가 하는 뜻</div><div class="v">생각은 대부분 끝났고,<br>말할 시간을 버는 중이에요.</div></div>
+  </div>
+  <div class="do"><b>이렇게 하세요</b> · 기한을 묻지 말고 "정리되면 말해줘" 한마디면 충분해요.</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+<section class="slide" id="s5">
+  <div class="num">05 · 남자가 하는 말</div>
+  <div class="phrase">"넌 좋은 사람이야"</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">당신이 듣는 뜻</div><div class="v dim">그럼 대체 왜?</div></div>
+    <div class="r"><div class="k accent">남자가 하는 뜻</div><div class="v">당신 탓이 아니라는 마지막 배려.<br>그리고 결정은 안 바뀐다는 뜻.</div></div>
+  </div>
+  <div class="do"><b>이렇게 하세요</b> · 이유를 더 캐묻지 마세요. 답은 이미 들었어요.</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+<section class="slide" id="s6">
+  <div class="num">06 · 남자가 하는 말</div>
+  <div class="phrase">"우리 천천히 가자"</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">당신이 듣는 뜻</div><div class="v dim">신중한 사람이구나</div></div>
+    <div class="r"><div class="k accent">남자가 하는 뜻</div><div class="v">아직 확신이 없다는 말이에요.<br>확신이 생기면 속도는 저절로 붙어요.</div></div>
+  </div>
+  <div class="do"><b>이렇게 하세요</b> · 속도 말고 <b>방향</b>을 물어보세요. "우리 어디로 가?"</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+<section class="slide" id="s7">
+  <div class="num">07 · 남자가 하는 말</div>
+  <div class="phrase">"나중에 연락할게"</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">당신이 듣는 뜻</div><div class="v dim">곧 연락 오겠지</div></div>
+    <div class="r"><div class="k accent">남자가 하는 뜻</div><div class="v">날짜 없는 '나중'은<br>약속이 아니라 인사예요.</div></div>
+  </div>
+  <div class="do"><b>이렇게 하세요</b> · <b>날짜가 붙은 나중</b>만 믿으세요.</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+<section class="slide" id="s8">
+  <div class="num">08 · 남자가 하는 말</div>
+  <div class="phrase">"지금은 연애할 상황이 아니야"</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">당신이 듣는 뜻</div><div class="v dim">상황이 나아지면 되겠지</div></div>
+    <div class="r"><div class="k accent">남자가 하는 뜻</div><div class="v">상황보다 우선순위의 문제인<br>경우가 훨씬 많아요.</div></div>
+  </div>
+  <div class="do"><b>이렇게 하세요</b> · 상황이 바뀌길 기다리며 <b>내 시간</b>을 쓰지 마세요.</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+<section class="slide" id="s9">
+  <div class="num">09</div>
+  <div class="body dim">솔직히 말하면,</div>
+  <div class="pen h2 mt-s">저도 이 말들,<br>다 써봤습니다.</div>
+  <div class="rule"></div>
+  <div class="body">대부분 <span class="accent">말하기 어려운 걸<br>미루는 말</span>이었어요.</div>
+  <div class="body dim mt-m">그래서 말보다 행동을 보세요.<br>다음 약속, 먼저 하는 질문, 먼저 오는 연락.</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+
+<section class="slide" id="s10">
+  <div class="num">10</div>
+  <div class="pen h2">이 말 들어본<br>친구가 있다면</div>
+  <div class="body mt-m">지금 보내주세요.<br>오늘 밤 해석은 이걸로 끝내게요.</div>
+  <div class="btns">
+    <div class="btn share">↗ 친구에게 보내기</div>
+    <div class="btn save">저장해두기</div>
+  </div>
+  <div class="sub">그가 지금 하는 말의 뜻, 「남자들끼리 하는 말」 2권에 적었습니다.<br><span class="accent">무료 · 댓글에 '2권'</span></div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #02</div>
+</section>
+</body></html>

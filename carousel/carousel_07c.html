@@ -92,7 +92,7 @@
   .howto b { color:var(--accent); }
 </style>
 <style>
-  .types { display:grid; gap:22px; margin-top:44px; }
+  .types { display:grid; gap:18px; margin-top:36px; }
   .ty { border:2px solid var(--line); border-radius:28px; padding:30px 36px; background:#141416; }
   .ty .h { display:flex; align-items:baseline; gap:20px; }
   .ty .c { font-size:30px; color:var(--dim); font-weight:700; font-variant-numeric:tabular-nums; }
@@ -101,6 +101,20 @@
   .ty.hi { border-color:var(--accent); }
   .letter { background:#f4f1ea; color:#151515; border-radius:32px; padding:52px 56px; font-size:44px; line-height:1.7; font-weight:500; margin-top:40px; }
   .letter b { color:#a8742a; }
+</style>
+<style>
+  /* legibility pass: min ~36px source (~13px on phone), thicker handwriting strokes */
+  .pen, .big-rule, .rule-t, .ty .n, .quote-big { -webkit-text-stroke: 1.4px currentColor; paint-order: stroke fill; }
+  .series, .handle { font-size:34px !important; }
+  .prog .lbl { font-size:36px !important; }
+  .who { font-size:38px !important; }
+  .small { font-size:38px !important; }
+  .ty .c { font-size:36px !important; }
+  .ty .d { font-size:38px !important; }
+  .howto { font-size:38px !important; }
+  .inv .accent2 { color:#8a5a12 !important; }
+  .inv .series, .inv .handle { color:#6b665d !important; }
+  .feel2 { color:#e6e1d8 !important; }
 </style>
 </head>
 <body>
@@ -194,7 +208,7 @@
   <div class="body dim">남자친구에게는</div>
   <div class="pen h3 mt-s"><span class="accent">이 장만</span> 보내주세요.</div>
   <div class="letter">내가 가끔 "나 사랑해?" 하고 묻고,<br>서운한 걸 말 못 하고 조용해질 때가 있어.<br>그건 사랑이 부족해서가 아니라,<br><b>불안해서야.</b><br><br>그럴 땐 이유를 묻지 말고<br><b>"나 여기 있어"</b> 한마디만 해줘.</div>
-  <div class="howto" style="margin-top:40px">보낼 땐 <b>종이비행기 ➤</b><br><span style="color:var(--dim);font-size:30px">남자가 하는 말의 뜻은 전자책 1·2권에 · 프로필 링크에서 무료</span></div>
+  <div class="howto" style="margin-top:40px">보낼 땐 <b>종이비행기 ➤</b><br><span style="color:var(--dim);font-size:34px">남자가 하는 말의 뜻은 전자책 1·2권에 · 프로필 링크에서 무료</span></div>
   <div class="handle">@mszexc</div>
   <div class="series">남자들끼리 하는 말 #06</div>
 </section>

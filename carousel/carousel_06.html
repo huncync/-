@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=block">
+<style>
+  :root { --bg:#0b0b0c; --ink:#f4f1ea; --dim:#8e8a83; --accent:#e0b46a; --cold:#7fa7c9; --line:#2a2a2d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { word-break:keep-all; background:#222; font-family:'Noto Sans KR', sans-serif; color:var(--ink); }
+  .slide { width:1080px; height:1350px; background:var(--bg); position:relative; overflow:hidden;
+           padding:120px 96px; display:flex; flex-direction:column; justify-content:center; margin-bottom:20px; }
+  .pen { font-family:'Nanum Pen Script', cursive; font-weight:400; line-height:1.15; }
+  .h1 { font-size:150px; }
+  .h2 { font-size:112px; }
+  .h3 { font-size:86px; }
+  .body { font-size:46px; line-height:1.65; font-weight:500; }
+  .small { font-size:34px; color:var(--dim); line-height:1.6; }
+  .dim { color:var(--dim); }
+  .accent { color:var(--accent); }
+  .cold { color:var(--cold); }
+  .series { position:absolute; right:96px; bottom:72px; font-size:28px; color:var(--dim); letter-spacing:.04em; }
+  .handle { position:absolute; left:96px; bottom:72px; font-size:28px; color:var(--dim); }
+  .num { position:absolute; left:96px; top:80px; font-size:30px; color:var(--dim); letter-spacing:.08em; }
+  .swipe { position:absolute; right:96px; top:80px; font-size:30px; color:var(--dim); }
+  .mt-s { margin-top:28px; } .mt-m { margin-top:56px; } .mt-l { margin-top:96px; }
+  .rule { height:2px; background:var(--line); margin:56px 0; }
+  /* cover */
+  .photo { position:absolute; inset:0; background:
+           radial-gradient(ellipse at 50% 38%, #3a3a3e 0%, #161617 55%, #0b0b0c 80%); }
+  .photo-note { position:absolute; top:330px; left:0; right:0; text-align:center; font-size:30px; color:#55555a;
+                border:3px dashed #3a3a3e; margin:0 220px; padding:150px 0; border-radius:24px; }
+  .cover-text { position:absolute; left:96px; right:96px; bottom:200px; }
+  .shade { position:absolute; left:0; right:0; bottom:0; height:700px; background:linear-gradient(transparent, rgba(0,0,0,.92) 45%); }
+  /* compare */
+  .topic { font-size:40px; font-weight:700; color:var(--dim); letter-spacing:.06em; }
+  .row { display:flex; flex-direction:column; gap:36px; margin-top:64px; }
+  .card { border-radius:28px; padding:44px 52px; }
+  .card.cold { background:#111a22; border:2px solid #24384a; }
+  .card.warm { background:#1d1710; border:2px solid #4a3a20; }
+  .tag { font-size:32px; font-weight:900; margin-bottom:16px; }
+  .card .pen { font-size:80px; margin-bottom:20px; color:var(--ink); }
+  .card p { font-size:36px; line-height:1.6; color:#cfcac1; }
+  .key { margin-top:64px; font-size:40px; line-height:1.6; font-weight:700; }
+  /* share slide */
+  .msg { background:#1c1c1f; border-radius:36px; padding:52px 56px; font-size:46px; line-height:1.6; position:relative; }
+  .msg:after { content:''; position:absolute; left:60px; bottom:-26px; border:16px solid transparent; border-top:20px solid #1c1c1f; }
+  .btns { display:flex; gap:24px; margin-top:72px; }
+  .btn { flex:1; text-align:center; padding:34px 0; border-radius:20px; font-size:36px; font-weight:700; }
+  .btn.share { background:var(--accent); color:#111; }
+  .btn.save { border:2px solid #444; color:var(--ink); }
+  .sub { margin-top:60px; font-size:32px; color:var(--dim); line-height:1.6; }
+</style>
+<style>
+  .phrase { font-family:'Nanum Pen Script'; font-size:150px; line-height:1.1; }
+  .tr { margin-top:64px; border-top:2px solid var(--line); }
+  .tr .r { padding:34px 0; border-bottom:2px solid var(--line); }
+  .tr .k { font-size:30px; font-weight:900; letter-spacing:.06em; margin-bottom:12px; }
+  .tr .v { font-size:42px; line-height:1.55; font-weight:500; }
+  .do { margin-top:48px; font-size:36px; line-height:1.6; color:#cfcac1; }
+  .do b { color:var(--accent); }
+</style>
+<style>
+  .xl { list-style:none; margin:56px 0 0; padding:0; }
+  .xl li { padding:30px 0; border-bottom:2px solid var(--line); }
+  .xl .q { font-family:'Nanum Pen Script'; font-size:92px; line-height:1.1; }
+  .xl .q b { color:#d88; font-family:'Noto Sans KR'; font-weight:900; font-size:48px; margin-right:18px; vertical-align:middle; }
+  .xl .w { font-size:34px; color:var(--dim); margin-top:8px; }
+  .mean { font-size:30px; font-weight:900; color:var(--accent); letter-spacing:.08em; }
+  .cover-c { position:absolute; left:96px; right:96px; top:50%; transform:translateY(-55%); }
+  .quote-big { font-family:'Nanum Pen Script'; font-size:120px; line-height:1.12; }
+</style>
+</head>
+<body>
+<section class="slide" id="s1">
+  <div class="cover-c">
+    <div class="small">257만 명이 본 「연락보다 먼저 사라지는 것」 그다음</div>
+    <div class="pen mt-s" style="font-size:140px; line-height:1.12">남자가 식을 때,<br><span class="accent">말투보다 먼저<br>바뀌는 것</span></div>
+  </div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="num">02</div>
+  <div class="pen h2">말투는<br>마지막까지 그대로예요.</div>
+  <div class="rule"></div>
+  <div class="body">"응, 잘 자."<br>똑같이 보내요.</div>
+  <div class="body dim mt-m">그래서 더 헷갈리는 거예요.<br>말투가 변할 때쯤이면,<br>이미 많은 게 바뀐 뒤예요.</div>
+  <div class="series">넘겨보세요 →</div>
+</section>
+
+<section class="slide" id="s3">
+  <div class="num">03</div>
+  <div class="mean">먼저 바뀌는 것 ①</div>
+  <div class="pen h2 mt-s">당신이 했던 말을<br>기억 못 해요</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 보여요</div><div class="v">"그 면접 어떻게 됐어?"<br>지난주에 말한 걸 처음 듣는 사람처럼.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v dim">관심이 빠지면 가장 먼저<br>당신 일정이 머리에서 지워져요.</div></div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+<section class="slide" id="s4">
+  <div class="num">04</div>
+  <div class="mean">먼저 바뀌는 것 ②</div>
+  <div class="pen h2 mt-s">만나서<br>휴대폰을 봐요</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 보여요</div><div class="v">마주 앉아 있는데<br>화면을 보는 시간이 길어져요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v dim">같이 있는 시간이<br>"채워야 할 시간"이 된 거예요.</div></div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+<section class="slide" id="s5">
+  <div class="num">05</div>
+  <div class="mean">먼저 바뀌는 것 ③</div>
+  <div class="pen h2 mt-s">통화를<br>먼저 끊어요</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 보여요</div><div class="v">"피곤하다, 이제 자자."<br>예전엔 당신이 먼저 끊었죠.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v dim">대화를 이어갈 이유를<br>찾지 않는 단계예요.</div></div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+<section class="slide" id="s6">
+  <div class="num">06</div>
+  <div class="mean">먼저 바뀌는 것 ④</div>
+  <div class="pen h2 mt-s">혼자 정하는 게<br>늘어나요</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 보여요</div><div class="v">주말 약속, 여행, 이사.<br>당신은 "정해지고 나서" 알게 돼요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v dim">계획 속에 당신 자리를<br>먼저 빼보는 중이에요.</div></div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+<section class="slide" id="s7">
+  <div class="num">07</div>
+  <div class="mean">먼저 바뀌는 것 ⑤</div>
+  <div class="pen h2 mt-s">당신 기분보다<br>자기 피곤함이 먼저예요</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 보여요</div><div class="v">"나 오늘 진짜 힘들었어."<br>당신 하루는 묻지 않고.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v dim">배려할 여유가 아니라<br>배려할 마음이 줄어든 거예요.</div></div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+<section class="slide" id="s8">
+  <div class="num">08</div>
+  <div class="mean">먼저 바뀌는 것 ⑥</div>
+  <div class="pen h2 mt-s">스토리에서<br>당신이 사라져요</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 보여요</div><div class="v">같이 간 곳은 올리는데,<br>당신은 안 나와요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v dim">주변에 보여주는 관계에서<br>먼저 거리를 둬요.</div></div>
+  </div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+<section class="slide" id="s9">
+  <div class="num">09 · 남자 입장에서</div>
+  <div class="body dim">솔직히 말하면,</div>
+  <div class="pen h2 mt-s">말투가 바뀔 땐<br>이미 끝난 경우가 많아요.</div>
+  <div class="rule"></div>
+  <div class="body">그래서 말투 말고<br><span class="accent">이 여섯 가지</span>를 보세요.</div>
+  <div class="body dim mt-m">하나만 보이면 피곤한 거고,<br>여러 개가 겹치면 그때 이야기해야 해요.</div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+
+<section class="slide" id="s10">
+  <div class="num">10</div>
+  <div class="pen h2">이거 보고<br><span class="accent">떠오른 친구</span>가 있다면</div>
+  <div class="body mt-m">지금 보내주세요.<br>혼자 헷갈리지 않게.</div>
+  <div class="btns">
+    <div class="btn share">↗ 친구에게 보내기</div>
+    <div class="btn save">저장해두기</div>
+  </div>
+  <div class="sub">남자가 하는 말의 뜻은 전자책 1·2권에 적었습니다.<br><span class="accent">프로필 링크에서 무료로 받아보세요</span></div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #05</div>
+</section>
+</body></html>

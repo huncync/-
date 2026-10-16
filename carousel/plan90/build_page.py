@@ -18,6 +18,21 @@ def capdet(no):
     _,c,p=CAPS[k]
     return (f'<details class="pc"><summary>캡션 · 고정 댓글</summary><div class="row"><button class="btn gold" data-ct="p90cap{no}">캡션 복사</button><button class="btn" data-ct="p90pin{no}">고정 댓글 복사</button></div>'
             f'<pre id="p90cap{no}">{e(c)}</pre><div class="pl">고정 댓글</div><pre id="p90pin{no}">{e(p)}</pre></details>')
+
+import importlib.util, os
+def reeldet(n):
+    f=f'/home/user/-/reels/R{n}.py'
+    if not os.path.exists(f): return ''
+    spec=importlib.util.spec_from_file_location(f'R{n}',f); m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); X=m.R
+    k=f'r{n}'
+    st='\n\n'.join(f"[{a} · {b}]\n{c}" for a,b,c,_ in X['script'])
+    rows=''.join(f'<div class="sc"><div class="st">{e(a)} <b>{e(b2)}</b></div><div class="sl">{e(c)}</div>'+(f'<div class="sn">{e(d)}</div>' if d else '')+'</div>' for a,b2,c,d in X['script'])
+    return (f'<details class="pc"><summary>대본 · 캡션 · 고정 댓글 ({e(X["len"])})</summary>'
+     f'<div class="toptxt"><small>{e(X["label"])}</small>{"<br>".join(e(x) for x in X["top"])}</div>'
+     f'<div class="row"><button class="btn gold" data-ct="{k}script">대본 복사</button><button class="btn" data-ct="{k}cap">캡션 복사</button><button class="btn" data-ct="{k}pin">고정 댓글 복사</button></div>'
+     f'<div class="scs">{rows}</div><pre id="{k}script" hidden>{e(st)}</pre>'
+     f'<div class="pl">촬영 메모</div><ul class="shoot">{"".join("<li>"+e(s)+"</li>" for s in X["shoot"])}</ul>'
+     f'<div class="pl">캡션</div><pre id="{k}cap">{e(X["caption"])}</pre><div class="pl">고정 댓글</div><pre id="{k}pin">{e(X["pin"])}</pre></details>')
 byday={}; n=7
 for r in rows:
     r=list(r); r.append(n); n+=1; byday.setdefault(r[0],[]).append(r)
@@ -79,13 +94,12 @@ t=t.replace('ol.topics .n {','ol.topics .n .sr { width: 30px; }\n  ol.topics .n 
 # ---- reels tab
 a=t.index('<section class="panel" id="p-reels"'); b=t.index('</section>',a)
 sec=t[a:b]
-r1det=sec[sec.index('<details class="pc" open>'):sec.index('</details>',sec.index('<details class="pc" open>'))+10]
 h0=sec.index('<h2>90일 릴스 목록') if '<h2>90일 릴스 목록' in sec else sec.index('<h2>1주차'); h1=sec.index('<h2>예비 소재')
 items=[]
 for x in R:
     dd=dt.date.fromisoformat(x['date'])
     lk=(f'캐러셀 #{x["link_no"]:02d} 「{e(x["link_t"])}」 {int(x["link_date"][5:7])}/{int(x["link_date"][8:])} 예고' if x['link_no'] else '')
-    extra=r1det if x['no']==1 else ''
+    extra=reeldet(x['no'])
     st=f'<span class="k3" style="background:#b9d38f">{e(x["done"])}</span> ' if x['done'] else ''
     items.append(f'<li><span class="d">{dd.month}/{dd.day}<i>{DOW[dd.weekday()]}</i></span><span class="ty" style="background:#ff5c8a;color:#fff">R</span><span class="m"><b>{e(x["title"])}</b><em>{st}R{x["no"]} · 18시{" · "+lk if lk else ""}</em></span>{extra}</li>')
 lst='<h2>90일 릴스 목록<small>화·목·일 18시 · '+str(len(R))+'편</small></h2><p class="lead">각 릴스는 2~3일 뒤 캐러셀의 핵심 3개만 말하는 예고편입니다. 대본은 이번처럼 후보 훅을 먼저 보여드리고, 고르시면 씁니다.</p><ol class="plan">'+''.join(items)+'</ol>\n    '

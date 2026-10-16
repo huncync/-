@@ -76,7 +76,7 @@ S = {
 FIXED = {  # (date, slot) -> (series, title, note)
  (dt.date(2026,10,16),0): ('S2','남자가 헤어지기 전에 하는 말들, 진짜 뜻','완성'),
  (dt.date(2026,10,16),1): ('S6','여자가 조용해지면, 그때가 제일 위험합니다','완성'),
- (dt.date(2026,10,17),0): ('S2','남자 카톡, 이 한 줄이면 보입니다','완성 · 마지막 장·번호 수정 필요'),
+ (dt.date(2026,10,17),0): ('S2','남자 카톡, 이 한 줄이면 보입니다','완성'),
  (dt.date(2026,10,19),1): ('S5','헤어진 남자가 돌아오고 싶을 때 하는 말들','#07 마지막 장에서 예고한 편 (월 밤 9시)'),
  (dt.date(2026,10,21),0): ('S3','다시 좋아진 걸까, 정리하는 걸까','10/18 릴스 「헤어지기 전 갑자기 잘해주는 이유」 완전판'),
 }
@@ -124,6 +124,8 @@ for d in range(DAYS):
         used.add(t); rows.append((day,slot,s,t,note))
 # seasonal leftovers check
 left = {k:[ (it if isinstance(it,str) else it[0]) for it in v[1] if (it if isinstance(it,str) else it[0]) not in used] for k,v in S.items()}
+DONE={'싸운 다음 날 남자가 하는 말들, 진짜 뜻'}
+rows=[(a,b,c,t,('완성' if t in DONE else n)) for a,b,c,t,n in rows]
 json.dump({'rows':[(r[0].isoformat(),r[1],r[2],r[3],r[4]) for r in rows],'left':left,'series':{k:v[0] for k,v in S.items()}}, open('/home/user/-/carousel/plan90/plan90.json','w'), ensure_ascii=False, indent=0)
 from collections import Counter
 print(len(rows), Counter(r[2] for r in rows)); print({k:len(v) for k,v in left.items() if v}); print(left)

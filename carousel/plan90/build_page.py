@@ -10,7 +10,14 @@ PH=[('1단계 · 공식 굳히기','10/16 ~ 11/4','검증된 시리즈를 매일
     ('2단계 · 3권 예고와 예약','11/5 ~ 11/17','밤 9시는 3권 주제로. 11/11~17 마지막 장 = 예약 29,000원',dt.date(2026,11,5),dt.date(2026,11,17)),
     ('3단계 · 시리즈 확장','11/18 ~ 12/12','잘된 시리즈에 편수 몰기. 12/2 3권 발송 → 후기·질문 활용',dt.date(2026,11,18),dt.date(2026,12,12)),
     ('4단계 · 연말·새해 시즌','12/13 ~ 1/13','크리스마스·연말·새해 소재가 가장 잘 퍼지는 시기',dt.date(2026,12,13),dt.date(2027,1,13))]
+CAPS=json.load(open('captions90.json'))
 R=json.load(open('reels90.json')); RB={x['date']:x for x in R}
+def capdet(no):
+    k=f'#{no:02d}'
+    if k not in CAPS: return ''
+    _,c,p=CAPS[k]
+    return (f'<details class="pc"><summary>캡션 · 고정 댓글</summary><div class="row"><button class="btn gold" data-ct="p90cap{no}">캡션 복사</button><button class="btn" data-ct="p90pin{no}">고정 댓글 복사</button></div>'
+            f'<pre id="p90cap{no}">{e(c)}</pre><div class="pl">고정 댓글</div><pre id="p90pin{no}">{e(p)}</pre></details>')
 byday={}; n=7
 for r in rows:
     r=list(r); r.append(n); n+=1; byday.setdefault(r[0],[]).append(r)
@@ -35,7 +42,7 @@ for name,rng,desc,a,b in PH:
             _,slot,s,t,note,no=obj
             lab,col=LAB[s]
             lines+=(f'<div class="pl9 cr"><span class="tm">{"13시" if slot==0 else "21시"}</span><span class="sr" style="background:{col}">{lab}</span>'
-                    f'<span class="tt">{e(t)}<em>#{no:02d}{" · "+e(note) if note else ""}</em></span></div>')
+                    f'<span class="tt">{e(t)}<em>#{no:02d}{" · "+e(note) if note else ""}</em>{capdet(no)}</span></div>')
             md.append(f'- {day.month}/{day.day}({DOW[day.weekday()]}) {"13시" if slot==0 else "21시"} [{lab}] #{no:02d} {t}'+(f' — {note}' if note else ''))
         wk=' class="wk"' if day.weekday()>=5 else ''
         parts.append(f'<li{wk}><span class="d">{day.month}/{day.day}<i>{DOW[day.weekday()]}</i></span><div>{lines}</div></li>')
@@ -73,7 +80,7 @@ t=t.replace('ol.topics .n {','ol.topics .n .sr { width: 30px; }\n  ol.topics .n 
 a=t.index('<section class="panel" id="p-reels"'); b=t.index('</section>',a)
 sec=t[a:b]
 r1det=sec[sec.index('<details class="pc" open>'):sec.index('</details>',sec.index('<details class="pc" open>'))+10]
-h0=sec.index('<h2>1주차'); h1=sec.index('<h2>예비 소재')
+h0=sec.index('<h2>90일 릴스 목록') if '<h2>90일 릴스 목록' in sec else sec.index('<h2>1주차'); h1=sec.index('<h2>예비 소재')
 items=[]
 for x in R:
     dd=dt.date.fromisoformat(x['date'])

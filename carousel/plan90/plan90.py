@@ -124,7 +124,7 @@ for d in range(DAYS):
         used.add(t); rows.append((day,slot,s,t,note))
 # seasonal leftovers check
 left = {k:[ (it if isinstance(it,str) else it[0]) for it in v[1] if (it if isinstance(it,str) else it[0]) not in used] for k,v in S.items()}
-DONE={'싸운 다음 날 남자가 하는 말들, 진짜 뜻'}
+DONE={'싸운 다음 날 남자가 하는 말들, 진짜 뜻','남자가 마음이 떠나면, 싸움보다 먼저 사라지는 것'}
 rows=[(a,b,c,t,('완성' if t in DONE else n)) for a,b,c,t,n in rows]
 json.dump({'rows':[(r[0].isoformat(),r[1],r[2],r[3],r[4]) for r in rows],'left':left,'series':{k:v[0] for k,v in S.items()}}, open('/home/user/-/carousel/plan90/plan90.json','w'), ensure_ascii=False, indent=0)
 from collections import Counter

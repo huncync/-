@@ -20,5 +20,13 @@ while day<=dt.date(2027,1,13):
         reels.append(dict(date=day.isoformat(),no=k,title=title,s=tgt['s'] if tgt else None,link_no=tgt['no'] if tgt else None,link_date=tgt['date'].isoformat() if tgt else None,link_t=tgt['t'] if tgt else None,done=done))
         k+=1
     day+=dt.timedelta(1)
+# --- manual overrides (keep on rerun)
+import importlib.util
+by={x['date']:x for x in reels}
+by['2026-11-15'].update(title='남자의 말이 줄어들 때, 여자가 꼭 알아야 할 것',s='S7',link_no=None,link_date=None,link_t=None,done='3권 예약 마감(11/17) 홍보')
+by['2026-10-18']['done']='업로드 완료'; by['2026-10-20']['done']='대본 완성'
+spec=importlib.util.spec_from_file_location('h','/home/user/-/reels/her_reasons.py'); h=importlib.util.module_from_spec(spec); spec.loader.exec_module(h)
+for rank,title,hook,flip,date in h.HER:
+    by[date].update(title=title,s='W',link_no=None,link_date=None,link_t=None,kind='W',hook=hook,flip=flip,rank=rank)
 json.dump(reels,open('reels90.json','w'),ensure_ascii=False,indent=0)
 print(len(reels)); [print(r['date'],'R%d'%r['no'],r['title'],'→',r['link_date'],'#%s'%r['link_no']) for r in reels]

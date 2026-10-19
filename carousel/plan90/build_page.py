@@ -49,8 +49,8 @@ for name,rng,desc,a,b in PH:
         seq=[('c',items[0])]+([('r',rl)] if rl else [])+[('c',x) for x in items[1:]]
         for kind,obj in seq:
             if kind=='r':
-                lk=(f' → 캐러셀 #{obj["link_no"]:02d} ({int(obj["link_date"][5:7])}/{int(obj["link_date"][8:])}) 예고' if obj['link_no'] else '')
-                lines+=(f'<div class="pl9 rl"><span class="tm">18시</span><span class="sr" style="background:#ff5c8a;color:#fff">릴스</span>'
+                lk=(f' → 캐러셀 #{obj["link_no"]:02d} ({int(obj["link_date"][5:7])}/{int(obj["link_date"][8:])}) 예고' if obj['link_no'] else (' · 그녀의 진짜 이유 (잔소리 공식)' if obj.get('kind')=='W' else ''))
+                lines+=(f'<div class="pl9 rl"><span class="tm">18시</span><span class="sr" style="background:{"#c86bff" if obj.get("kind")=="W" else "#ff5c8a"};color:#fff">릴스</span>'
                         f'<span class="tt">{e(obj["title"])}<em>R{obj["no"]}{lk}{" · "+e(obj["done"]) if obj["done"] else ""}</em></span></div>')
                 md.append(f'- {day.month}/{day.day}({DOW[day.weekday()]}) 18시 [릴스] R{obj["no"]} {obj["title"]}{lk}')
                 continue
@@ -79,7 +79,7 @@ head=f'''    <div class="tip"><b>목표 · 3개월 안에 캐러셀 조회 100�
       <div><b>점검</b> · 매주 일요일, 편당 평균 1만 이상이면 그대로. 5천 아래로 2주 연속이면 하루 1편으로 되돌리고 약한 시리즈를 뺍니다.</div>
       <div><b>위험</b> · 하루 2편이면 팔로워 피드 노출이 나뉘어 편당 조회가 줄 수 있어요. 첫 2주는 "2편 합계 > 예전 1편"인지 꼭 확인.</div>
     </div>
-    <div class="legend">{legend}<span class="lg"><span class="sr" style="background:#ff5c8a;color:#fff">릴스</span>화·목·일 18시 · {len(R)}편 (2~3일 뒤 캐러셀 예고)</span></div>
+    <div class="legend">{legend}<span class="lg"><span class="sr" style="background:#ff5c8a;color:#fff">릴스</span>화·목 18시 · 캐러셀 예고</span><span class="lg"><span class="sr" style="background:#c86bff;color:#fff">릴스</span>일 18시 · 그녀의 진짜 이유</span></div>
     <div class="flt" role="group" aria-label="보기"><button class="btn gold" data-f="all">전체 <b>{180+len(R)}</b></button><button class="btn" data-f="cr">캐러셀 <b>180</b></button><button class="btn" data-f="rl">릴스 <b>{len(R)}</b></button></div>
 '''
 md.insert(1,'목표: 10월 124,760회 → 3개월 안에 100만. 누적 기준 편당 평균 4,900회, 월간 100만 기준 편당 1.7만.\n\n시리즈별 편수: '+', '.join(f'{d["series"][k]} {c[k]}' for k in ORDER)+'\n')
@@ -94,15 +94,24 @@ t=t.replace('ol.topics .n {','ol.topics .n .sr { width: 30px; }\n  ol.topics .n 
 # ---- reels tab
 a=t.index('<section class="panel" id="p-reels"'); b=t.index('</section>',a)
 sec=t[a:b]
-h0=sec.index('<h2>90일 릴스 목록') if '<h2>90일 릴스 목록' in sec else sec.index('<h2>1주차'); h1=sec.index('<h2>예비 소재')
+h0=(sec.index('<h2>일요일 · 그녀의 진짜 이유') if '<h2>일요일 · 그녀의 진짜 이유' in sec else sec.index('<h2>90일 릴스 목록') if '<h2>90일 릴스 목록' in sec else sec.index('<h2>1주차')); h1=sec.index('<h2>예비 소재')
 items=[]
 for x in R:
     dd=dt.date.fromisoformat(x['date'])
     lk=(f'캐러셀 #{x["link_no"]:02d} 「{e(x["link_t"])}」 {int(x["link_date"][5:7])}/{int(x["link_date"][8:])} 예고' if x['link_no'] else '')
     extra=reeldet(x['no'])
     st=f'<span class="k3" style="background:#b9d38f">{e(x["done"])}</span> ' if x['done'] else ''
+    if x.get('kind')=='W':
+        items.append(f'<li><span class="d">{dd.month}/{dd.day}<i>{DOW[dd.weekday()]}</i></span><span class="ty" style="background:#c86bff;color:#fff">그</span><span class="m"><b>{e(x["title"])}</b><em class="hk"><span class="k3">첫 3초</span> {e(x["hook"])}</em><em class="em2"><span class="k3">뒤집기</span> {e(x["flip"])}</em><em>{st}R{x["no"]} · 18시 · 그녀의 진짜 이유</em></span>{extra}</li>')
+        continue
     items.append(f'<li><span class="d">{dd.month}/{dd.day}<i>{DOW[dd.weekday()]}</i></span><span class="ty" style="background:#ff5c8a;color:#fff">R</span><span class="m"><b>{e(x["title"])}</b><em>{st}R{x["no"]} · 18시{" · "+lk if lk else ""}</em></span>{extra}</li>')
-lst='<h2>90일 릴스 목록<small>화·목·일 18시 · '+str(len(R))+'편</small></h2><p class="lead">각 릴스는 2~3일 뒤 캐러셀의 핵심 3개만 말하는 예고편입니다. 대본은 이번처럼 후보 훅을 먼저 보여드리고, 고르시면 씁니다.</p><ol class="plan">'+''.join(items)+'</ol>\n    '
+spec=importlib.util.spec_from_file_location('her','/home/user/-/reels/her_reasons.py'); HM=importlib.util.module_from_spec(spec); spec.loader.exec_module(HM)
+nW=sum(1 for x in R if x.get('kind')=='W')
+herbox=('<h2>일요일 · 그녀의 진짜 이유<small>잔소리 릴스 공식 · '+str(nW)+'편</small></h2>'
+  '<div class="tip">잔소리 릴스에 "전생에 여자 아니냐"는 댓글이 쏟아진 이유: <b>여자가 미안해하던 행동을, 남자가 "그게 사랑이야"라고 대신 말해줬기 때문</b>이에요. 위로가 아니라 인정. 얼굴 보고 남자 목소리로 들어야 힘이 나는 소재라 캐러셀보다 릴스로 먼저 올립니다.</div>'
+  '<ol class="topics">'+''.join(f'<li><span class="n">{i}</span><span class="t">{e(s)}</span><span></span></li>' for i,s in enumerate(HM.FORMULA,1))+'</ol>'
+  '<div class="note"><div><b>예비:</b> '+' / '.join(e(s[1]) for s in HM.SPARE)+'</div><div><b>끝 멘트 고정:</b> "안 해도 되는데, 이 남자랑 오래 가고 싶어서 굳이 하는 거예요. 그러니까 귀찮아하지 마세요."</div></div>')
+lst=herbox+'<h2>90일 릴스 목록<small>화·목·일 18시 · '+str(len(R))+'편</small></h2><p class="lead"><b style="color:#ff5c8a">화·목</b> = 2~3일 뒤 캐러셀의 핵심 3개만 말하는 예고편(남자 해독). <b style="color:#c86bff">일요일</b> = 그녀의 진짜 이유(인정형). 대본은 후보 훅을 먼저 보여드리고, 고르시면 씁니다.</p><ol class="plan">'+''.join(items)+'</ol>\n    '
 sec=sec[:h0]+lst+sec[h1:]
 t=t[:a]+sec+t[b:]
 open(P,'w',encoding='utf-8').write(t)

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=block">
+<style>
+  :root { --bg:#0b0b0c; --ink:#f4f1ea; --dim:#8e8a83; --accent:#e0b46a; --cold:#7fa7c9; --line:#2a2a2d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { word-break:keep-all; background:#222; font-family:'Noto Sans KR', sans-serif; color:var(--ink); }
+  .slide { width:1080px; height:1350px; background:var(--bg); position:relative; overflow:hidden;
+           padding:120px 96px; display:flex; flex-direction:column; justify-content:center; margin-bottom:20px; }
+  .pen { font-family:'Nanum Pen Script', cursive; font-weight:400; line-height:1.15; }
+  .h1 { font-size:150px; }
+  .h2 { font-size:112px; }
+  .h3 { font-size:86px; }
+  .body { font-size:46px; line-height:1.65; font-weight:500; }
+  .small { font-size:34px; color:var(--dim); line-height:1.6; }
+  .dim { color:var(--dim); }
+  .accent { color:var(--accent); }
+  .cold { color:var(--cold); }
+  .series { position:absolute; right:96px; bottom:72px; font-size:28px; color:var(--dim); letter-spacing:.04em; }
+  .handle { position:absolute; left:96px; bottom:72px; font-size:28px; color:var(--dim); }
+  .num { position:absolute; left:96px; top:80px; font-size:30px; color:var(--dim); letter-spacing:.08em; }
+  .swipe { position:absolute; right:96px; top:80px; font-size:30px; color:var(--dim); }
+  .mt-s { margin-top:28px; } .mt-m { margin-top:56px; } .mt-l { margin-top:96px; }
+  .rule { height:2px; background:var(--line); margin:56px 0; }
+  /* cover */
+  .photo { position:absolute; inset:0; background:
+           radial-gradient(ellipse at 50% 38%, #3a3a3e 0%, #161617 55%, #0b0b0c 80%); }
+  .photo-note { position:absolute; top:330px; left:0; right:0; text-align:center; font-size:30px; color:#55555a;
+                border:3px dashed #3a3a3e; margin:0 220px; padding:150px 0; border-radius:24px; }
+  .cover-text { position:absolute; left:96px; right:96px; bottom:200px; }
+  .shade { position:absolute; left:0; right:0; bottom:0; height:700px; background:linear-gradient(transparent, rgba(0,0,0,.92) 45%); }
+  /* compare */
+  .topic { font-size:40px; font-weight:700; color:var(--dim); letter-spacing:.06em; }
+  .row { display:flex; flex-direction:column; gap:36px; margin-top:64px; }
+  .card { border-radius:28px; padding:44px 52px; }
+  .card.cold { background:#111a22; border:2px solid #24384a; }
+  .card.warm { background:#1d1710; border:2px solid #4a3a20; }
+  .tag { font-size:32px; font-weight:900; margin-bottom:16px; }
+  .card .pen { font-size:80px; margin-bottom:20px; color:var(--ink); }
+  .card p { font-size:36px; line-height:1.6; color:#cfcac1; }
+  .key { margin-top:64px; font-size:40px; line-height:1.6; font-weight:700; }
+  /* share slide */
+  .msg { background:#1c1c1f; border-radius:36px; padding:52px 56px; font-size:46px; line-height:1.6; position:relative; }
+  .msg:after { content:''; position:absolute; left:60px; bottom:-26px; border:16px solid transparent; border-top:20px solid #1c1c1f; }
+  .btns { display:flex; gap:24px; margin-top:72px; }
+  .btn { flex:1; text-align:center; padding:34px 0; border-radius:20px; font-size:36px; font-weight:700; }
+  .btn.share { background:var(--accent); color:#111; }
+  .btn.save { border:2px solid #444; color:var(--ink); }
+  .sub { margin-top:60px; font-size:32px; color:var(--dim); line-height:1.6; }
+</style>
+<style>
+  .phrase { font-family:'Nanum Pen Script'; font-size:150px; line-height:1.1; }
+  .tr { margin-top:64px; border-top:2px solid var(--line); }
+  .tr .r { padding:34px 0; border-bottom:2px solid var(--line); }
+  .tr .k { font-size:30px; font-weight:900; letter-spacing:.06em; margin-bottom:12px; }
+  .tr .v { font-size:42px; line-height:1.55; font-weight:500; }
+  .do { margin-top:48px; font-size:36px; line-height:1.6; color:#cfcac1; }
+  .do b { color:var(--accent); }
+</style>
+<style>
+  .xl { list-style:none; margin:56px 0 0; padding:0; }
+  .xl li { padding:30px 0; border-bottom:2px solid var(--line); }
+  .xl .q { font-family:'Nanum Pen Script'; font-size:92px; line-height:1.1; }
+  .xl .q b { color:#d88; font-family:'Noto Sans KR'; font-weight:900; font-size:48px; margin-right:18px; vertical-align:middle; }
+  .xl .w { font-size:34px; color:var(--dim); margin-top:8px; }
+  .mean { font-size:30px; font-weight:900; color:var(--accent); letter-spacing:.08em; }
+  .cover-c { position:absolute; left:96px; right:96px; top:50%; transform:translateY(-55%); }
+  .quote-big { font-family:'Nanum Pen Script'; font-size:120px; line-height:1.12; }
+</style>
+<style>
+  .prog { position:absolute; left:96px; right:96px; top:80px; display:flex; align-items:center; gap:14px; }
+  .prog .lbl { font-size:30px; color:var(--dim); font-weight:700; letter-spacing:.06em; margin-right:8px; font-variant-numeric:tabular-nums; }
+  .prog i { flex:1; height:6px; border-radius:3px; background:#2a2a2d; }
+  .prog i.on { background:var(--accent); }
+  .big-rule { font-family:'Nanum Pen Script'; font-size:118px; line-height:1.12; }
+  .feel2 { margin-top:72px; font-size:46px; line-height:1.6; font-weight:500; color:#d9d4cb; }
+  .feel2 b { color:var(--accent); font-weight:700; }
+  .who { font-size:32px; font-weight:900; color:var(--accent); letter-spacing:.06em; margin-bottom:16px; }
+  .inv { background:#f2ede3 !important; color:#151515; }
+  .inv .dim2 { color:#6b665d; }
+  .inv .accent2 { color:#a8742a; }
+  .inv .series, .inv .handle { color:#8a857b; }
+  .ck { list-style:none; margin:40px 0 0; padding:0; }
+  .ck li { display:flex; gap:24px; align-items:center; padding:14px 0; border-bottom:2px solid var(--line); font-size:36px; font-weight:500; }
+  .ck li span.b { width:44px; height:44px; flex:0 0 44px; border:3px solid var(--accent); border-radius:10px; }
+  .counter { display:inline-flex; align-items:baseline; gap:12px; margin-top:64px; border:3px solid var(--accent); border-radius:28px; padding:20px 40px; }
+  .counter .n { font-size:120px; font-weight:900; color:var(--accent); line-height:1; }
+  .counter .t { font-size:40px; color:var(--dim); font-weight:700; }
+  .howto { margin-top:36px; font-size:34px; line-height:1.6; color:#cfcac1; }
+  .howto b { color:var(--accent); }
+</style>
+<style>
+  .types { display:grid; gap:18px; margin-top:36px; }
+  .ty { border:2px solid var(--line); border-radius:28px; padding:30px 36px; background:#141416; }
+  .ty .h { display:flex; align-items:baseline; gap:20px; }
+  .ty .c { font-size:30px; color:var(--dim); font-weight:700; font-variant-numeric:tabular-nums; }
+  .ty .n { font-family:'Nanum Pen Script'; font-size:84px; line-height:1; }
+  .ty .d { font-size:34px; color:#d9d4cb; margin-top:10px; line-height:1.5; }
+  .ty.hi { border-color:var(--accent); }
+  .letter { background:#f4f1ea; color:#151515; border-radius:32px; padding:52px 56px; font-size:44px; line-height:1.7; font-weight:500; margin-top:40px; }
+  .letter b { color:#a8742a; }
+</style>
+<style>
+  /* legibility pass: min ~36px source (~13px on phone), thicker handwriting strokes */
+  .pen, .big-rule, .rule-t, .ty .n, .quote-big { -webkit-text-stroke: 1.4px currentColor; paint-order: stroke fill; }
+  .series, .handle { font-size:34px !important; }
+  .prog .lbl { font-size:36px !important; }
+  .who { font-size:38px !important; }
+  .small { font-size:38px !important; }
+  .ty .c { font-size:36px !important; }
+  .ty .d { font-size:38px !important; }
+  .howto { font-size:38px !important; }
+  .inv .accent2 { color:#8a5a12 !important; }
+  .inv .series, .inv .handle { color:#6b665d !important; }
+  .feel2 { color:#e6e1d8 !important; }
+</style>
+<style>
+  /* cover standard: bold gothic title + handwritten top line; slides 2+ stay handwritten */
+  #s1 .cover-c .pen { font-family:'Noto Sans KR',sans-serif !important; font-weight:900 !important; -webkit-text-stroke:0 !important; letter-spacing:-0.03em; line-height:1.18 !important; font-size:150px !important; }
+  #s1 .cover-c .small { font-family:'Nanum Pen Script',cursive !important; font-size:64px !important; color:#d6d1c8 !important; -webkit-text-stroke:1px currentColor; }
+</style>
+<style>
+  .phrase { font-family:'Nanum Pen Script'; font-size:116px; line-height:1.12; -webkit-text-stroke:1.4px currentColor; paint-order:stroke fill; margin-top:40px; }
+  .tr { margin-top:56px; border-top:2px solid var(--line); }
+  .tr .r { padding:30px 0; border-bottom:2px solid var(--line); }
+  .tr .k { font-size:34px; font-weight:900; letter-spacing:.06em; margin-bottom:10px; }
+  .tr .v { font-size:44px; line-height:1.5; font-weight:500; }
+  .tr .v.dim { color:#a29d94; }
+  .do { margin-top:44px; font-size:38px; line-height:1.6; color:#e6e1d8; }
+  .do b { color:var(--accent); }
+  .byline { margin-top:56px; font-size:36px; color:#cfcac1; }
+  .byline b { color:var(--accent); }
+  .next { margin-top:44px; border:3px solid var(--accent); border-radius:32px; padding:40px 48px; background:#17130c; }
+  .next .k { font-size:36px; font-weight:900; color:var(--accent); letter-spacing:.06em; }
+  .next .t { font-family:'Nanum Pen Script'; font-size:96px; line-height:1.12; margin-top:14px; -webkit-text-stroke:1.4px currentColor; paint-order:stroke fill; }
+  .fbtn { display:flex; gap:24px; margin-top:48px; }
+  .fbtn div { flex:1; text-align:center; padding:32px 0; border-radius:20px; font-size:38px; font-weight:900; }
+  .fbtn .f { background:var(--accent); color:#111; }
+  .fbtn .s { border:2px solid #555; color:var(--ink); }
+</style>
+<style>
+  .sig { font-family:'Nanum Pen Script'; font-size:110px; line-height:1.12; -webkit-text-stroke:1.4px currentColor; paint-order:stroke fill; margin-top:20px; }
+  .tr .v.see { font-size:42px; }
+</style>
+<style>
+  .teaser { margin-top:36px; font-size:36px; color:var(--accent); font-weight:700; }
+</style>
+</head>
+<body>
+<section class="slide" id="s1">
+  <div class="cover-c">
+    <div class="small">남자가 직접 알려드립니다</div>
+    <div class="pen mt-s" style="font-size:128px !important">헤어지고<br>남자가 <span class="accent">가장 늦게<br>지우는 것</span></div>
+    <div class="body mt-m" style="color:#d6d1c8">지우는 순서에 미련이 보여요</div>
+  </div>
+  <div class="handle">@mszexc</div>
+  <div class="series">넘겨보세요 →</div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="pen h2">사진부터 지울 것 같죠.<br><span class="accent">순서가 있어요.</span></div>
+  <div class="rule"></div>
+  <div class="body">먼저 지우는 것부터<br>가장 늦게 남는 것까지.</div>
+  <div class="body dim mt-m">그 사람은 지금<br>몇 번째까지 지웠을까요?</div>
+  <div class="byline">남자인 제가 직접 말합니다 · <b>박지훈</b></div>
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+<section class="slide" id="s3">
+  <div class="prog"><span class="lbl">1 / 6</span><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="who">지우는 순서 · 가장 먼저</div>
+  <div class="sig">프로필 사진</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 지워요</div><div class="v see">같이 찍은 프로필부터 바꿔요.<br>헤어진 그날 밤에도요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v">남들이 보는 곳이라서예요.<br>정리했다고 <b>보여주는 것</b>일 뿐이에요.</div></div>
+  </div>
+  
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+<section class="slide" id="s4">
+  <div class="prog"><span class="lbl">2 / 6</span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="who">지우는 순서 · 두 번째</div>
+  <div class="sig">사진첩</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 지워요</div><div class="v see">삭제가 아니라 <b>숨김</b>이에요.<br>보관함으로 옮겨만 둬요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v">지울 자신은 없고,<br>보이는 건 힘든 거예요.</div></div>
+  </div>
+  
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+<section class="slide" id="s5">
+  <div class="prog"><span class="lbl">3 / 6</span><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="who">지우는 순서 · 세 번째</div>
+  <div class="sig">카톡 대화방</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 지워요</div><div class="v see">방을 나가지 않아요.<br>알림만 꺼둬요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v">나가면 진짜 끝난 것 같아서<br>그 버튼을 못 눌러요.</div></div>
+  </div>
+  
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+<section class="slide" id="s6">
+  <div class="prog"><span class="lbl">4 / 6</span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></div>
+  <div class="who">지우는 순서 · 네 번째</div>
+  <div class="sig">인스타 팔로우</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 지워요</div><div class="v see">언팔은 제일 미뤄요.<br>눌렀다가도 다시 취소해요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v">끊으면 당신 소식을<br>영영 모르게 되니까요.</div></div>
+  </div>
+  <div class="teaser">→ 헤어진 남자가 스토리를 보는 이유는 11/2에</div>
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+<section class="slide" id="s7">
+  <div class="prog"><span class="lbl">5 / 6</span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></div>
+  <div class="who">지우는 순서 · 다섯 번째</div>
+  <div class="sig">연락처</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 지워요</div><div class="v see">이름만 바꾸거나 그대로 둬요.<br>차단은 거의 안 해요.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v">"혹시"가 남아 있어서예요.</div></div>
+  </div>
+  <div class="teaser">→ 차단 안 하는 진짜 이유는 10/29에</div>
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+<section class="slide" id="s8">
+  <div class="prog"><span class="lbl">6 / 6</span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+  <div class="who">지우는 순서 · 가장 늦게</div>
+  <div class="sig">당신이 남긴 습관</div>
+  <div class="tr">
+    <div class="r"><div class="k cold">이렇게 지워요</div><div class="v see">당신이 좋아하던 노래, 같이 가던 가게,<br>당신이 알려준 말투.</div></div>
+    <div class="r"><div class="k accent">남자 입장에서는</div><div class="v">이건 지운다고 지워지는 게 아니라서<br>몇 달 뒤 혼자 그 가게 앞을 지나가요.</div></div>
+  </div>
+  
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+<section class="slide inv" id="s9">
+  <div class="body dim2">빨리 지운 건<br>남들 보라고 지운 거예요.</div>
+  <div class="pen mt-m" style="font-size:112px;line-height:1.15">늦게 남은 게<br><span class="accent2">진짜 마음</span>이에요.</div>
+  <div class="rule" style="background:#d9d2c4"></div>
+  <div class="body">근데 미련이 있다고<br>돌아오는 건 아니에요.</div>
+  <div class="body dim2 mt-s">미련과 다시 시작할 용기는 달라요.<br>그건 그 사람이 정할 몫이에요.</div>
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+
+<section class="slide" id="s10" style="justify-content:flex-start; padding-top:110px">
+  <div class="pen h3">그 사람은<br><span class="accent">몇 번째까지</span> 지웠나요?</div>
+  <div class="types">
+    <div class="ty"><div class="h"><span class="c">1~2번째</span><span class="n">정리하는 척</span></div><div class="d">보이는 곳만 치웠어요. 마음은 그대로예요.</div></div>
+    <div class="ty"><div class="h"><span class="c">3~4번째</span><span class="n">정리하는 중</span></div><div class="d">버티는 중이에요. 흔들리기 쉬운 때예요.</div></div>
+    <div class="ty hi"><div class="h"><span class="c">5번째까지</span><span class="n" style="color:var(--accent)">거의 정리됨</span></div><div class="d">습관만 남았어요. 이제 당신 차례예요.</div></div>
+  </div>
+  <div class="howto">댓글로 <b>몇 번째</b>인지만 남겨주세요.<br>그 사람 프로필 몰래 본 친구에게 보내주세요.</div>
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+
+<section class="slide" id="s11">
+  <div class="body dim">이별 시리즈는 계속됩니다</div>
+  <div class="next" style="margin-top:36px;border:3px solid var(--accent);border-radius:32px;padding:40px 48px;background:#17130c">
+    <div style="font-size:36px;font-weight:900;color:var(--accent);letter-spacing:.06em">다음 편 · 금요일 밤 9시</div>
+    <div class="sig" style="font-size:96px">헤어지고 3개월,<br><span class="accent">남자 머릿속</span></div>
+  </div>
+  <div class="btns">
+    <div class="btn share">놓치지 않게 팔로우</div>
+    <div class="btn save">저장해두기</div>
+  </div>
+  <div class="sub" style="font-size:36px">남자가 하는 말의 뜻은 전자책 1·2권에<br><span class="accent">프로필 링크에서 무료로 받아보세요</span></div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #16</div>
+</section>
+</body></html>

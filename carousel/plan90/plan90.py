@@ -124,7 +124,7 @@ for d in range(DAYS):
         used.add(t); rows.append((day,slot,s,t,note))
 # seasonal leftovers check
 left = {k:[ (it if isinstance(it,str) else it[0]) for it in v[1] if (it if isinstance(it,str) else it[0]) not in used] for k,v in S.items()}
-DONE={'싸운 다음 날 남자가 하는 말들, 진짜 뜻','남자가 마음이 떠나면, 싸움보다 먼저 사라지는 것','여자가 "서운해"라고 할 때, 원하는 건 해결이 아닙니다','남자가 진심일 때만 하는 행동','헤어진 남자가 돌아오고 싶을 때 하는 말들','좋은 남자를 놓치는 법'}
+DONE={'싸운 다음 날 남자가 하는 말들, 진짜 뜻','남자가 마음이 떠나면, 싸움보다 먼저 사라지는 것','여자가 "서운해"라고 할 때, 원하는 건 해결이 아닙니다','남자가 진심일 때만 하는 행동','헤어진 남자가 돌아오고 싶을 때 하는 말들','좋은 남자를 놓치는 법','헤어지고 남자가 가장 늦게 지우는 것'}
 rows=[(a,b,c,t,('완성' if t in DONE else n)) for a,b,c,t,n in rows]
 json.dump({'rows':[(r[0].isoformat(),r[1],r[2],r[3],r[4]) for r in rows],'left':left,'series':{k:v[0] for k,v in S.items()}}, open('/home/user/-/carousel/plan90/plan90.json','w'), ensure_ascii=False, indent=0)
 from collections import Counter

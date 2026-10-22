@@ -24,7 +24,8 @@ while day<=dt.date(2027,1,13):
 import importlib.util
 by={x['date']:x for x in reels}
 by['2026-11-15'].update(title='남자의 말이 줄어들 때, 여자가 꼭 알아야 할 것',s='S7',link_no=None,link_date=None,link_t=None,done='3권 예약 마감(11/17) 홍보')
-by['2026-10-18']['done']='업로드 완료'; by['2026-10-20']['done']='대본 완성'
+by['2026-10-18']['done']='업로드 완료'; by['2026-10-20']['done']='대본 완성 · 10/22 업로드 (캐러셀 #19 다음에)'
+by['2026-10-22']['done']='건너뜀 · R2가 10/22로 밀림'
 spec=importlib.util.spec_from_file_location('h','/home/user/-/reels/her_reasons.py'); h=importlib.util.module_from_spec(spec); spec.loader.exec_module(h)
 for rank,title,hook,flip,date in h.HER:
     by[date].update(title=title,s='W',link_no=None,link_date=None,link_t=None,kind='W',hook=hook,flip=flip,rank=rank)

@@ -106,6 +106,6 @@ def block():
     <h2>바꿀 것<small>중요한 순서</small></h2><ol class="topics">{chg}</ol>
     <h2>소개글 예시</h2><div class="row"><button class="btn gold" data-ct="ins-bio">복사</button></div><pre id="ins-bio">{e(BIO)}</pre>
     <h2>새 목표</h2><div class="kg">{gl}</div>
-    <h2>목차 교체 제안<small>아직 목차에 반영하지 않았어요</small></h2><ol class="plan subplan">{sw}</ol>
+    <h2>목차 교체<small>10/22 반영 완료 · 순번과 날짜는 그대로</small></h2><ol class="plan subplan">{sw}</ol>
     </div></details>
 '''

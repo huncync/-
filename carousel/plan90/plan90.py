@@ -126,6 +126,30 @@ for d in range(DAYS):
 left = {k:[ (it if isinstance(it,str) else it[0]) for it in v[1] if (it if isinstance(it,str) else it[0]) not in used] for k,v in S.items()}
 DONE={'싸운 다음 날 남자가 하는 말들, 진짜 뜻','남자가 마음이 떠나면, 싸움보다 먼저 사라지는 것','여자가 "서운해"라고 할 때, 원하는 건 해결이 아닙니다','남자가 진심일 때만 하는 행동','헤어진 남자가 돌아오고 싶을 때 하는 말들','좋은 남자를 놓치는 법','헤어지고 남자가 가장 늦게 지우는 것','다시 좋아진 걸까, 정리하는 걸까','편해진 걸까, 식은 걸까','남자가 식을 때, 데이트보다 먼저 바뀌는 것','썸에서 남자가 하는 말, 진짜 뜻'}
 rows=[(a,b,c,t,('완성' if t in DONE else n)) for a,b,c,t,n in rows]
+# 10/22 인사이트 반영: 비교형·"식을 때" 과다 → 번역·이별·장기연애로 교체 (자리만 바꿔서 순번은 그대로)
+SWAP={('2026-10-24',0):('S2','남자가 "나중에 다 말해줄게"라고 할 때, 진짜 뜻'),
+ ('2026-10-25',0):('S5','남자가 붙잡지 않는 진짜 이유'),
+ ('2026-10-28',0):('S2','남자가 "너 없으면 안 돼"라고 할 때, 진짜 뜻'),
+ ('2026-10-30',0):('C','오래 만난 남자를 "가족"으로만 만드는 법'),
+ ('2026-10-30',1):('S5','헤어진 남자의 "좋아요" 하나의 뜻'),
+ ('2026-10-31',0):('H','남자가 하는 말, 진짜 뜻 총정리'),
+ ('2026-11-02',0):('S2','남자가 술 마시고 하는 말, 진짜 뜻'),
+ ('2026-11-04',0):('S2','남자가 "그 사람 그냥 친구야"라고 할 때, 진짜 뜻'),
+ ('2026-11-05',0):('S5','남자가 헤어지고 바로 괜찮아 보이는 이유'),
+ ('2026-11-08',0):('S2','권태기 남자가 하는 말, 진짜 뜻'),
+ ('2026-11-12',0):('S2','남자가 "나 원래 이래"라고 할 때, 진짜 뜻')}
+_rows=[]
+for a,b,c,tt,n in rows:
+    k=(a.isoformat(),b)
+    if k in SWAP:
+        ns,nt=SWAP[k]
+        left.setdefault(c,[]).append(tt)
+        for v in left.values():
+            if nt in v: v.remove(nt)
+        _rows.append((a,b,ns,nt,n))
+    else: _rows.append((a,b,c,tt,n))
+assert len([1 for a,b,c,tt,n in rows if (a.isoformat(),b) in SWAP])==len(SWAP)
+rows=_rows
 json.dump({'rows':[(r[0].isoformat(),r[1],r[2],r[3],r[4]) for r in rows],'left':left,'series':{k:v[0] for k,v in S.items()}}, open('/home/user/-/carousel/plan90/plan90.json','w'), ensure_ascii=False, indent=0)
 from collections import Counter
 print(len(rows), Counter(r[2] for r in rows)); print({k:len(v) for k,v in left.items() if v}); print(left)

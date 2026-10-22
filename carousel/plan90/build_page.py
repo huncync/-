@@ -68,21 +68,18 @@ parts.append('<h2>예비 소재<small>반응 좋은 시리즈가 나오면 바�
 md.append('## 예비 소재\n'+'\n'.join(f'- [{LAB[k][0]}] {t}' for k,t in spare)+'\n')
 c=Counter(r[2] for r in rows)
 legend=''.join(f'<span class="lg"><span class="sr" style="background:{LAB[k][1]}">{LAB[k][0]}</span>{e(d["series"][k])} · {c[k]}편</span>' for k in ORDER)
-head=f'''    <div class="tip"><b>목표 · 3개월 안에 캐러셀 조회 100만</b><br>
-      10월 지금까지 124,760회. 남은 87.5만 ÷ 180편 = <b>편당 평균 4,900회</b>면 누적 100만입니다.<br>
-      남자 해독형 평균이 2.8만이라 이 페이스면 누적 100만은 11월 안에 넘습니다. 그래서 진짜 목표는 <b>월간 100만</b> = 60편 × <b>편당 1.7만</b>.</div>
-    <div class="rules" style="margin-top:12px">
+from insights import block as ins_block
+head=ins_block()+f'''    <div class="rules" style="margin-top:12px">
       <div><b>11~12시</b> 저장형: 신호 · 진심 · 비교 · 반어(화·금) · 합본 &nbsp; <b>18~19시</b> 감정형: 번역 · 이별 · 그녀의 말 · 3권 · 사연</div>
       <div><b>반어(C형)</b> · #06 「버림받는 법」 1시간 반 만에 7,471회, 비팔로워 노출이 평소의 약 3배, 저장이 좋아요의 2배. 공유는 0이라 마지막 장 문구를 "생각난 사람 있으면 보내주세요"로 바꿉니다.</div>
       <div><b>릴스</b> · 팔로우 담당. 화·목·일 21시, 남자 해독형만. 핵심 3개만 말하고 "나머지는 ○요일 캐러셀에"로 2~3일 뒤 캐러셀 완전판을 예고합니다.</div>
       <div><b>고정 리듬</b> · 화·금 낮 = 반어, 일요일 밤 = 그녀의 말 번역, 수요일 밤 = 댓글 사연 답변(10/28~), 격주 토요일 낮 = 합본</div>
-      <div><b>점검</b> · 매주 일요일, 편당 평균 1만 이상이면 그대로. 5천 아래로 2주 연속이면 하루 1편으로 되돌리고 약한 시리즈를 뺍니다.</div>
-      <div><b>위험</b> · 하루 2편이면 팔로워 피드 노출이 나뉘어 편당 조회가 줄 수 있어요. 첫 2주는 "2편 합계 > 예전 1편"인지 꼭 확인.</div>
+      <div><b>점검</b> · 매주 일요일, 시리즈별 편당 조회를 보고 2주 연속 1만 아래인 시리즈는 덜어냅니다. 하루 2편은 10/22 기준 검증됨(2편 합계 > 예전 1편).</div>
     </div>
     <div class="legend">{legend}<span class="lg"><span class="sr" style="background:#ff5c8a;color:#fff">릴스</span>화·목 21시 · 캐러셀 예고</span><span class="lg"><span class="sr" style="background:#c86bff;color:#fff">릴스</span>일 21시 · 그녀의 진짜 이유</span></div>
     <div class="flt" role="group" aria-label="보기"><button class="btn gold" data-f="all">전체 <b>{180+len(R)}</b></button><button class="btn" data-f="cr">캐러셀 <b>180</b></button><button class="btn" data-f="rl">릴스 <b>{len(R)}</b></button></div>
 '''
-md.insert(1,'목표: 10월 124,760회 → 3개월 안에 100만. 누적 기준 편당 평균 4,900회, 월간 100만 기준 편당 1.7만.\n\n시리즈별 편수: '+', '.join(f'{d["series"][k]} {c[k]}' for k in ORDER)+'\n')
+md.insert(1,'목표(10/22 수정): 캐러셀 월 150만 · 팔로워 12/31까지 3만 · 프로필→링크 4% · 카카오채널 친구 11/10까지 1,000명.\n\n시리즈별 편수: '+', '.join(f'{d["series"][k]} {c[k]}' for k in ORDER)+'\n')
 open('plan90.md','w',encoding='utf-8').write('\n'.join(md))
 P=sys.argv[1]
 t=open(P,encoding='utf-8').read()

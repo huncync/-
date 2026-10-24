@@ -2,7 +2,7 @@ import json, datetime as dt
 d=json.load(open('plan90.json')); rows=d['rows']
 car=[]; n=7
 for r in rows: car.append(dict(date=dt.date.fromisoformat(r[0]),slot=r[1],s=r[2],t=r[3],note=r[4],no=n)); n+=1
-OK={'S1','S2','S3','S4','S5','S7'}
+OK={'S1','S2','S3','S4','S5','S7','M','D','E'}
 used=set(); reels=[]
 day=dt.date(2026,10,18); k=1
 while day<=dt.date(2027,1,13):

@@ -185,7 +185,7 @@ form.addEventListener("submit", async (e) => {
     consent_at: new Date().toISOString(), // 수신동의 증빙용
     phase,
     source: new URLSearchParams(location.search).get("utm_source") || document.referrer || "direct",
-    _subject: "[말이 줄어든 다음] 선주문 알림 신청",
+    _subject: "[3권 선주문] 선주문 알림 신청",
   };
 
   const original = submitBtn.textContent;
@@ -225,7 +225,7 @@ $("#extra-form").addEventListener("submit", async (e) => {
       story,
       share_ok: fd.get("share_ok") ? "소개 동의" : "소개 안 함",
       _replyto: submittedEmail,
-      _subject: "[말이 줄어든 다음] 사연",
+      _subject: "[3권 선주문] 사연",
     });
     e.target.hidden = true;
     $("#extra-thanks").hidden = false;
@@ -239,7 +239,7 @@ $("#extra-form").addEventListener("submit", async (e) => {
 // ── 공유 ──
 $("#share-btn").addEventListener("click", async () => {
   const url = location.origin + location.pathname;
-  const shareData = { title: "말이 줄어든 다음 — 남자들끼리 하는 말 3권", text: "2권은 거기서 멈췄고, 3권은 거기서 시작한대.", url };
+  const shareData = { title: "그의 무의식에 내 자리를 새기는 기술 — 남자들끼리 하는 말 3권", text: "2권은 거기서 멈췄고, 3권은 거기서 시작한대.", url };
   if (navigator.share) {
     try { await navigator.share(shareData); } catch { /* 취소 */ }
     return;

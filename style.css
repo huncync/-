@@ -178,7 +178,7 @@ p { margin: 0; }
 .book-bubbles { position: absolute; top: 64px; right: 20px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 .bubble { padding: 8px 14px; border-radius: 16px 16px 4px 16px; font-size: 13px; background: rgba(255, 255, 255, .1); }
 .bubble.b2 { border-radius: 16px 16px 16px 4px; background: rgba(217, 168, 91, .9); color: #1a1408; font-weight: 600; margin-right: 26px; }
-.book-title { font-family: var(--serif); font-weight: 900; font-size: 36px; line-height: 1.25; }
+.book-title { font-family: var(--serif); font-weight: 900; font-size: 30px; line-height: 1.28; }
 .book-sub { margin-top: 12px; font-size: 13px; color: var(--gold); }
 @keyframes float {
   0%, 100% { transform: rotateY(-36deg) rotateX(6deg) translateY(0); }
@@ -448,7 +448,7 @@ details.toc-part[open] > summary::after { transform: rotate(45deg); }
   .book-cover::before { left: 5px; width: 4px; }
   .book-label { top: 10px; left: 16px; font-size: 7px; letter-spacing: .2em; }
   .book-bubbles { display: none; }
-  .book-title { font-size: 17px; }
+  .book-title { font-size: 14px; }
   .book-sub { margin-top: 6px; font-size: 8px; }
   .hero h1 { font-size: 36px; }
   .eyebrow { font-size: 13px; margin-bottom: 8px; }

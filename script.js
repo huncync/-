@@ -239,7 +239,7 @@ $("#extra-form").addEventListener("submit", async (e) => {
 // ── 공유 ──
 $("#share-btn").addEventListener("click", async () => {
   const url = location.origin + location.pathname;
-  const shareData = { title: "그의 무의식에 내 자리를 새기는 기술 — 남자들끼리 하는 말 3권", text: "2권은 거기서 멈췄고, 3권은 거기서 시작한대.", url };
+  const shareData = { title: "그의 무의식에 내 자리를 새기는 기술 — 남자들끼리 하는 말 3권", text: "그가 돌아올지는 그가 정해도, 그의 기억에 내가 어떤 사람으로 남을지는 내가 고를 수 있대.", url };
   if (navigator.share) {
     try { await navigator.share(shareData); } catch { /* 취소 */ }
     return;

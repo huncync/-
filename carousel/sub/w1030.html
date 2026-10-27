@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=block">
+<style>
+  :root { --bg:#0b0b0c; --ink:#f4f1ea; --dim:#8e8a83; --accent:#e0b46a; --cold:#7fa7c9; --line:#2a2a2d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { word-break:keep-all; background:#222; font-family:'Noto Sans KR', sans-serif; color:var(--ink); }
+  .slide { width:1080px; height:1350px; background:var(--bg); position:relative; overflow:hidden;
+           padding:120px 96px; display:flex; flex-direction:column; justify-content:center; margin-bottom:20px; }
+  .pen { font-family:'Nanum Pen Script', cursive; font-weight:400; line-height:1.15; }
+  .h1 { font-size:150px; }
+  .h2 { font-size:112px; }
+  .h3 { font-size:86px; }
+  .body { font-size:46px; line-height:1.65; font-weight:500; }
+  .small { font-size:34px; color:var(--dim); line-height:1.6; }
+  .dim { color:var(--dim); }
+  .accent { color:var(--accent); }
+  .cold { color:var(--cold); }
+  .series { position:absolute; right:96px; bottom:72px; font-size:28px; color:var(--dim); letter-spacing:.04em; }
+  .handle { position:absolute; left:96px; bottom:72px; font-size:28px; color:var(--dim); }
+  .num { position:absolute; left:96px; top:80px; font-size:30px; color:var(--dim); letter-spacing:.08em; }
+  .swipe { position:absolute; right:96px; top:80px; font-size:30px; color:var(--dim); }
+  .mt-s { margin-top:28px; } .mt-m { margin-top:56px; } .mt-l { margin-top:96px; }
+  .rule { height:2px; background:var(--line); margin:56px 0; }
+  /* cover */
+  .photo { position:absolute; inset:0; background:
+           radial-gradient(ellipse at 50% 38%, #3a3a3e 0%, #161617 55%, #0b0b0c 80%); }
+  .photo-note { position:absolute; top:330px; left:0; right:0; text-align:center; font-size:30px; color:#55555a;
+                border:3px dashed #3a3a3e; margin:0 220px; padding:150px 0; border-radius:24px; }
+  .cover-text { position:absolute; left:96px; right:96px; bottom:200px; }
+  .shade { position:absolute; left:0; right:0; bottom:0; height:700px; background:linear-gradient(transparent, rgba(0,0,0,.92) 45%); }
+  /* compare */
+  .topic { font-size:40px; font-weight:700; color:var(--dim); letter-spacing:.06em; }
+  .row { display:flex; flex-direction:column; gap:36px; margin-top:64px; }
+  .card { border-radius:28px; padding:44px 52px; }
+  .card.cold { background:#111a22; border:2px solid #24384a; }
+  .card.warm { background:#1d1710; border:2px solid #4a3a20; }
+  .tag { font-size:32px; font-weight:900; margin-bottom:16px; }
+  .card .pen { font-size:80px; margin-bottom:20px; color:var(--ink); }
+  .card p { font-size:36px; line-height:1.6; color:#cfcac1; }
+  .key { margin-top:64px; font-size:40px; line-height:1.6; font-weight:700; }
+  /* share slide */
+  .msg { background:#1c1c1f; border-radius:36px; padding:52px 56px; font-size:46px; line-height:1.6; position:relative; }
+  .msg:after { content:''; position:absolute; left:60px; bottom:-26px; border:16px solid transparent; border-top:20px solid #1c1c1f; }
+  .btns { display:flex; gap:24px; margin-top:72px; }
+  .btn { flex:1; text-align:center; padding:34px 0; border-radius:20px; font-size:36px; font-weight:700; }
+  .btn.share { background:var(--accent); color:#111; }
+  .btn.save { border:2px solid #444; color:var(--ink); }
+  .sub { margin-top:60px; font-size:32px; color:var(--dim); line-height:1.6; }
+</style>
+<style>
+  .phrase { font-family:'Nanum Pen Script'; font-size:150px; line-height:1.1; }
+  .tr { margin-top:64px; border-top:2px solid var(--line); }
+  .tr .r { padding:34px 0; border-bottom:2px solid var(--line); }
+  .tr .k { font-size:30px; font-weight:900; letter-spacing:.06em; margin-bottom:12px; }
+  .tr .v { font-size:42px; line-height:1.55; font-weight:500; }
+  .do { margin-top:48px; font-size:36px; line-height:1.6; color:#cfcac1; }
+  .do b { color:var(--accent); }
+</style>
+<style>
+  .xl { list-style:none; margin:56px 0 0; padding:0; }
+  .xl li { padding:30px 0; border-bottom:2px solid var(--line); }
+  .xl .q { font-family:'Nanum Pen Script'; font-size:92px; line-height:1.1; }
+  .xl .q b { color:#d88; font-family:'Noto Sans KR'; font-weight:900; font-size:48px; margin-right:18px; vertical-align:middle; }
+  .xl .w { font-size:34px; color:var(--dim); margin-top:8px; }
+  .mean { font-size:30px; font-weight:900; color:var(--accent); letter-spacing:.08em; }
+  .cover-c { position:absolute; left:96px; right:96px; top:50%; transform:translateY(-55%); }
+  .quote-big { font-family:'Nanum Pen Script'; font-size:120px; line-height:1.12; }
+</style>
+<style>
+  .prog { position:absolute; left:96px; right:96px; top:80px; display:flex; align-items:center; gap:14px; }
+  .prog .lbl { font-size:30px; color:var(--dim); font-weight:700; letter-spacing:.06em; margin-right:8px; font-variant-numeric:tabular-nums; }
+  .prog i { flex:1; height:6px; border-radius:3px; background:#2a2a2d; }
+  .prog i.on { background:var(--accent); }
+  .big-rule { font-family:'Nanum Pen Script'; font-size:118px; line-height:1.12; }
+  .feel2 { margin-top:72px; font-size:46px; line-height:1.6; font-weight:500; color:#d9d4cb; }
+  .feel2 b { color:var(--accent); font-weight:700; }
+  .who { font-size:32px; font-weight:900; color:var(--accent); letter-spacing:.06em; margin-bottom:16px; }
+  .inv { background:#f2ede3 !important; color:#151515; }
+  .inv .dim2 { color:#6b665d; }
+  .inv .accent2 { color:#a8742a; }
+  .inv .series, .inv .handle { color:#8a857b; }
+  .ck { list-style:none; margin:40px 0 0; padding:0; }
+  .ck li { display:flex; gap:24px; align-items:center; padding:14px 0; border-bottom:2px solid var(--line); font-size:36px; font-weight:500; }
+  .ck li span.b { width:44px; height:44px; flex:0 0 44px; border:3px solid var(--accent); border-radius:10px; }
+  .counter { display:inline-flex; align-items:baseline; gap:12px; margin-top:64px; border:3px solid var(--accent); border-radius:28px; padding:20px 40px; }
+  .counter .n { font-size:120px; font-weight:900; color:var(--accent); line-height:1; }
+  .counter .t { font-size:40px; color:var(--dim); font-weight:700; }
+  .howto { margin-top:36px; font-size:34px; line-height:1.6; color:#cfcac1; }
+  .howto b { color:var(--accent); }
+</style>
+<style>
+  .types { display:grid; gap:18px; margin-top:36px; }
+  .ty { border:2px solid var(--line); border-radius:28px; padding:30px 36px; background:#141416; }
+  .ty .h { display:flex; align-items:baseline; gap:20px; }
+  .ty .c { font-size:30px; color:var(--dim); font-weight:700; font-variant-numeric:tabular-nums; }
+  .ty .n { font-family:'Nanum Pen Script'; font-size:84px; line-height:1; }
+  .ty .d { font-size:34px; color:#d9d4cb; margin-top:10px; line-height:1.5; }
+  .ty.hi { border-color:var(--accent); }
+  .letter { background:#f4f1ea; color:#151515; border-radius:32px; padding:52px 56px; font-size:44px; line-height:1.7; font-weight:500; margin-top:40px; }
+  .letter b { color:#a8742a; }
+</style>
+<style>
+  /* legibility pass: min ~36px source (~13px on phone), thicker handwriting strokes */
+  .pen, .big-rule, .rule-t, .ty .n, .quote-big { -webkit-text-stroke: 1.4px currentColor; paint-order: stroke fill; }
+  .series, .handle { font-size:34px !important; }
+  .prog .lbl { font-size:36px !important; }
+  .who { font-size:38px !important; }
+  .small { font-size:38px !important; }
+  .ty .c { font-size:36px !important; }
+  .ty .d { font-size:38px !important; }
+  .howto { font-size:38px !important; }
+  .inv .accent2 { color:#8a5a12 !important; }
+  .inv .series, .inv .handle { color:#6b665d !important; }
+  .feel2 { color:#e6e1d8 !important; }
+</style>
+<style>
+  /* cover standard: bold gothic title + handwritten top line; slides 2+ stay handwritten */
+  #s1 .cover-c .pen { font-family:'Noto Sans KR',sans-serif !important; font-weight:900 !important; -webkit-text-stroke:0 !important; letter-spacing:-0.03em; line-height:1.18 !important; font-size:150px !important; }
+  #s1 .cover-c .small { font-family:'Nanum Pen Script',cursive !important; font-size:64px !important; color:#d6d1c8 !important; -webkit-text-stroke:1px currentColor; }
+</style>
+<style>
+  .phrase { font-family:'Nanum Pen Script'; font-size:116px; line-height:1.12; -webkit-text-stroke:1.4px currentColor; paint-order:stroke fill; margin-top:40px; }
+  .tr { margin-top:56px; border-top:2px solid var(--line); }
+  .tr .r { padding:30px 0; border-bottom:2px solid var(--line); }
+  .tr .k { font-size:34px; font-weight:900; letter-spacing:.06em; margin-bottom:10px; }
+  .tr .v { font-size:44px; line-height:1.5; font-weight:500; }
+  .tr .v.dim { color:#a29d94; }
+  .do { margin-top:44px; font-size:38px; line-height:1.6; color:#e6e1d8; }
+  .do b { color:var(--accent); }
+  .byline { margin-top:56px; font-size:36px; color:#cfcac1; }
+  .byline b { color:var(--accent); }
+  .next { margin-top:44px; border:3px solid var(--accent); border-radius:32px; padding:40px 48px; background:#17130c; }
+  .next .k { font-size:36px; font-weight:900; color:var(--accent); letter-spacing:.06em; }
+  .next .t { font-family:'Nanum Pen Script'; font-size:96px; line-height:1.12; margin-top:14px; -webkit-text-stroke:1.4px currentColor; paint-order:stroke fill; }
+  .fbtn { display:flex; gap:24px; margin-top:48px; }
+  .fbtn div { flex:1; text-align:center; padding:32px 0; border-radius:20px; font-size:38px; font-weight:900; }
+  .fbtn .f { background:var(--accent); color:#111; }
+  .fbtn .s { border:2px solid #555; color:var(--ink); }
+</style>
+<style>
+  .sig { font-family:'Nanum Pen Script'; font-size:110px; line-height:1.12; -webkit-text-stroke:1.4px currentColor; paint-order:stroke fill; margin-top:20px; }
+  .tr .v.see { font-size:42px; }
+</style>
+<style>
+  .subbadge { position:absolute; right:96px; top:80px; font-size:30px; font-weight:900; color:#111; background:var(--accent); border-radius:999px; padding:8px 22px; letter-spacing:.04em; }
+  .sec { font-size:38px; font-weight:900; color:var(--accent); letter-spacing:.06em; margin-bottom:12px; }
+  .ent { padding:30px 0; border-bottom:2px solid var(--line); }
+  .ent .ph { font-family:'Nanum Pen Script'; font-size:70px; line-height:1.12; -webkit-text-stroke:1.2px currentColor; paint-order:stroke fill; }
+  .ent .mn { font-size:38px; line-height:1.5; color:#d9d4cb; margin-top:8px; }
+  .ent .no { font-size:32px; font-weight:900; color:var(--dim); margin-right:14px; font-family:'Noto Sans KR'; -webkit-text-stroke:0; }
+  .sit { font-size:44px; font-weight:900; color:#8fb3d6; margin-top:20px; }
+  .msgcard { background:#f4f1ea; color:#151515; border-radius:32px; padding:44px 48px; margin-top:28px; font-family:'Nanum Pen Script'; font-size:92px; line-height:1.2; -webkit-text-stroke:1.2px currentColor; paint-order:stroke fill; }
+  .why { margin-top:48px; font-size:44px; line-height:1.55; color:#e6e1d8; } .why b { color:var(--accent); }
+  .avoid { margin-top:36px; font-size:42px; color:#c98d8d; } .avoid s { color:#9a958c; }
+  .series { font-size:34px !important; }
+</style>
+<style>
+  .card-h { font-family:'Nanum Pen Script'; font-size:88px; line-height:1.1; -webkit-text-stroke:1.4px currentColor; paint-order:stroke fill; }
+  .card-s { font-size:36px; color:var(--dim); margin-top:10px; }
+  .ents { margin-top:36px; border-top:2px solid var(--line); }
+  .ent { padding:20px 0; }
+  .ent .ph { font-size:62px; }
+  .ent .mn { font-size:36px; margin-top:4px; }
+  .ent .no { font-size:30px; }
+</style>
+</head><body><section class="slide" id="s1"><div class="subbadge">구독자 전용</div>
+  <div class="cover-c"><div class="small">이번 주 총정리 · 10/22~10/28</div>
+  <div class="pen mt-s" style="font-size:140px !important">14편을<br><span class="accent">3장에</span></div>
+  <div class="body mt-m" style="color:#d6d1c8">신호 · 번역 · 싸움과 이별<br>저장해두고 헷갈릴 때 꺼내 보세요</div></div><div class="handle">@mszexc</div><div class="series">남자들끼리 하는 말 · 구독자 전용</div></section>
+<section class="slide" style="justify-content:flex-start;padding-top:150px"><div class="prog"><span class="lbl">1 / 3</span><i class="on"></i><i class=""></i><i class=""></i></div>
+  <div class="card-h">신호 · <span class="accent">식을 때와 진심일 때</span></div><div class="card-s">행동이 말보다 먼저 바뀌어요</div><div class="ents"><div class="ent"><div class="ph"><span class="no">#19</span>"너 가고 싶은 데"</div><div class="mn">장소는 안 정하고, 끝나는 시간부터 말해요.</div></div><div class="ent"><div class="ph"><span class="no">#24</span>뒤돌아보지 않아요</div><div class="mn">스킨십보다 눈 맞춤 · 앉는 자리가 먼저 멀어져요.</div></div><div class="ent"><div class="ph"><span class="no">#21</span>연락이 숙제가 되면</div><div class="mn">남자는 한 번에 끊지 않고, 조금씩 미뤄요.</div></div><div class="ent"><div class="ph"><span class="no">#29</span>말이 줄어드는 건</div><div class="mn">할 말이 없어서가 아니라, 말해봤자라서예요.</div></div><div class="ent"><div class="ph"><span class="no">#27</span>귀찮은 걸 감수해요</div><div class="mn">진심은 연락보다 귀찮은 쪽에서 먼저 보여요.</div></div></div><div class="handle">@mszexc</div><div class="series">이번 주 총정리 · 구독자 전용</div></section>
+<section class="slide" style="justify-content:flex-start;padding-top:150px"><div class="prog"><span class="lbl">2 / 3</span><i class="on"></i><i class="on"></i><i class=""></i></div>
+  <div class="card-h">번역 · <span class="accent">그가 한 말</span></div><div class="card-s">같은 말도 상황마다 뜻이 달라요</div><div class="ents"><div class="ent"><div class="ph"><span class="no">#20</span>"다음엔 내가 살게"</div><div class="mn">썸에서 진짜 신호예요. 다음을 만들고 싶은 거예요.</div></div><div class="ent"><div class="ph"><span class="no">#23</span>"나중에 다 말해줄게"</div><div class="mn">안 오는 "나중"이 세 번 쌓이면, 그게 대답이에요.</div></div><div class="ent"><div class="ph"><span class="no">#28</span>"때가 되면 하겠지"</div><div class="mn">지금은 결혼 생각이 없다는 뜻이에요.</div></div><div class="ent"><div class="ph"><span class="no">#30</span>"너 나 못 믿어?"</div><div class="mn">질문을 당신의 문제로 바꾸는 말이에요.</div></div><div class="ent"><div class="ph"><span class="no">#31</span>"너 없으면 안 돼"</div><div class="mn">당신의 시간을 지켜주면 사랑, 막으면 불안이에요.</div></div></div><div class="handle">@mszexc</div><div class="series">이번 주 총정리 · 구독자 전용</div></section>
+<section class="slide" style="justify-content:flex-start;padding-top:150px"><div class="prog"><span class="lbl">3 / 3</span><i class="on"></i><i class="on"></i><i class="on"></i></div>
+  <div class="card-h">싸움 · <span class="accent">이별</span></div><div class="card-s">이 밤과 이 시기에 그의 머릿속</div><div class="ents"><div class="ent"><div class="ph"><span class="no">#32</span>연락 끊긴 첫날 밤</div><div class="mn">그도 못 자요. 문장이 정리될 때까지 안 보낼 뿐.</div></div><div class="ent"><div class="ph"><span class="no">#26</span>여자의 "알아서 해"</div><div class="mn">허락이 아니라 "나를 얼마나 알아?"라는 질문이에요.</div></div><div class="ent"><div class="ph"><span class="no">#25</span>"그동안 고마웠어"</div><div class="mn">안 잡는 남자 중, 이미 정리가 끝난 사람의 말이에요.</div></div><div class="ent"><div class="ph"><span class="no">#22</span>헤어지고 3개월</div><div class="mn">당신이 괜찮아질 때쯤, 그가 흔들려요.</div></div></div><div class="handle">@mszexc</div><div class="series">이번 주 총정리 · 구독자 전용</div></section>
+<section class="slide"><div class="subbadge">구독자 전용</div>
+  <div class="small">이번 주, 하나만 기억한다면</div>
+  <div class="pen h2 mt-s">한 번은 기분,<br><span class="accent">반복되면 대답</span>이에요.</div>
+  <div class="body mt-m">한 번 들은 말로 단정하지 마세요.<br>같은 말, 같은 행동이 쌓이는지 보세요.<br>쌓이고 있다면 그때 대화를 꺼내세요.</div>
+  <div class="byline">월요일에 다음 캐러셀을 먼저 보여드릴게요 · <b>박지훈</b></div><div class="handle">@mszexc</div><div class="series">남자들끼리 하는 말 · 구독자 전용</div></section></body></html>

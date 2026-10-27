@@ -4,7 +4,7 @@ e=html.escape
 d=json.load(open('plan90.json'))
 rows=d['rows']
 LAB={'S1':('신호','#e0b46a'),'S2':('번역','#8fb3d6'),'S3':('비교','#d9a3a3'),'S4':('진심','#b9d38f'),'S5':('이별','#b8a3d9'),'C':('반어','#7fd1c7'),'S6':('그녀','#bdbdbd'),'S7':('3권','#f0d264'),'H':('합본','#f2a65a'),'Q':('사연','#ffffff'),'M':('머릿속','#d4e157'),'D':('위험','#e07a7a'),'E':('결혼','#f5b0cb')}
-ORDER=['S1','S2','S3','C','S4','S5','M','D','E','S6','S7','H','Q']
+ORDER=['S1','S2','S3','C','S4','S5','M','D','E','S6','S7','H']
 DOW='월화수목금토일'
 PH=[('1단계 · 공식 굳히기','10/16 ~ 11/4','검증된 시리즈를 매일 2편. 첫 2주에 하루 2편이 편당 조회를 깎는지 확인',dt.date(2026,10,16),dt.date(2026,11,4)),
     ('2단계 · 3권 예고와 예약','11/5 ~ 11/17','저녁(18~19시)은 3권 주제로. 11/11~17 마지막 장 = 예약 29,000원',dt.date(2026,11,5),dt.date(2026,11,17)),
@@ -63,17 +63,17 @@ for name,rng,desc,a,b in PH:
         parts.append(f'<li{wk}><span class="d">{day.month}/{day.day}<i>{DOW[day.weekday()]}</i></span><div>{lines}</div></li>')
         day+=dt.timedelta(1)
     parts.append('</ol>'); md.append('')
-spare=[(k,t) for k,v in d['left'].items() for t in v]
+spare=[(k,t) for k,v in d['left'].items() if k!='Q' for t in v]  # Q(댓글 사연)는 10/27부터 안 올림
 parts.append('<h2>예비 소재<small>반응 좋은 시리즈가 나오면 바로 교체 투입</small></h2><ol class="topics">'+''.join(f'<li><span class="n"><span class="sr" style="background:{LAB[k][1]}">{LAB[k][0]}</span></span><span class="t">{e(t)}</span><span></span></li>' for k,t in spare)+'</ol>')
 md.append('## 예비 소재\n'+'\n'.join(f'- [{LAB[k][0]}] {t}' for k,t in spare)+'\n')
 c=Counter(r[2] for r in rows)
 legend=''.join(f'<span class="lg"><span class="sr" style="background:{LAB[k][1]}">{LAB[k][0]}</span>{e(d["series"][k])} · {c[k]}편</span>' for k in ORDER)
 from insights import block as ins_block
 head=ins_block()+f'''    <div class="rules" style="margin-top:12px">
-      <div><b>11~12시</b> 저장형: 신호 · 진심 · 반어(화·금) · 위험한 남자 · 오래 만난 연애 · 합본 &nbsp; <b>18~19시</b> 감정형: 번역 · 이별 · 머릿속 · 그녀의 말 · 3권 · 사연 &nbsp; <b>비교형은 11/13부터 0편</b></div>
+      <div><b>11~12시</b> 저장형: 신호 · 진심 · 반어(화·금) · 위험한 남자 · 오래 만난 연애 · 합본 &nbsp; <b>18~19시</b> 감정형: 번역 · 이별 · 머릿속 · 그녀의 말 · 3권 &nbsp; <b>비교형은 11/13부터 0편</b></div>
       <div><b>반어(C형)</b> · #06 「버림받는 법」 1시간 반 만에 7,471회, 비팔로워 노출이 평소의 약 3배, 저장이 좋아요의 2배. 공유는 0이라 마지막 장 문구를 "생각난 사람 있으면 보내주세요"로 바꿉니다.</div>
       <div><b>릴스</b> · 팔로우 담당. <b>주 2편(목 · 일 21시)</b>. 목요일과 격주 일요일은 남자 해독(팔로우형), 나머지 일요일은 그녀의 진짜 이유. 캐러셀 예고는 하지 않아요.</div>
-      <div><b>고정 리듬</b> · 화·금 낮 = 반어, 일요일 밤 = 그녀의 말 번역, 수요일 밤 = 댓글 사연 답변(10/28~), 격주 토요일 낮 = 합본</div>
+      <div><b>고정 리듬</b> · 화·금 낮 = 반어, 일요일 밤 = 그녀의 말 번역, 격주 토요일 낮 = 합본. 댓글 사연 답변은 올리지 않기로 해서(10/27) 수요일 밤도 일반 캐러셀이에요.</div>
       <div><b>점검</b> · 매주 일요일, 시리즈별 편당 조회를 보고 2주 연속 1만 아래인 시리즈는 덜어냅니다. 하루 2편은 10/22 기준 검증됨(2편 합계 > 예전 1편).</div>
     </div>
     <div class="legend">{legend}<span class="lg"><span class="sr" style="background:#ff5c8a;color:#fff">릴스</span>목 · 격주 일 21시 · 팔로우형</span><span class="lg"><span class="sr" style="background:#c86bff;color:#fff">릴스</span>격주 일 21시 · 그녀의 진짜 이유</span></div>

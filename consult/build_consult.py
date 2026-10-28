@@ -4,7 +4,7 @@ e = html.escape
 D = os.path.dirname(os.path.abspath(__file__))
 def load(n):
     s = importlib.util.spec_from_file_location(n, os.path.join(D, n + '.py')); m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
-M, DM = load('menu'), load('dm')
+M, DM, K = load('menu'), load('dm'), load('kakao')
 
 md = ['# 남자 심리 분석 · 상품 메뉴', '']
 for c, n, p, who, items, cap in M.MAIN:
@@ -43,6 +43,19 @@ dm_html = f'''    <h2>DM → 유료 상담 전환<small>DM에서는 상담하지
     <div class="note">{note}</div>
 '''
 
+st = ''.join(f'<div class="ik"><small>{e(a)}</small><b>{e(b)}</b><span>{e(c)}</span></div>' for a, b, c in K.STATUS)
+def kcopy(cid, lab, body):
+    return f'<details class="cap"><summary>{e(lab)}</summary><div class="row" style="padding:0 14px"><button class="btn gold" data-ct="{cid}">복사</button></div><pre id="{cid}">{e(body)}</pre></details>'
+steps = ''.join(f'<li><span class="n">{n}</span><span class="t"><b>{e(ti)}</b> <span class="dim">· {e(wh)}</span><br>{desc}{"".join(kcopy(*c) for c in cps)}</span><span></span></li>' for n, ti, wh, desc, cps in K.STEPS)
+kakao_html = f'''    <h2>카카오채널 세팅<small>「{e(K.NAME)}」 · 10/28 캡처 기준 · 순서대로</small></h2>
+    <style>.kks .ik {{ background:#141416; border:1px solid #2a2a2d; border-radius:12px; padding:10px 12px; }} .kks .ik small {{ display:block; font-size:12px; opacity:.7; }} .kks .ik b {{ display:block; font-size:18px; margin:2px 0; }} .kks .ik span {{ font-size:12px; opacity:.75; }} .kks .kg {{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }} .kk ol.topics li .t details {{ margin-top:8px; }}</style>
+    <div class="kks"><div class="kg">{st}</div>
+    <div class="tip" style="margin-top:10px">{K.VERDICT}</div>
+    <ol class="topics">{steps}</ol>
+    <div class="note"><div><b>링크 넣는 곳:</b> {e(K.WHERE)}</div></div></div>
+'''
+dm_html = kakao_html + dm_html
+
 def swap(t, start, end, new):
     a = t.index(start); b = t.index(end, a); return t[:a] + new + t[b:]
 def pre(t, pid, body):
@@ -53,7 +66,7 @@ t = open(P, encoding='utf-8').read()
 c0 = t.index('id="p-consult"')
 head, t2 = t[:c0], t[c0:]
 t2 = swap(t2, '    <h2>상품 메뉴</h2>', '    <h2>카카오채널 이미지', menu_html)
-t2 = swap(t2, '    <h2>DM → 유료 상담 전환', '    <h2>복사해서 쓰기</h2>', dm_html)
+t2 = swap(t2, '    <h2>카카오채널 세팅' if '    <h2>카카오채널 세팅' in t2 else '    <h2>DM → 유료 상담 전환', '    <h2>복사해서 쓰기</h2>', dm_html)
 for pid, body in (('cs-guide', M.GUIDE), ('cs-form', M.FORM), ('cs-report', M.REPORT)):
     t2 = pre(t2, pid, body)
 open(P, 'w', encoding='utf-8').write(head + t2)

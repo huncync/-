@@ -43,6 +43,15 @@ dm_html = f'''    <h2>DM → 유료 상담 전환<small>DM에서는 상담하지
     <div class="note">{note}</div>
 '''
 
+# 채널용 안내문: 카카오 소개 메시지에서 "상담"이 금칙어라 채널에 올리는 판은 "상담"을 뺀다
+GUIDE_CH = (M.GUIDE.replace('전문 심리상담이 아닙니다', '의료 · 치료 목적의 서비스가 아닙니다')
+            .replace('상담 자리가 열리기', '분석 자리가 열리기').replace('상담', '분석'))
+assert '상담' not in GUIDE_CH
+for i, s in enumerate(K.STEPS):
+    if s[0] == '5' and not any(c[0] == 'kk-guide-ch' for c in s[4]):
+        K.STEPS[i] = s[:4] + ([('kk-guide-ch', '소식 ① 채널용 안내문 ("상담" 뺀 판)', GUIDE_CH)] + s[4],)
+    if s[0] == '2' and len(s[4]) == 1:
+        K.STEPS[i] = s[:4] + (s[4] + [(f'kk-intro{j}', f'소개 메시지 다른 안 {j}', x) for j, x in enumerate(K.INTRO_ALT, 1)],)
 st = ''.join(f'<div class="ik"><small>{e(a)}</small><b>{e(b)}</b><span>{e(c)}</span></div>' for a, b, c in K.STATUS)
 def kcopy(cid, lab, body):
     return f'<details class="cap"><summary>{e(lab)}</summary><div class="row" style="padding:0 14px"><button class="btn gold" data-ct="{cid}">복사</button></div><pre id="{cid}">{e(body)}</pre></details>'

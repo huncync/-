@@ -124,5 +124,5 @@ PIN36 = '그 사람은 어떤 사진에 눌렀어요? 댓글로 남겨주세요 
 DATA = {'34': (C34, CAP34, PIN34), '35': (C35, CAP35, PIN35), '36': (C36, CAP36, PIN36)}
 if __name__ == '__main__':
     for k, (s, _, _) in DATA.items():
-        open(f'c{k}.html', 'w', encoding='utf-8').write(build(s))
+        open(f'c{k}.html', 'w', encoding='utf-8').write(build(s, no=k))
     print('ok', {k: len(v[0]) for k, v in DATA.items()})

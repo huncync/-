@@ -25,15 +25,20 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
   .bx.G { background:#f0c674; color:#151515; font-size:76px; font-weight:900; letter-spacing:-0.03em; line-height:1.25; }
   .num { position:absolute; right:40px; top:40px; font-size:28px; color:#fff; background:rgba(0,0,0,.45); border-radius:999px; padding:6px 18px; }
   .hd { position:absolute; left:40px; bottom:36px; font-size:28px; color:rgba(255,255,255,.75); text-shadow:0 1px 6px rgba(0,0,0,.6); }
+  .ser { position:absolute; right:40px; bottom:36px; font-size:30px; color:rgba(255,255,255,.8); letter-spacing:.03em; text-shadow:0 1px 6px rgba(0,0,0,.6); }
+  .phd { position:absolute; left:0; right:0; bottom:130px; text-align:center; font-size:34px; color:#8a8378; }
+  .phd b { display:block; font-size:30px; color:#6d675e; letter-spacing:.1em; margin-bottom:8px; }
   .shade { position:absolute; left:0; right:0; bottom:0; height:60%; background:linear-gradient(transparent, rgba(0,0,0,.55)); }
 </style></head><body>
 '''
 
-def build(slides):
+def build(slides, no=None):
     out = CSS; n = len(slides)
     for i, (bg, desc, boxes) in enumerate(slides, 1):
         if isinstance(bg, dict):  # {'src':..., 'style':...} 사진 확대 · 위치
             b = f'<img class="bg" src="{e(bg["src"])}" style="{bg["style"]}"><div class="shade"></div>'
+        elif bg is None:  # 사진 자리 (설명 표시)
+            b = f'<div class="tint" style="background:linear-gradient(160deg,#3a3631,#191816 70%)"></div><div class="phd"><b>사진 자리</b>{e(desc)}</div>'
         elif bg in TINT:
             a, c = TINT[bg]; b = f'<div class="tint" style="background:linear-gradient(165deg,{a},{c} 75%)"></div>'
         else:
@@ -42,7 +47,8 @@ def build(slides):
         for kind, text, top, left in boxes:
             pos = f'top:{top}%;' + ('right:6%;' if left == 'r' else f'left:{left}%;')
             bx += f'<div class="bx {kind}" style="{pos}">{e(text)}</div>'
-        out += f'<section class="slide" id="s{i}">{b}{bx}<div class="num">{i}/{n}</div><div class="hd">@mszexc</div></section>\n'
+        ser = ('넘겨보세요 →' if i == 1 else f'남자들끼리 하는 말 #{no}') if no else ''
+        out += f'<section class="slide" id="s{i}">{b}{bx}<div class="num">{i}/{n}</div><div class="hd">@mszexc</div><div class="ser">{ser}</div></section>\n'
     return out + '</body></html>'
 
 EBOOK = ('k', '남자가 하는 말의 뜻은 전자책 1·2권에 · 프로필 링크에서 무료로 받아보세요', 82, 'r')

@@ -100,6 +100,7 @@ def build():
     return out + '</body></html>'
 
 if __name__ == '__main__':
-    open('ps01.html', 'w', encoding='utf-8').write(build())
+    from psgen import build as gbuild
+    open('ps01.html', 'w', encoding='utf-8').write(gbuild(SLIDES, no=40))  # 11/1 18~19시 = #40
     json.dump({'title': TITLE, 'caption': CAPTION, 'pin': PIN, 'shots': [d for _, d, _ in SLIDES]}, open('ps01.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('ok', len(SLIDES))

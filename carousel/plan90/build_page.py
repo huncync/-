@@ -108,8 +108,23 @@ herbox=('<h2>격주 일요일 · 그녀의 진짜 이유<small>잔소리 릴스 
   '<div class="tip">잔소리 릴스에 "전생에 여자 아니냐"는 댓글이 쏟아진 이유: <b>여자가 미안해하던 행동을, 남자가 "그게 사랑이야"라고 대신 말해줬기 때문</b>이에요. 위로가 아니라 인정. 얼굴 보고 남자 목소리로 들어야 힘이 나는 소재라 캐러셀보다 릴스로 먼저 올립니다.</div>'
   '<ol class="topics">'+''.join(f'<li><span class="n">{i}</span><span class="t">{e(s)}</span><span></span></li>' for i,s in enumerate(HM.FORMULA,1))+'</ol>'
   '<div class="note"><div><b>예비:</b> '+' / '.join(e(s[1]) for s in HM.SPARE)+'</div><div><b>끝 멘트 고정:</b> "안 해도 되는데, 이 남자랑 오래 가고 싶어서 굳이 하는 거예요. 그러니까 귀찮아하지 마세요."</div></div>')
+spec=importlib.util.spec_from_file_location('rst','/home/user/-/reels/stats.py'); RS=importlib.util.module_from_spec(spec); spec.loader.exec_module(RS)
+def _n(v):
+    return '—' if v is None else (f'{v/10000:.1f}만'.replace('.0만','만') if v >= 10000 else f'{v:,}')
+def _p(a, b):
+    return '' if (a is None or not b) else f' ({a/b*100:.2f}%)'
+rows=''.join(f'<li><span class="d">{e(d)}<i>{e(no)}</i></span><span class="m"><b>{e(ti)}</b>'
+  f'<em>조회 <b>{_n(v)}</b>' + (f' · 조회한 사람 {_n(vw)}' if vw else '') + (f' · 평균 {sec}초' if sec else '') + f' · <b style="color:#b9d38f">팔로우 {_n(fo)}{_p(fo,v)}</b></em>'
+  + (f'<em>공유 {_n(sh)}{_p(sh,v)} · 저장 {_n(sv)}{_p(sv,v)} · 좋아요 {_n(lk)} · 댓글 {_n(cm)} · 리포스트 {_n(rp)}</em>' if sh is not None else '')
+  + f'<em class="dim">{e(memo)} · {e(asof)} 기준</em></span></li>'
+  for no, d, ti, v, vw, sec, fo, lk, cm, rp, sh, sv, asof, memo in RS.STATS)
+statbox='<div id="rstat"><h2>릴스 성적표<small>최근 올린 순 · 팔로우 전환이 제일 중요</small></h2><ol class="plan subplan">'+rows+'</ol></div>'
 lst=herbox+'<h2>90일 릴스 목록<small>주 2편 · 목·일 21시 · '+str(len(R))+'편</small></h2><p class="lead"><b style="color:#ff5c8a">목요일 + 격주 일요일</b> = 팔로우형(남자 해독). 팔로우를 만든 소재(연락 끊김 · 관계를 끝내는 남자 · 위험한 남자)와 캐러셀에서 터진 편의 릴스판. <b style="color:#c86bff">격주 일요일</b> = 그녀의 진짜 이유. 캐러셀 예고는 하지 않아요(R1 22만 → 예고한 #17은 9천). 끝 한 줄은 고정: "남자가 하는 말, 매일 번역해서 올려요."</p><ol class="plan">'+''.join(items)+'</ol>\n    '
 sec=sec[:h0]+lst+sec[h1:]
+if '<div id="rstat">' in sec:
+    r0=sec.index('<div id="rstat">'); r1=sec.index('</ol></div>',r0)+len('</ol></div>'); sec=sec[:r0]+sec[r1:]
+o=sec.index('>')+1
+sec=sec[:o]+'\n    '+statbox+sec[o:]
 t=t[:a]+sec+t[b:]
 open(P,'w',encoding='utf-8').write(t)
 print(c, len(spare))

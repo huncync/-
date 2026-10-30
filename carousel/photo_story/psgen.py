@@ -15,6 +15,7 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
   .slide { width:1080px; height:1350px; position:relative; overflow:hidden; margin-bottom:20px; background:#1a1917; }
   /* 사진은 채도 · 밝기를 눌러 배경으로 물러나게, 상자는 진한 색으로 앞으로 (10/29 시선 점검) */
   .slide img.bg { position:absolute; filter:saturate(.5) brightness(.82) contrast(.95); }
+  .slide.vid { background:transparent; }
   .tint { position:absolute; inset:0; }
   .tint:after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.07), transparent 60%); }
   .bx { position:absolute; max-width:84%; font-size:46px; line-height:1.38; font-weight:500; padding:16px 28px; letter-spacing:-0.01em; }
@@ -36,8 +37,11 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 def build(slides, no=None):
     out = CSS; n = len(slides)
     for i, (bg, desc, boxes) in enumerate(slides, 1):
-        if isinstance(bg, dict):  # {'src':..., 'style':...} 사진 확대 · 위치
-            b = f'<img class="bg" src="{e(bg["src"])}" style="{bg["style"]}"><div class="shade"></div>'
+        cls = 'slide'
+        if isinstance(bg, dict) and bg.get('video'):  # 영상 장: 글 상자만 투명하게 그려서 영상 위에 얹어요 (vidgen.py)
+            b = '<div class="shade"></div>'; cls = 'slide vid'
+        elif isinstance(bg, dict):  # {'src':..., 'style':...} 사진 확대 · 위치
+            b = f'<img class="bg" src="{e(bg["src"])}" style="{bg["style"]}">' + ('' if bg.get('noshade') else '<div class="shade"></div>')
         elif bg is None:  # 사진 자리 (설명 표시)
             b = f'<div class="tint" style="background:linear-gradient(160deg,#3a3631,#191816 70%)"></div><div class="phd"><b>사진 자리</b>{e(desc)}</div>'
         elif bg in TINT:
@@ -49,7 +53,7 @@ def build(slides, no=None):
             pos = f'top:{top}%;' + ('right:6%;' if left == 'r' else f'left:{left}%;')
             bx += f'<div class="bx {kind}" style="{pos}">{e(text)}</div>'
         ser = ('넘겨보세요 →' if i == 1 else f'남자들끼리 하는 말 #{no}') if no else ''
-        out += f'<section class="slide" id="s{i}">{b}{bx}<div class="num">{i}/{n}</div><div class="hd">@mszexc</div><div class="ser">{ser}</div></section>\n'
+        out += f'<section class="{cls}" id="s{i}">{b}{bx}<div class="num">{i}/{n}</div><div class="hd">@mszexc</div><div class="ser">{ser}</div></section>\n'
     return out + '</body></html>'
 
 EBOOK = ('k', '남자가 하는 말의 뜻은 전자책 1·2권에 · 프로필 링크에서 무료로 받아보세요', 82, 'r')

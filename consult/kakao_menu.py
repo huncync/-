@@ -130,7 +130,7 @@ B + 4주 동안 주 1회 점검 · 첨삭 주 3건
 
 추가 옵션: 첨삭 1건 2만 · 추가 질문 2만 · 급행 +3만
 
-신청: 채팅으로 "A · B · C 신청"
+신청: 채팅으로 "A · B · C 신청" (계좌이체)
 결과는 100% 장담하지 않으며, 분석 시작 후엔 환불이 어려워요.'''
 ALL_CSS = CSS.replace('</style>', '''
   .one { width:800px; height:400px; position:relative; overflow:hidden; background:linear-gradient(150deg,#1d1b18,#0d0d0f 70%); color:#f4f1ea; padding:26px 30px; }
@@ -160,7 +160,7 @@ def build_one():
 <div class="cols">{c}</div>
 <div class="op"><b>추가 옵션</b> · 카톡 첨삭 1건 2만 · 추가 질문 2만 · 24시간 급행 +3만</div>
 <div class="op" style="margin-top:6px;font-size:14px;color:#8e8578">결과를 100% 장담하지 않아요 · 분석 시작 전 전액 환불, 시작 후 환불 불가</div>
-<div class="ft2"><span>신청은 채팅으로 <b>"A · B · C 신청"</b></span><span>@mszexc</span></div></section></body></html>'''
+<div class="ft2"><span>신청은 채팅으로 <b>"A · B · C 신청"</b> · 계좌이체</span><span>@mszexc</span></div></section></body></html>'''
 
 if __name__ == '__main__':
     open('kakao_menu/km_one.html', 'w', encoding='utf-8').write(build_one())

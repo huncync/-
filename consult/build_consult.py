@@ -87,6 +87,9 @@ launch_html = f'''    <h2>오픈 실행표<small>11/2 오픈 · 냉정한 판단
     <ol class="plan subplan">{pl}</ol>
     <h2>복사해서 올리기</h2>
     {cp}
+    <h2>카카오채널 채팅방 메뉴<small>리스트 메뉴 6개 · 이미지 + 응답 메시지</small></h2>
+    <div class="tip">채팅방 메뉴 → <b>리스트 메뉴 ON</b> → 메뉴 6개를 만들고, 메뉴마다 아래 이미지(같은 번호)와 응답 메시지(캡션 보기에 순서대로)를 넣어요. 메시지 버튼은 "없음". 응답 메시지는 400자 안으로 맞춰뒀어요.</div>
+    <div id="consultsets"></div>
     <h2>하지 않을 것</h2>
     <ol class="pc-notes">{dn}</ol>
 '''

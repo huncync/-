@@ -72,7 +72,9 @@ def build():
     out.append('    <div class="note">' + ''.join(f'<div><b>{e(a)}:</b> {e(b)}</div>' for a, b in NOTES) + '</div>\n  ')
     return ''.join(out)
 
-if __name__ == '__main__':
+# 11/1: 작업실에서 3권 탭은 뺐어요(용량). 다시 넣으려면 아래 줄을 지우고 실행하세요.
+RETIRED = True
+if __name__ == '__main__' and not RETIRED:
     P = sys.argv[1]
     t = open(P, encoding='utf-8').read()
     if 'id="p-vol3"' not in t:

@@ -121,16 +121,17 @@ CAP39 = f'''"사랑해"는 쉬워요.
 {END}{tags(['#남자속마음', '#연애고민'])}'''
 PIN39 = '6개 중에 몇 개 보여요? 숫자만 남겨주세요 👇'
 
-# 11/1 지훈님 사진 10장 + 영상 1개 → #37(회피) 배경. 3장(7 · 12 · 14)은 색 배경
+# 11/1 지훈님 사진 13장 + 영상 1개 → #37(회피) 배경 (7장 벽시계는 로고 안 보이게 흐리게)
 def P7(n, pos='50% 50%', blur=0):
     f = f';filter:saturate(.5) brightness(.8) blur({blur}px)' if blur else ''
     return {'src': f'p37/{n:02d}.jpg', 'style': f'inset:0;width:100%;height:100%;object-fit:cover;object-position:{pos}{f}'}
 BG37 = [P7(1), {'video': 'p37/v1.mov', 'start': 0, 'dur': 5.0, 'yoff': 285}, P7(4), P7(3, blur=2), P7(2), P7(5, blur=3),
-        'olive', P7(6, blur=10), P7(7), P7(8), P7(9), 'warm', P7(10), 'night']
+        P7(11, '50% 60%', blur=9), P7(6, blur=10), P7(7), P7(8), P7(9), P7(12), P7(10), P7(13)]
 C38 = [(bg, '', boxes) for bg, (_, _, boxes) in zip(BG37, C38)]
 def _shift(boxes, d): return [(k, s, top + d, l) if top < 80 else (k, s, top, l) for k, s, top, l in boxes]
 C38[0] = (C38[0][0], '', _shift(C38[0][2], 7))     # 표지: 룸미러 속 얼굴 아래로
 C38[12] = (C38[12][0], '', _shift(C38[12][2], 24))  # 13장: 걸어오는 사람 그림자 가리지 않게
+C38[11] = (C38[11][0], '', _shift(C38[11][2], -24))  # 12장: 조명 가리지 않게 위로
 
 # 10/31: 총정리(#37 자리)는 빼기로 → 회피가 #37, 놓치기 싫을 때가 #38, 이별 통보 받은 날 밤(ps01)이 #39
 DATA = {'37': (T38, C38, CAP38, PIN38), '38': (T39, C39, CAP39, PIN39)}

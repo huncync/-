@@ -4,7 +4,7 @@ e = html.escape
 D = os.path.dirname(os.path.abspath(__file__))
 def load(n):
     s = importlib.util.spec_from_file_location(n, os.path.join(D, n + '.py')); m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
-M, DM, K, L = load('menu'), load('dm'), load('kakao'), load('launch')
+M, DM, K, L, O = load('menu'), load('dm'), load('kakao'), load('launch'), load('options')
 
 md = ['# 남자 심리 분석 · 상품 메뉴', '']
 for c, n, p, who, items, cap in M.MAIN:
@@ -21,10 +21,22 @@ cards = ''.join(
     for c, n, p, who, items, cap in M.MAIN)
 opts = ''.join(f'<li><b>{e(n)}</b><span>{e(p)}</span><em>{e(d)}</em></li>' for n, p, d in M.OPTS)
 notes = ''.join(f'<li>{e(x)}</li>' for x in M.NOTES)
+def _cp(cid, lab, body):
+    return f'<details class="cap"><summary>{e(lab)}</summary><div class="row" style="padding:0 14px"><button class="btn gold" data-ct="{cid}">복사</button></div><pre id="{cid}">{e(body)}</pre></details>'
+ops = ''.join(f'<details class="cap"><summary>{e(n)}</summary><div style="padding:0 14px 12px;font-size:14px;line-height:1.65">'
+              f'<div><b>받는 것</b> · {e(g)}</div><div><b>해주는 것</b> · {e(d)}</div><div><b>기한</b> · {e(w)}</div>'
+              f'<div><b>범위 밖</b> · {e(x)}</div><div class="dim"><b>걸리는 시간</b> · {e(h)}</div></div></details>' for n, g, d, w, x, h in O.OPS)
+orules = ''.join(f'<li>{e(x)}</li>' for x in O.RULES)
+ocopy = ''.join(_cp(*c) for c in O.COPY)
 menu_html = f'''    <h2>상품 메뉴</h2>
     <div class="pc-grid">{cards}</div>
     <h2>추가 옵션<small>신청자 전용</small></h2>
     <ul class="pc-opts">{opts}</ul>
+    <h2>옵션은 이렇게 해드려요<small>받는 것 · 해주는 것 · 기한 · 범위</small></h2>
+    {ops}
+    <ol class="pc-notes" style="margin-top:10px">{orules}</ol>
+    <h2>옵션 답장 문구</h2>
+    {ocopy}
     <h2>운영 원칙</h2>
     <ol class="pc-notes">{notes}</ol>
 '''

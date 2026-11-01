@@ -113,3 +113,56 @@ if __name__ == '__main__':
         assert len(msg) <= 400, (key, len(msg))
         assert '상담' not in msg + name, key
         print(key, len(name), len(msg))
+
+# 11/1: 이미지를 한 장만 넣을 때 — 메뉴 하나(「상품 · 가격 보기」)에 이 한 장 + 아래 메시지(400자 안)
+ALL_NAME = '상품 · 가격 보기'
+ALL_MSG = '''1:1 남자 심리 분석 · 상품 안내
+
+A. 남자 심리 분석 · 50,000원
+관상 + 카톡 10장으로 그의 성향 · 말 번역 · 지금 마음 단계 · 72시간 안
+
+B. 분석 + 대본 · 100,000원 ★추천
+A + 상황별 대본 4종 · 7일 안 피드백 2회
+(오픈 첫 주 · B 첫 10분께 카톡 첨삭 2건)
+
+C. 4주 플랜 · 390,000원 · 월 3명
+B + 4주 동안 주 1회 점검 · 첨삭 주 3건
+
+추가 옵션: 첨삭 1건 2만 · 추가 질문 2만 · 급행 +3만
+
+신청: 채팅으로 "A · B · C 신청"
+결과는 100% 장담하지 않으며, 분석 시작 후엔 환불이 어려워요.'''
+ALL_CSS = CSS.replace('</style>', '''
+  .one { width:800px; height:400px; position:relative; overflow:hidden; background:linear-gradient(150deg,#1d1b18,#0d0d0f 70%); color:#f4f1ea; padding:26px 30px; }
+  .one:before { content:''; position:absolute; inset:10px; border:1.5px solid #4a3c22; border-radius:6px; }
+  .one .hd1 { display:flex; align-items:baseline; gap:12px; }
+  .one .hd1 b { font-size:30px; font-weight:900; letter-spacing:-0.02em; }
+  .one .hd1 span { font-family:'Nanum Pen Script',cursive; font-size:26px; color:#d6d1c8; }
+  .one .cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:14px; }
+  .one .c { border:1.5px solid #3a3326; border-radius:10px; padding:12px 14px; background:rgba(255,255,255,.03); position:relative; }
+  .one .c.hot { border-color:#ffcb3d; }
+  .one .c .t { font-size:21px; font-weight:900; line-height:1.2; }
+  .one .c .p { display:inline-block; margin-top:8px; background:#ffcb3d; color:#151515; font-weight:900; font-size:22px; padding:1px 8px; }
+  .one .c .s { font-size:15.5px; color:#d9d4cb; margin-top:8px; line-height:1.45; }
+  .one .c .r { position:absolute; right:10px; top:10px; font-size:13px; font-weight:900; color:#ffcb3d; }
+  .one .op { margin-top:12px; font-size:16px; color:#cfcac1; }
+  .one .op b { color:#ffcb3d; }
+  .one .ft2 { position:absolute; left:30px; right:30px; bottom:22px; display:flex; justify-content:space-between; font-size:15px; color:#8e8578; }
+  .one .ft2 b { color:#f4f1ea; }
+</style>''')
+
+def build_one():
+    cols = [('A. 남자 심리 분석', '50,000원', '관상 · 카톡 10장<br>성향 · 말 번역 · 마음 단계<br>72시간 안', ''),
+            ('B. 분석 + 대본', '100,000원', 'A + 상황별 대본 4종<br>7일 안 피드백 2회<br>주 5건', 'hot'),
+            ('C. 4주 플랜', '390,000원', 'B + 주 1회 점검 4번<br>첨삭 주 3건<br>월 3명', '')]
+    c = ''.join(f'<div class="c {r}">' + ('<div class="r">★ 추천</div>' if r else '') + f'<div class="t">{e(t)}</div><div class="p">{e(p)}</div><div class="s">{s}</div></div>' for t, p, s, r in cols)
+    return ALL_CSS + f'''<section class="one" id="all"><div class="hd1"><b>1:1 남자 심리 분석</b><span>남자가 직접, 그 사람 마음을 번역해 드려요</span></div>
+<div class="cols">{c}</div>
+<div class="op"><b>추가 옵션</b> · 카톡 첨삭 1건 2만 · 추가 질문 2만 · 24시간 급행 +3만</div>
+<div class="op" style="margin-top:6px;font-size:14px;color:#8e8578">결과를 100% 장담하지 않아요 · 분석 시작 전 전액 환불, 시작 후 환불 불가</div>
+<div class="ft2"><span>신청은 채팅으로 <b>"A · B · C 신청"</b></span><span>@mszexc</span></div></section></body></html>'''
+
+if __name__ == '__main__':
+    open('kakao_menu/km_one.html', 'w', encoding='utf-8').write(build_one())
+    assert len(ALL_MSG) <= 400 and '상담' not in ALL_MSG and len(ALL_NAME) <= 20, len(ALL_MSG)
+    print('one', len(ALL_MSG))

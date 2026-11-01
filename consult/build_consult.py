@@ -4,7 +4,7 @@ e = html.escape
 D = os.path.dirname(os.path.abspath(__file__))
 def load(n):
     s = importlib.util.spec_from_file_location(n, os.path.join(D, n + '.py')); m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
-M, DM, K = load('menu'), load('dm'), load('kakao')
+M, DM, K, L = load('menu'), load('dm'), load('kakao'), load('launch')
 
 md = ['# 남자 심리 분석 · 상품 메뉴', '']
 for c, n, p, who, items, cap in M.MAIN:
@@ -63,7 +63,22 @@ kakao_html = f'''    <h2>카카오채널 세팅<small>「{e(K.NAME)}」 · 10/28
     <ol class="topics">{steps}</ol>
     <div class="note"><div><b>링크 넣는 곳:</b> {e(K.WHERE)}</div></div></div>
 '''
-dm_html = kakao_html + dm_html
+pr = ''.join(f'<li><span class="n">{i}</span><span class="t"><b>{e(a)}</b><br><span class="dim">{e(b)}</span></span><span></span></li>' for i, (a, b) in enumerate(L.PRICE, 1))
+pl = ''.join(f'<li><span class="d">{e(d)}<i>{e(w)}</i></span><span class="m"><b>{e(x)}</b></span></li>' for d, w, x in L.PLAN)
+dn = ''.join(f'<li>{e(x)}</li>' for x in L.DONT)
+cp = ''.join(kcopy(*c) for c in L.COPIES)
+launch_html = f'''    <h2>오픈 실행표<small>11/2 오픈 · 냉정한 판단부터</small></h2>
+    <div class="tip">{L.VERDICT}</div>
+    <h2>가격<small>그대로 가요</small></h2>
+    <ol class="topics">{pr}</ol>
+    <h2>언제 · 어디에 · 무엇을</h2>
+    <ol class="plan subplan">{pl}</ol>
+    <h2>복사해서 올리기</h2>
+    {cp}
+    <h2>하지 않을 것</h2>
+    <ol class="pc-notes">{dn}</ol>
+'''
+dm_html = launch_html + kakao_html + dm_html
 
 def swap(t, start, end, new):
     a = t.index(start); b = t.index(end, a); return t[:a] + new + t[b:]
@@ -75,7 +90,7 @@ t = open(P, encoding='utf-8').read()
 c0 = t.index('id="p-consult"')
 head, t2 = t[:c0], t[c0:]
 t2 = swap(t2, '    <h2>상품 메뉴</h2>', '    <h2>카카오채널 이미지', menu_html)
-t2 = swap(t2, '    <h2>카카오채널 세팅' if '    <h2>카카오채널 세팅' in t2 else '    <h2>DM → 유료 상담 전환', '    <h2>복사해서 쓰기</h2>', dm_html)
+t2 = swap(t2, '    <h2>오픈 실행표' if '    <h2>오픈 실행표' in t2 else '    <h2>카카오채널 세팅' if '    <h2>카카오채널 세팅' in t2 else '    <h2>DM → 유료 상담 전환', '    <h2>복사해서 쓰기</h2>', dm_html)
 for pid, body in (('cs-guide', M.GUIDE), ('cs-form', M.FORM), ('cs-report', M.REPORT)):
     t2 = pre(t2, pid, body)
 open(P, 'w', encoding='utf-8').write(head + t2)

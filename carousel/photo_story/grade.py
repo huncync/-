@@ -32,13 +32,16 @@ def grade(im, mode):
     im = _vignette(im)
     return _grain(im, 9)
 
-def crop(src, box, mode, out, blur=0, size=(1080, 1350), flip=False):
+def crop(src, box, mode, out, blur=0, size=(1080, 1350), flip=False, blur_from=None, blur_r=10):
     im = ImageOps.exif_transpose(Image.open(src))
     x, y, w, h = box
     im = im.crop((x, y, x + w, y + h))
     if flip: im = ImageOps.mirror(im)
     im = im.resize(size, Image.LANCZOS)
     if blur: im = im.filter(ImageFilter.GaussianBlur(blur))
+    if blur_from is not None:  # 아래쪽(화면 · 간판 글자)만 흐리게
+        y0 = int(size[1] * blur_from)
+        im.paste(im.crop((0, y0, size[0], size[1])).filter(ImageFilter.GaussianBlur(blur_r)), (0, y0))
     im = grade(im, mode).filter(ImageFilter.UnsharpMask(2, 40, 3))
     im.save(out, quality=92)
     return out

@@ -79,7 +79,7 @@ head=ins_block()+f'''    <div class="rules" style="margin-top:12px">
     <div class="legend">{legend}<span class="lg"><span class="sr" style="background:#ff5c8a;color:#fff">릴스</span>목 · 격주 일 21시 · 팔로우형</span><span class="lg"><span class="sr" style="background:#c86bff;color:#fff">릴스</span>격주 일 21시 · 그녀의 진짜 이유</span></div>
     <div class="flt" role="group" aria-label="보기"><button class="btn gold" data-f="all">전체 <b>{180+len(R)}</b></button><button class="btn" data-f="cr">캐러셀 <b>180</b></button><button class="btn" data-f="rl">릴스 <b>{len(R)}</b></button></div>
 '''
-md.insert(1,'목표(10/22 수정): 캐러셀 월 150만 · 팔로워 12/31까지 3만 · 프로필→링크 4% · 카카오채널 친구 11/10까지 1,000명.\n\n시리즈별 편수: '+', '.join(f'{d["series"][k]} {c[k]}' for k in ORDER)+'\n')
+md.insert(1,'목표(11/3 수정): 캐러셀 월 150만 · 팔로워 12/31까지 4만 · 프로필→링크 4% · 카카오채널 친구 11/10까지 1,000명.\n\n시리즈별 편수: '+', '.join(f'{d["series"][k]} {c[k]}' for k in ORDER)+'\n')
 open('plan90.md','w',encoding='utf-8').write('\n'.join(md))
 P=sys.argv[1]
 t=open(P,encoding='utf-8').read()

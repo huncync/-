@@ -1,6 +1,6 @@
 # 남자심리 처방전 (1:1 분석 결과물 PDF) — python3 rx.py <내용.txt> <출력.html>
 # 내용 파일 형식 (손님 개인정보가 들어가므로 저장소 밖 .work/rx/ 에 둬요):
-#   #patient 이름 / #plan 상품 / #date 발행일 / #no 처방 번호
+#   #patient 이름 / #plan 상품 / #date 발행일 / #no 처방 번호 / #label 3 FINDINGS|소견 / #qa 6 / #rx 7 (문진 · 처방 섹션 번호)
 #   ■ 섹션 제목 · ①~⑨ 또는 Q1. 항목 제목 · "근거"/"논리" 한 줄 · "· " 근거 줄 · "→ " 결론
 #   "근거: …"/"논리: …" 한 줄형 · "- " 체크 · step: 순서 · note: 사례(| 줄바꿈) · warn: 경고(|) · quote: 마지막 한 줄
 import html, re, sys
@@ -20,7 +20,11 @@ def parse(path):
         l = raw.rstrip()
         if not l.strip(): continue
         if l.startswith('#'):
-            k, _, v = l[1:].partition(' '); meta[k] = v; continue
+            k, _, v = l[1:].partition(' ')
+            if k == 'label':  # #label 3 FINDINGS|소견 — 섹션 번호별 영문 · 한글 꼬리표 덮어쓰기
+                n, _, t = v.partition(' '); meta.setdefault('labels', {})[n] = tuple(t.split('|'))
+            else: meta[k] = v
+            continue
         if l.startswith('■'):
             t = l[1:].strip(); m = re.match(r'(\d+)\.\s*(.+)', t)
             cur = {'key': m.group(1) if m else t, 'title': m.group(2) if m else t, 'blocks': [], 'items': []}
@@ -95,6 +99,7 @@ table.pt th { width:30mm; background:var(--green2); color:var(--green); font-wei
 .dx { margin-top:9mm; background:var(--green); color:#fff; border-radius:3mm; padding:7mm 8mm; }
 .dx .tag { color:#cfe3d8; font-size:8.5pt; letter-spacing:.2em; font-weight:700; }
 .dx p { font-size:12.2pt; line-height:1.75; margin-top:2mm; }
+.dx .qt { color:#ffe7a8; background:none; }
 .dx p:last-child { font-weight:700; color:#ffe7a8; font-size:13.5pt; }
 .foot { margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end; }
 .doc { font-size:9.5pt; color:var(--mut); line-height:1.6; }
@@ -163,9 +168,9 @@ def build(path):
     body = [f'<div class="intro">{"".join(f"<p>{q(x)}</p>" for x in intro)}</div>']
     for s in secs:
         if s is dx: continue
-        eb, kr = LABEL.get(s['key'], ('', ''))
+        eb, kr = meta.get('labels', {}).get(s['key']) or LABEL.get(s['key'], ('', ''))
         num = s['key'] if s['key'].isdigit() else '✦'
-        cls = 'sec' + (' rxsec' if s['key'] == '9' else '') + (' qa' if s['key'] == '5' else '')
+        cls = 'sec' + (' rxsec' if s['key'] == meta.get('rx', '9') else '') + (' qa' if s['key'] == meta.get('qa', '5') else '')
         head = f'<div class="sh"><span class="num">{num if num != "✦" else "✦"}</span><div><span class="eb">{e(eb)} · {e(kr)}</span><h2>{e(s["title"])}</h2></div></div>'
         inner = blocks_html(s['blocks'])
         items = ''.join(f'<div class="item"><div class="it">{q(it["title"])}</div>{blocks_html(it["blocks"])}</div>' for it in s['items'])

@@ -84,24 +84,24 @@ CSS = '''
 html, body { background:#fff; color:var(--ink); font-family:'Noto Sans KR', sans-serif; font-size:10.4pt; line-height:1.72; word-break:keep-all; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 .serif { font-family:'Noto Serif KR', serif; }
 /* 표지 */
-.cover { height: 263mm; display:flex; flex-direction:column; border:1.5px solid var(--green); border-radius:4mm; padding:12mm 12mm 10mm; position:relative; background:
+.cover { height: 258mm; display:flex; flex-direction:column; border:1.5px solid var(--green); border-radius:4mm; padding:12mm 12mm 13mm; position:relative; background:
   radial-gradient(circle at 100% 0, #eef4f0 0, #eef4f0 32%, transparent 32.2%), var(--paper); break-after: page; overflow:hidden; }
 .cover:after { content:''; position:absolute; inset:3mm; border:0.6px solid var(--line); border-radius:3mm; pointer-events:none; }
 .brand { display:flex; justify-content:space-between; align-items:center; font-size:9pt; color:var(--mut); letter-spacing:.08em; }
 .brand b { color:var(--green); letter-spacing:.02em; }
-.rx { font-family:'Noto Serif KR', serif; font-size:64pt; font-weight:700; color:var(--green); line-height:1; margin-top:16mm; }
+.rx { font-family:'Noto Serif KR', serif; font-size:54pt; font-weight:700; color:var(--green); line-height:1; margin-top:6mm; }
 .rx small { font-size:13pt; color:var(--gold); letter-spacing:.3em; display:block; margin-top:3mm; }
-h1.t { font-family:'Noto Serif KR', serif; font-size:34pt; font-weight:700; letter-spacing:-.02em; margin-top:6mm; line-height:1.2; }
+h1.t { font-family:'Noto Serif KR', serif; font-size:31pt; font-weight:700; letter-spacing:-.02em; margin-top:6mm; line-height:1.2; }
 .sub { color:var(--mut); font-size:11pt; margin-top:3mm; }
-table.pt { width:100%; border-collapse:collapse; margin-top:12mm; font-size:10.5pt; background:#fff; }
-table.pt th, table.pt td { border:1px solid var(--line); padding:3.2mm 4mm; text-align:left; }
+table.pt { width:100%; border-collapse:collapse; margin-top:9mm; font-size:10.5pt; background:#fff; }
+table.pt th, table.pt td { border:1px solid var(--line); padding:2.6mm 4mm; text-align:left; }
 table.pt th { width:30mm; background:var(--green2); color:var(--green); font-weight:700; }
-.dx { margin-top:9mm; background:var(--green); color:#fff; border-radius:3mm; padding:7mm 8mm; }
+.dx { margin-top:7mm; background:var(--green); color:#fff; border-radius:3mm; padding:6mm 8mm; }
 .dx .tag { color:#cfe3d8; font-size:8.5pt; letter-spacing:.2em; font-weight:700; }
 .dx p { font-size:12.2pt; line-height:1.75; margin-top:2mm; }
 .dx .qt { color:#ffe7a8; background:none; }
 .dx p:last-child { font-weight:700; color:#ffe7a8; font-size:13.5pt; }
-.foot { margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end; }
+.foot { margin-top:auto; padding-top:6mm; display:flex; justify-content:space-between; align-items:flex-end; }
 .doc { font-size:9.5pt; color:var(--mut); line-height:1.6; }
 .doc b { color:var(--ink); font-size:12pt; }
 .stamp { width:30mm; height:30mm; border:2.2px solid var(--red); border-radius:50%; color:var(--red); display:flex; flex-direction:column; align-items:center; justify-content:center;

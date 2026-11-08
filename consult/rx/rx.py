@@ -138,7 +138,7 @@ table.pt th { width:30mm; background:var(--green2); color:var(--green); font-wei
 .steps li:before { content:counter(s); position:absolute; left:0; top:0.4mm; width:6mm; height:6mm; border-radius:50%; background:var(--green); color:#fff; font-size:8.5pt; font-weight:700; text-align:center; line-height:6mm; }
 .chk { list-style:none; margin:2mm 0 3mm; } .chk li { padding-left:8mm; position:relative; margin:1.4mm 0; }
 .chk li:before { content:'✓'; position:absolute; left:0; top:-0.2mm; width:5.5mm; height:5.5mm; border:1.4px solid var(--green); border-radius:1mm; color:var(--green); font-weight:900; font-size:9pt; text-align:center; line-height:5.2mm; }
-.qt { font-weight:700; color:#2b3a34; background:linear-gradient(transparent 62%, #f3e3bd 62%); }
+.qt { font-weight:700; color:#2b3a34; background:#f6edd8; border-radius:1mm; padding:0 0.8mm; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 .rxsec .item { border:1px solid var(--line); border-radius:3mm; padding:4mm 5mm 3mm; background:#fff; break-inside:avoid; }
 .rxsec .it { border-left:none; padding-left:0; font-size:12pt; }
 .rxsec .it:before { content:'Rx  '; font-style:italic; color:var(--red); font-family:'Noto Serif KR', serif; }

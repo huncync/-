@@ -68,7 +68,7 @@ def top(no, date): return f'<div class="top"><span>구독자 전용 · MEMBERS</
 def foot(t): return f'<div class="foot"><span>@mszexc</span><span>{t}</span></div>'
 def bars(i, n): return ''.join(f'<i class="{"on" if k < i else ""}"></i>' for k in range(n))
 
-COVER = {'s01': '연락이<br>뜸해졌을 때', 's02': '싸운<br>다음 날', 's03': '헤어지고<br>연락하고<br>싶을 때'}
+COVER = {'s01': '연락이<br>뜸해졌을 때', 's02': '싸운<br>다음 날', 's03': '헤어지고<br>연락하고<br>싶을 때', 's04': '다른 여자가<br>신경 쓰일 때'}
 
 def week(idx):
     key, date, theme, items = D.WEEKS[idx]
@@ -111,6 +111,9 @@ def week(idx):
     if key == 's03':
         h = h.replace('문장보다 <b>타이밍</b>이 먼저예요.<br>화가 가라앉은 다음,<br>그가 쉬는 시간에 보내세요.<br>보내고 나서는 재촉하지 마세요.',
                       '답이 올지는 <b>그가</b> 정해요.<br>어떤 사람으로 남을지는<br><b>당신이</b> 정해요.<br>보내기 전에 한 번만 읽어보세요.')
+    if key == 's04':
+        h = h.replace('문장보다 <b>타이밍</b>이 먼저예요.<br>화가 가라앉은 다음,<br>그가 쉬는 시간에 보내세요.<br>보내고 나서는 재촉하지 마세요.',
+                      '질투는 잘못이 아니에요.<br>다만 <b>질문</b>보다<br><b>마음</b>으로 꺼내세요.<br>그래야 그가 당신 편에 서요.')
     open(f'{key}.html', 'w', encoding='utf-8').write(h)
 
 RECAP = {

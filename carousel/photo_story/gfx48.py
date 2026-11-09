@@ -1,5 +1,5 @@
-# #51 그래픽 배경 (2 · 4 · 6 · 8 · 10 · 12 · 13장) — 글 상자 자리(30~60%)는 비우고 위 · 아래에만 그림
-# python3 gfx51.py → gfx51.html → node render51.js (p51g/NN.png)
+# #48 그래픽 배경 (2 · 4 · 6 · 8 · 10 · 12 · 13장) — 글 상자 자리(30~60%)는 비우고 위 · 아래에만 그림
+# python3 gfx48.py → gfx48.html → node render48.js (p48g/NN.png)
 from gfx48_50 import BASE, sec, svg, glow, bubbles, calendar, clock, mug, two_circles, spot
 
 def say(x, y, w, t, bg='#3a3f4b', fg='#e9ecef', fs=44):  # 말풍선 + 글자
@@ -20,5 +20,5 @@ G = {
 }
 
 if __name__ == '__main__':
-    open('gfx51.html', 'w', encoding='utf-8').write(BASE + ''.join(G[k] for k in sorted(G)) + '</body></html>')
+    open('gfx48.html', 'w', encoding='utf-8').write(BASE + ''.join(G[k] for k in sorted(G)) + '</body></html>')
     print('ok', sorted(G))

@@ -1,11 +1,11 @@
-# #51 글 상자 + 배경 (11/9) — 지훈님 사진 7장 + 그래픽 7장
-# python3 gfx51.py → node render51.js gfx → python3 s51.py → node render51.js slides
+# #48 글 상자 + 배경 (11/9) — 지훈님 사진 7장 + 그래픽 7장
+# python3 gfx48.py → node render48.js gfx → python3 s48.py → node render48.js slides
 from PIL import Image, ImageOps, ImageFilter
 from psgen import build
 from s48_50 import bright
-import stories_51 as S
+import stories_48 as S
 
-# 장 → (사진 번호, [(x0,y0,x1,y1 비율, 흐리기 px)])  · 사진 없는 장은 그래픽(p51g)
+# 장 → (사진 번호, [(x0,y0,x1,y1 비율, 흐리기 px)])  · 사진 없는 장은 그래픽(p48g)
 PLAN = {
  1: (6, [((0, 0.18, 0.12, 0.30), 14), ((0, 0.33, 0.10, 0.57), 14)]),                    # 표지: 헬스장 거울 셀카 (간판 흐리게)
  3: (4, []),                                                                              # 대부분은 진짜 피곤 · 사무실 건물
@@ -18,24 +18,24 @@ PLAN = {
 SHIFT = {1: 6}
 
 def prep(i, src, regions):
-    im = ImageOps.exif_transpose(Image.open(f'p51/src_{src:02d}.jpg')).convert('RGB')
+    im = ImageOps.exif_transpose(Image.open(f'p48/src_{src:02d}.jpg')).convert('RGB')
     w, h = im.size
     for (x0, y0, x1, y1), r in regions:
         b = (int(x0 * w), int(y0 * h), int(x1 * w), int(y1 * h))
         im.paste(im.crop(b).filter(ImageFilter.GaussianBlur(r * w / 1080)), b[:2])
     im = ImageOps.fit(im, (1080, 1350), Image.LANCZOS)
-    im.save(f'p51/{i:02d}.jpg', quality=90)
+    im.save(f'p48/{i:02d}.jpg', quality=90)
 
 if __name__ == '__main__':
-    assert len(S.C51) == 14 and S.CAP51.count('#') == 5
+    assert len(S.C48) == 14 and S.CAP48.count('#') == 5
     sl = []
-    for i, boxes in enumerate(S.C51, 1):
+    for i, boxes in enumerate(S.C48, 1):
         boxes = [(k, t, top + SHIFT.get(i, 0) if top < 80 else top, l) for k, t, top, l in boxes]
         if i in PLAN:
             prep(i, *PLAN[i])
-            bg = {'src': f'p51/{i:02d}.jpg', 'style': 'inset:0;width:100%;height:100%;object-fit:cover'}
+            bg = {'src': f'p48/{i:02d}.jpg', 'style': 'inset:0;width:100%;height:100%;object-fit:cover'}
         else:
-            bg = {'src': f'p51g/{i:02d}.png', 'noshade': not bright(f'p51g/{i:02d}.png'), 'style': 'inset:0;width:100%;height:100%;object-fit:cover;filter:none'}
+            bg = {'src': f'p48g/{i:02d}.png', 'noshade': not bright(f'p48g/{i:02d}.png'), 'style': 'inset:0;width:100%;height:100%;object-fit:cover;filter:none'}
         sl.append((bg, '', boxes))
-    open('c51.html', 'w', encoding='utf-8').write(build(sl, no='51'))
+    open('c48.html', 'w', encoding='utf-8').write(build(sl, no='48'))
     print('ok')

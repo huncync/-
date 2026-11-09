@@ -1,11 +1,11 @@
-# #48~#50 글 상자 + 그래픽 배경 (p48g · p49g · p50g) → c48.html ~ c50.html → node .work/r48.js
+# #49~#51 글 상자 + 그래픽 배경 (p49g · p50g · p51g) → c49.html ~ c51.html → node render48.js c49 c50 c51 (11/9 번호 한 칸씩 밀림 · 파일 이름은 그대로)
 from psgen import build
 from PIL import Image, ImageStat
 
 def bright(path):  # 아래 글자줄 자리가 밝으면 그림자(shade)를 깔아 @mszexc · 시리즈 번호가 읽히게
     im = Image.open(path).convert('L'); w, h = im.size
     return ImageStat.Stat(im.crop((0, int(h * .9), w, h))).mean[0] > 110
-import stories_48_50 as S
+import stories_49_51 as S
 
 if __name__ == '__main__':
     for k, (t, c, cap, pin) in S.DATA.items():

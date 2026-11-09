@@ -1,5 +1,5 @@
 # #48~#50 그래픽 배경 42장 (11/8) — 장 내용에 맞는 그림. 글 상자 자리(30~60%)는 비워 두고 위(0~30%) · 아래(63~92%)에만 그림
-# python3 gfx48_50.py → gfx48_50.html → node .work/rg48.js → p48g · p49g · p50g/01~14.png
+# python3 gfx48_50.py → gfx48_50.html → node .work/rg48.js → p48g · p49g · p50g/01~14.png (11/9 번호 밀림: 지금은 p49g · p50g · p51g. 다시 그리면 폴더 이름을 맞춰 주세요)
 import random
 from gfx46 import BASE
 

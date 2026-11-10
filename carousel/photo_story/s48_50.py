@@ -9,6 +9,7 @@ import stories_49_51 as S
 
 if __name__ == '__main__':
     for k, (t, c, cap, pin) in S.DATA.items():
+        if k == '49': continue  # #49는 사진 + 그래픽으로 s49.py에서 (11/10)
         assert len(c) == 14 and cap.count('#') == 5, k
         sl = [({'src': f'p{k}g/{i:02d}.png', 'noshade': not bright(f'p{k}g/{i:02d}.png'), 'style': 'inset:0;width:100%;height:100%;object-fit:cover;filter:none'}, '', b) for i, b in enumerate(c, 1)]
         open(f'c{k}.html', 'w', encoding='utf-8').write(build(sl, no=k))

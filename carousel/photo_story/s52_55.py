@@ -7,8 +7,10 @@ import stories_52_55 as S
 
 # 장 → ('폴더/src_NN', [(x0,y0,x1,y1 비율, 흐리기 px)])  · 표지(1)와 마지막(14)은 얼굴 사진
 PLAN = {
- '52': {1: ('p40/src_06', []), 3: ('p39/src_11', []), 5: ('p47/src_04', []), 9: ('p42/src_07', []),
-        11: ('p40/src_12', []), 13: ('p45/src_09', []), 14: ('p43/src_09', [((0.0, 0.0, 0.25, 0.25), 10)])},
+ '52': {1: ('p52s/src_01', [((0.72, 0.46, 0.85, 0.65), 16), ((0.85, 0.71, 1, 0.85), 16), ((0.04, 0.63, 0.16, 0.78), 14), ((0.69, 0.72, 0.84, 0.81), 14)]),  # 11/11 새 사진: 헬스장 거울 셀카 (Reebok · VERVE · 원판 로고 흐리게)
+        3: ('p52s/src_05', []), 5: ('p52s/src_06', []), 9: ('p52s/src_04', []), 11: ('p52s/src_03', []),
+        13: ('p52s/src_07', [((0.14, 0.80, 0.42, 0.86), 14), ((0.12, 0.88, 0.62, 1), 14)]),   # 단풍 빌딩 (반사 글자 · 병원 간판 흐리게)
+        14: ('p52s/src_02', [((0.08, 0.36, 0.17, 0.48), 14), ((0.67, 0.36, 0.76, 0.57), 14)])},  # 엘리베이터 셀카 (안내문 · 전화번호 흐리게)
  '53': {1: ('p44/src_05', []), 3: ('p41/src_04', []), 5: ('p45/src_05', []), 9: ('p41/src_11', []),
         11: ('p42/src_06', []), 13: ('p47/src_10', []), 14: ('p45/src_12', [])},
  '54': {1: ('p44/src_14', []), 3: ('p43/src_10', []), 5: ('p39/src_13', []), 9: ('p40/src_15', [((0.08, 0.30, 0.42, 0.75), 16)]),
@@ -17,7 +19,8 @@ PLAN = {
         11: ('p41/src_03', []), 13: ('p47/src_11', []), 14: ('p43/src_03', [])},
 }
 SHIFT = {1: 6}
-SHIFT14 = {'55': 22}  # 마지막 장 글 상자가 얼굴을 가리면 아래로
+VIVID = {('52', 13)}  # 낮 단풍은 색을 덜 빼요
+SHIFT14 = {'55': 22, '52': -12}  # 마지막 장 글 상자가 얼굴을 가리면 아래로
 
 def prep(no, i, src, regions):
     im = ImageOps.exif_transpose(Image.open(f'{src}.jpg')).convert('RGB')
@@ -40,7 +43,7 @@ if __name__ == '__main__':
             sh = SHIFT14.get(no, 0) if i == 14 else SHIFT.get(i, 0)
             boxes = [(k, x, top + sh if top < 80 else top, l) for k, x, top, l in boxes]
             if i in PLAN[no]:
-                bg = {'src': prep(no, i, *PLAN[no][i]), 'style': 'inset:0;width:100%;height:100%;object-fit:cover'}
+                bg = {'src': prep(no, i, *PLAN[no][i]), 'style': 'inset:0;width:100%;height:100%;object-fit:cover' + (';filter:saturate(.85) brightness(.9)' if (no, i) in VIVID else '')}
             else:
                 g = f'p{no}g/{i:02d}.png'
                 bg = {'src': g, 'noshade': not bright(g), 'style': 'inset:0;width:100%;height:100%;object-fit:cover;filter:none'}

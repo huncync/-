@@ -34,8 +34,8 @@ G = [
  (52, 8, sec('wine', calendar(60, 2, .9, 53, cols=('#5c5f66', '#495057')) + svg('<text x="540" y="1120" text-anchor="middle" font-size="120" font-weight="900" fill="#868e96" font-family="Noto Sans KR,sans-serif">다음에</text>'))),
  (52, 10, sec('dark', svg(heart(540, 230, 1.6, '#ff6b81', .9) + '<path d="M500 140 L560 230 L510 300" stroke="#0f1115" stroke-width="18" fill="none"/>' + battery(325, 980, 1)))),
  (52, 12, sec('', svg(say(220, 120, 760, '이번 주는 내가 정할게', '#fee500', '#3a3a3a', 42)) + glow(52, 14, ('#ffd27f', '#ff8fab'), 900, 1250, .35), f'background:{BG}')),
- # ── #53 너 요즘 이상해
- (53, 2, sec('', svg('<text x="540" y="330" text-anchor="middle" font-size="240" font-weight="900" fill="#ff8787" opacity=".85" font-family="sans-serif">?</text>' + say(300, 1000, 480, '너 요즘 이상해', '#3a3f4b', '#e9ecef')), f'background:{BG}')),
+ # ── #53 너 요즘 변했어
+ (53, 2, sec('', svg('<text x="540" y="330" text-anchor="middle" font-size="240" font-weight="900" fill="#ff8787" opacity=".85" font-family="sans-serif">?</text>' + say(300, 1000, 480, '너 요즘 변했어', '#3a3f4b', '#e9ecef')), f'background:{BG}')),
  (53, 4, sec('dark', bubbles([('me', 420), ('me', 300), ('me', 360)], 60) + svg(clock(540, 1060, 130, 1, 30, '#868e96')))),
  (53, 6, sec('wine', svg('<rect x="390" y="80" width="300" height="320" rx="20" fill="#2b2f3a"/><circle cx="640" cy="240" r="16" fill="#ffd43b"/><path d="M320 1060 H760" stroke="#495057" stroke-width="24" stroke-linecap="round"/>'))),
  (53, 7, sec('dark', svg('<text x="540" y="320" text-anchor="middle" font-size="200" font-weight="900" fill="#ff6b6b" opacity=".85" font-family="sans-serif">!</text>' + heart(540, 1060, 1.2, '#495057')))),

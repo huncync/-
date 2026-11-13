@@ -1,7 +1,7 @@
-# #57 ~ #60 그래픽 배경 (장 2 · 4 · 6 · 7 · 8 · 10 · 12) — 글 상자 자리(30~60%)는 비우고 위 · 아래에만 그림
+# #57 ~ #60 그래픽 배경 (11/13 · 2판 소재) (장 2 · 4 · 6 · 7 · 8 · 10 · 12) — 글 상자 자리(30~60%)는 비우고 위 · 아래에만 그림
 # python3 gfx57_60.py → node render57.js gfx → p57g ~ p60g/NN.png
 import json
-from gfx48_50 import BASE, sec, svg, glow, bubbles, calendar, heart, clock, mug, spot, phone, post
+from gfx48_50 import BASE, sec, svg, glow, bubbles, calendar, heart, clock, mug, spot, phone, post, two_circles
 from gfx52_55 import people
 from gfx48 import say
 
@@ -17,38 +17,38 @@ def thumbs(y, n, cols=('#ffa8a8', '#b197fc', '#74c0fc', '#ffd43b', '#63e6be')):
     return ''.join(f'<rect x="{150 + (k % 4) * 200}" y="{y + (k // 4) * 170}" width="170" height="150" rx="12" fill="{cols[k % len(cols)]}" opacity=".85"/>' for k in range(n))
 
 G = [
- # ── #57 저장명
- (57, 2, sec('', phone(390, 30, 300, 360, ''.join(f'<div style="position:absolute;left:30px;right:30px;top:{50 + k * 70}px;height:40px;border-radius:12px;background:{"#ff8fab" if k == 2 else "#3a3f4b"}"></div>' for k in range(4))) + svg(heart(540, 1060, 1.3, '#495057')), f'background:{BG}')),
- (57, 4, sec('dark', contact('김지은 소개팅') + svg(people(540, 960, 2, '#adb5bd', 200)))),
- (57, 6, sec('wine', contact('지은 ♥', '#ff8fab') + svg(heart(540, 1060, 1.6, '#ff6b81', .9)))),
- (57, 7, sec('ink', contact('꼬꼬마', '#ffd43b', '#ffa94d') + glow(57, 14, ('#ffd27f', '#ff8fab'), 900, 1250, .35))),
- (57, 8, sec('', svg(say(160, 130, 640, '저장명 뭐야? ㅋㅋ 보여줘 봐', '#3a3f4b', '#e9ecef', 40) + mug(330, 960, .9) + mug(620, 980, .8, '#d9c7a6')), f'background:{BG}')),
- (57, 10, sec('dark', contact('김지은', '#868e96', '#495057') + svg('<path d="M500 1010 L580 1110 M580 1010 L500 1110" stroke="#495057" stroke-width="14" stroke-linecap="round"/>' + heart(540, 1060, 1.4, '#343a40', .9)))),
- (57, 12, sec('', svg(say(240, 130, 620, '나 뭐라고 저장했어? ㅋㅋ', '#fee500', '#3a3a3a', 40) + heart(540, 1060, 1.4, '#ff8fab', .9)), f'background:{BG}')),
- # ── #58 첫 데이트
- (58, 2, sec('', svg(say(160, 130, 520, '야 오늘 어땠어?', '#3a3f4b', '#e9ecef') + people(540, 960, 2, '#adb5bd', 200)), f'background:{BG}')),
- (58, 4, sec('dark', svg(say(340, 130, 420, '괜찮던데?', '#3a3f4b', '#e9ecef') + clock(540, 1060, 120, 9, 0, '#868e96')))),
- (58, 6, sec('ink', svg(say(200, 130, 680, '집 데려다주고 왔다', '#3a3f4b', '#e9ecef') + '<path d="M420 1180 V1040 L540 950 L660 1040 V1180 Z" fill="none" stroke="#ffd43b" stroke-width="12" stroke-linejoin="round"/>'))),
- (58, 7, sec('wine', calendar(60, 2, .3, 58, hi=(1, 3)) + svg(heart(540, 1060, 1.4, '#ff8fab', .9)))),
- (58, 8, sec('', svg(say(160, 110, 400, '어땠어?', '#3a3f4b', '#e9ecef') + say(300, 240, 540, '…그냥 밥 먹었어', '#3a3f4b', '#868e96') + mug(450, 960, .9)), f'background:{BG}')),
- (58, 10, sec('dark', svg('<circle cx="540" cy="210" r="120" fill="#ffd43b"/><circle cx="590" cy="170" r="110" fill="#14171f"/>' + say(300, 1000, 500, '잘 들어갔어?', '#fee500', '#3a3a3a')))),
- (58, 12, sec('olive', svg(clock(540, 230, 140, 10, 0, '#ced4da')) + spot(540, 1080, 140, '#fff3bf', .45))),
- # ── #59 사진
- (59, 2, sec('', svg(camera(540, 220) + heart(540, 1060, 1.3, '#ff8fab', .9)), f'background:{BG}')),
- (59, 4, sec('dark', svg(thumbs(40, 8) + '<text x="540" y="1130" text-anchor="middle" font-size="160" font-weight="900" fill="#ffd43b" font-family="sans-serif">1장?</text>'))),
- (59, 6, sec('ink', svg('<rect x="300" y="40" width="480" height="340" rx="20" fill="#2b2f3a"/>' + people(540, 120, 1, '#ff8fab') + '<path d="M330 360 L460 260 L560 330 L660 250 L750 360 Z" fill="#495057"/>' + camera(540, 1070, .7, '#868e96')))),
- (59, 7, sec('wine', phone(390, 30, 300, 360, '<div style="position:absolute;left:24px;right:24px;top:40px;bottom:40px;border-radius:16px;background:linear-gradient(150deg,#ffa8a8,#b197fc)"></div>') + svg(say(300, 1000, 520, '이거 잘 나왔다', '#3a3f4b', '#e9ecef')))),
- (59, 8, sec('', svg(say(160, 130, 700, '팔 떨어지는 줄 ㅋㅋ', '#3a3f4b', '#e9ecef') + camera(540, 1070, .8)), f'background:{BG}')),
- (59, 10, sec('dark', svg('<rect x="300" y="40" width="480" height="340" rx="20" fill="#2b2f3a"/>' + people(540, 110, 2, '#adb5bd', 160, hi=1) + heart(540, 1060, 1.3, '#495057')))),
- (59, 12, sec('olive', svg(people(540, 960, 2, '#adb5bd', 200)) + glow(59, 14, ('#ffffff', '#ffd27f'), 0, 380, .45))),
- # ── #60 쓸데없는 연락
- (60, 2, sec('', svg(say(160, 130, 520, 'ㅋㅋㅋ 이거 봐', '#3a3f4b', '#e9ecef')) + post(420, 900, 240, 'linear-gradient(140deg,#ffd43b,#ff8787)', False, -4), f'background:{BG}')),
- (60, 4, sec('dark', post(270, 40, 300, 'linear-gradient(140deg,#74c0fc,#b197fc)', False, -6) + post(560, 80, 260, 'linear-gradient(140deg,#ffa8a8,#ffd43b)', False, 5) + svg(heart(540, 1070, 1.2, '#ff8fab', .9)))),
- (60, 6, sec('morn', spot(860, 160, 150, '#ffd166', .9) + post(410, 920, 260, 'linear-gradient(170deg,#74c0fc,#e7f5ff)', False, -3), '')),
- (60, 7, sec('wine', svg(say(160, 130, 760, '이거 너 좋아하는 거 아냐?', '#3a3f4b', '#e9ecef', 40) + heart(540, 1060, 1.6, '#ff6b81', .9)))),
- (60, 8, sec('', svg(say(160, 130, 720, '걔 생각나서 보냈지', '#3a3f4b', '#e9ecef') + mug(330, 960, .9) + mug(620, 980, .8, '#d9c7a6')), f'background:{BG}')),
- (60, 10, sec('dark', phone(390, 30, 300, 360, '<div style="position:absolute;left:30px;right:30px;top:120px;height:120px;border-radius:16px;border:4px dashed #868e96"></div>') + svg(heart(540, 1060, 1.3, '#343a40')))),
- (60, 12, sec('', bubbles([('him', 360), ('him', 260), ('him', 300)], 70, him='#495057') + svg(heart(540, 1060, 1.6, '#ff8fab', .9)), f'background:{BG}')),
+ # ── #57 놓치면 안 되는 여자
+ (57, 2, sec('', svg(say(160, 130, 700, '야, 그 여자는 놓치지 마라', '#3a3f4b', '#e9ecef', 40) + mug(330, 960, .9) + mug(620, 980, .8, '#d9c7a6')), f'background:{BG}')),
+ (57, 4, sec('dark', svg(people(540, 110, 3, '#495057') + people(540, 110, 1, '#ffd43b') + heart(540, 1060, 1.3, '#ff8fab', .9)))),
+ (57, 6, sec('wine', svg(say(380, 130, 320, '고마워', '#fee500', '#3a3a3a') + heart(540, 1060, 1.6, '#ff6b81', .9)))),
+ (57, 7, sec('ink', svg(people(540, 960, 1, '#ffd43b')) + spot(540, 220, 150, '#fff3bf', .45))),
+ (57, 8, sec('', svg(say(160, 130, 700, '걔는 나 안 깎아내려', '#3a3f4b', '#e9ecef') + mug(450, 960, .9)), f'background:{BG}')),
+ (57, 10, sec('dark', svg(people(540, 110, 3, '#495057') + '<path d="M540 940 L660 1160 L420 1160Z" fill="none" stroke="#ffd43b" stroke-width="14" stroke-linejoin="round"/><text x="540" y="1140" text-anchor="middle" font-size="120" font-weight="900" fill="#ffd43b" font-family="sans-serif">!</text>'))),
+ (57, 12, sec('', svg(say(200, 130, 680, '오늘 진짜 고마웠어', '#fee500', '#3a3a3a') + heart(540, 1060, 1.4, '#ff8fab', .9)), f'background:{BG}')),
+ # ── #58 무서워하는 순간
+ (58, 2, sec('', svg('<text x="540" y="330" text-anchor="middle" font-size="240" font-weight="900" fill="#74c0fc" opacity=".85" font-family="sans-serif">?</text>' + people(540, 960, 1, '#adb5bd')), f'background:{BG}')),
+ (58, 4, sec('dark', svg(clock(540, 230, 140, 11, 55, '#ced4da') + '<path d="M380 1080 h320" stroke="#495057" stroke-width="18" stroke-linecap="round"/>'))),
+ (58, 6, sec('ink', svg(people(540, 110, 3, '#ff8fab', 170) + people(540, 960, 1, '#adb5bd')))),
+ (58, 7, sec('wine', svg(''.join(f'<path transform="translate({x},{y})" d="M0 -40 C 25 -5 30 15 0 40 C -30 15 -25 -5 0 -40Z" fill="#74c0fc" opacity=".8"/>' for x, y in [(440, 180), (540, 240), (640, 170)]) + people(540, 960, 1, '#adb5bd')))),
+ (58, 8, sec('', svg(say(160, 130, 760, '아무것도 못 하겠더라', '#3a3f4b', '#e9ecef', 40) + mug(450, 960, .9)), f'background:{BG}')),
+ (58, 10, sec('dark', glow(58, 16, ('#a5d8ff', '#74c0fc', '#ffffff'), 0, 380, .4) + svg(heart(540, 1060, 1.4, '#74c0fc', .7)))),
+ (58, 12, sec('', svg(say(220, 130, 660, '옆에만 있어줘', '#fee500', '#3a3a3a') + people(540, 960, 2, '#adb5bd', 170)), f'background:{BG}')),
+ # ── #59 잘해주는 vs 좋아하는
+ (59, 2, sec('dark', two_circles(200, '#74c0fc', '#ff8787', 140) + svg('<text x="540" y="1140" text-anchor="middle" font-size="200" font-weight="900" fill="#ced4da" opacity=".85" font-family="sans-serif">?</text>'))),
+ (59, 4, sec('ink', svg(people(540, 110, 4, '#868e96', 170) + heart(540, 1060, 1.4, '#ff8fab', .9)))),
+ (59, 6, sec('', bubbles([('him', 420), ('me', 300), ('him', 360)], 70) + svg(heart(540, 1060, 1.3, '#495057')), f'background:{BG}')),
+ (59, 7, sec('wine', calendar(60, 2, .35, 59, hi=(1, 5)) + svg(heart(540, 1060, 1.4, '#ff8fab', .9)))),
+ (59, 8, sec('', svg(say(160, 130, 760, '원래 다 잘해줘', '#3a3f4b', '#e9ecef') + mug(330, 960, .9) + mug(620, 980, .8, '#d9c7a6')), f'background:{BG}')),
+ (59, 10, sec('dark', svg(''.join(f'<rect x="330" y="{60 + k * 90}" width="60" height="60" rx="12" fill="#20c997"/><path d="M343 {90 + k * 90} l15 15 l25 -30" stroke="#0f1115" stroke-width="10" fill="none"/><rect x="420" y="{78 + k * 90}" width="330" height="24" rx="12" fill="#495057"/>' for k in range(4)) + heart(540, 1060, 1.3, '#495057')))),
+ (59, 12, sec('', svg(say(240, 130, 600, '이번 주말엔 뭐 해?', '#fee500', '#3a3a3a')) + calendar(900, 2, .3, 60, hi=(0, 5)), f'background:{BG}')),
+ # ── #60 3개월 차
+ (60, 2, sec('dark', calendar(60, 2, .6, 61) + svg('<text x="540" y="1140" text-anchor="middle" font-size="180" font-weight="900" fill="#ffd43b" font-family="Noto Sans KR,sans-serif">3개월</text>'))),
+ (60, 4, sec('wine', svg('<path d="M560 60 L440 250 L540 250 L480 400 L660 190 L560 190 L620 60Z" fill="#ffd43b" opacity=".9"/>' + heart(540, 1060, 1.4, '#ff8fab', .9)))),
+ (60, 6, sec('ink', svg(people(540, 110, 3, '#adb5bd') + people(540, 960, 2, '#ff8fab', 170)))),
+ (60, 7, sec('dark', calendar(60, 2, .4, 62, hi=(1, 6)) + svg('<path d="M380 1060 h240 l-40 -40 M620 1060 l-40 40" stroke="#ffd43b" stroke-width="16" fill="none" stroke-linecap="round"/>'))),
+ (60, 8, sec('', svg(say(160, 130, 760, '3개월 지나니까 편해졌어', '#3a3f4b', '#e9ecef', 40) + mug(330, 960, .9) + mug(620, 980, .8, '#d9c7a6')), f'background:{BG}')),
+ (60, 10, sec('wine', svg(say(200, 130, 680, '너 처음이랑 달라졌어', '#3a3f4b', '#e9ecef') + '<path d="M480 1010 L600 1130 M600 1010 L480 1130" stroke="#ff6b6b" stroke-width="18" stroke-linecap="round"/>'))),
+ (60, 12, sec('', svg(say(220, 130, 640, '다음엔 이렇게 하자', '#fee500', '#3a3a3a') + heart(540, 1060, 1.4, '#ff8fab', .9)), f'background:{BG}')),
 ]
 
 if __name__ == '__main__':

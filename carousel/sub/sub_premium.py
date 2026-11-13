@@ -68,7 +68,7 @@ def top(no, date): return f'<div class="top"><span>구독자 전용 · MEMBERS</
 def foot(t): return f'<div class="foot"><span>@mszexc</span><span>{t}</span></div>'
 def bars(i, n): return ''.join(f'<i class="{"on" if k < i else ""}"></i>' for k in range(n))
 
-COVER = {'s01': '연락이<br>뜸해졌을 때', 's02': '싸운<br>다음 날', 's03': '헤어지고<br>연락하고<br>싶을 때', 's04': '다른 여자가<br>신경 쓰일 때'}
+COVER = {'s01': '연락이<br>뜸해졌을 때', 's02': '싸운<br>다음 날', 's03': '헤어지고<br>연락하고<br>싶을 때', 's04': '다른 여자가<br>신경 쓰일 때', 's05': '권태기<br>같을 때', 's06': '연말 계획,<br>먼저 꺼내고<br>싶을 때', 's07': '결혼 얘기,<br>꺼내고 싶을 때'}
 
 def week(idx):
     key, date, theme, items = D.WEEKS[idx]
@@ -111,6 +111,12 @@ def week(idx):
     if key == 's03':
         h = h.replace('문장보다 <b>타이밍</b>이 먼저예요.<br>화가 가라앉은 다음,<br>그가 쉬는 시간에 보내세요.<br>보내고 나서는 재촉하지 마세요.',
                       '답이 올지는 <b>그가</b> 정해요.<br>어떤 사람으로 남을지는<br><b>당신이</b> 정해요.<br>보내기 전에 한 번만 읽어보세요.')
+    if key == 's07':
+        h = h.replace('문장보다 <b>타이밍</b>이 먼저예요.<br>화가 가라앉은 다음,<br>그가 쉬는 시간에 보내세요.<br>보내고 나서는 재촉하지 마세요.',
+                      '결혼은 <b>날짜</b>보다<br><b>같이</b>라는 말에서 시작돼요.<br>한 번에 다 묻지 말고,<br>한 문장씩 꺼내세요.')
+    if key == 's05':
+        h = h.replace('문장보다 <b>타이밍</b>이 먼저예요.<br>화가 가라앉은 다음,<br>그가 쉬는 시간에 보내세요.<br>보내고 나서는 재촉하지 마세요.',
+                      '권태기는 <b>끝</b>이 아니라<br><b>신호</b>예요.<br>탓하지 말고,<br>먼저 하나만 제안하세요.')
     if key == 's04':
         h = h.replace('문장보다 <b>타이밍</b>이 먼저예요.<br>화가 가라앉은 다음,<br>그가 쉬는 시간에 보내세요.<br>보내고 나서는 재촉하지 마세요.',
                       '질투는 잘못이 아니에요.<br>다만 <b>질문</b>보다<br><b>마음</b>으로 꺼내세요.<br>그래야 그가 당신 편에 서요.')

@@ -1,4 +1,4 @@
-# #56 글 상자 + 배경 (11/12) — 사진은 보관함(p39 ~ p47)에서 8장, 나머지 6장은 그래픽(p56g)
+# #57(11/14부터 · 원래 #56) 글 상자 + 배경 (11/12) — 사진은 보관함(p39 ~ p47)에서 8장, 나머지 6장은 그래픽(p56g)
 # python3 gfx56.py → node render56.js gfx → python3 s56.py → node render56.js c56
 from PIL import Image, ImageOps, ImageFilter
 from psgen import build
@@ -42,5 +42,5 @@ if __name__ == '__main__':
             g = f'p56g/{i:02d}.png'
             bg = {'src': g, 'noshade': not bright(g), 'style': 'inset:0;width:100%;height:100%;object-fit:cover;filter:none'}
         sl.append((bg, '', boxes))
-    open('c56.html', 'w', encoding='utf-8').write(build(sl, no='56'))
+    open('c57.html', 'w', encoding='utf-8').write(build(sl, no='57'))  # 11/14 순서 바꿈: 이 캐러셀은 #57
     print('ok')

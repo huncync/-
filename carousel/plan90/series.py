@@ -78,6 +78,32 @@ MEASURE = [
 ]
 DONT = ['예전 릴스를 시리즈에 다시 넣기', '목록형 회차 ("5가지")로 만들기 — 회차는 시간이 흘러야 해요', '"다음 화는 목요일" 같은 날짜 예고', '시리즈 이름을 큰 제목으로 쓰기', '한 시리즈를 연달아 올리기', '3권 · 상담 홍보를 회차에 넣기']
 
+import importlib.util as _iu
+def shots_block():
+    sp = _iu.spec_from_file_location('s1e1shots', '/home/user/-/reels/series/s1_e1_shots.py'); M = _iu.module_from_spec(sp); sp.loader.exec_module(M)
+    allp = '\n\n'.join(f'[{n} · {t}]\n{p}' for n, t, k, sc, ko, p, cam, ln, memo in M.SHOTS if p)
+    cards = ''
+    for n, t, k, sc, ko, p, cam, ln, memo in M.SHOTS:
+        col = '#e0b46a' if k == '실사' else '#8fb3d6'
+        body = f'<div class="sl"><b>대본</b> {e(sc)}</div><div class="sl"><b>장면</b> {e(ko)}</div>'
+        body += f'<div class="sn">카메라: {e(cam)} · 길이: {e(ln)}' + (f' · {e(memo)}' if memo else '') + '</div>'
+        if p:
+            body += f'<div class="row"><button class="btn gold" data-ct="sh{n}">프롬프트 복사</button></div><pre id="sh{n}">{e(p)}</pre>'
+        cards += (f'<details class="pc"><summary><span class="sr" style="background:{col};width:auto;padding:1px 8px">{e(k)}</span> '
+                  f'<b>{e(n)}</b> · {e(t)}</summary><div style="padding:0 12px 12px">{body}</div></details>')
+    tips = ''.join(f'<li><span class="n">{i}</span><span class="t"><b>{e(a)}</b><br><span class="dim">{e(b)}</span></span><span></span></li>' for i, (a, b) in enumerate(M.TIPS, 1))
+    dont = ''.join(f'<li>{e(x)}</li>' for x in M.DONT)
+    nai = sum(1 for x in M.SHOTS if x[2] != '실사')
+    return f"""
+    <h2>EP.1 장면 목록 · 힉스필드<small>헤어진 남자의 1년 · 실사 {len(M.SHOTS) - nai}컷 + AI {nai}컷 · 목소리는 전부 지훈님</small></h2>
+    <p class="lead">실사(금색)는 지훈님 정면 · 같은 차 안. AI(파랑)는 대사 없이 내레이션 + 자막. 프롬프트는 영어가 더 정확해서 영어로 썼어요.</p>
+    <h3>1. 인물 기준 사진 (먼저 1번만)</h3><div class="row"><button class="btn gold" data-ct="shchar">복사</button></div><pre id="shchar">{e(M.CHAR_SHEET)}</pre>
+    <h3>2. 컷별</h3>{cards}
+    <h3>AI 프롬프트 한 번에</h3><div class="row"><button class="btn" data-ct="shall">전체 복사</button></div><pre id="shall" style="max-height:220px;overflow:auto">{e(allp)}</pre>
+    <h3>만드는 순서</h3><ol class="topics">{tips}</ol>
+    <h3>하지 않을 것</h3><ol class="pc-notes">{dont}</ol>
+"""
+
 def build():
     facts = ''.join(f'<li><span class="n">{e(a)}</span><span class="t">{e(b)}</span><span></span></li>' for a, b in FACTS)
     ser = ''
@@ -98,6 +124,7 @@ def build():
     <h2>올리는 순서<small>화 · 목 · 일 21시 · 제안</small></h2>
     <ol class="plan subplan">{sch}</ol>
     {ser}
+    {shots_block()}
     <h2>그다음</h2>
     <ol class="topics">{later}</ol>
     <h2>시리즈 기능<small>11/12 확인 · 공식 자료가 적어요</small></h2>

@@ -31,6 +31,7 @@ def reeldet(n):
      f'<div class="toptxt"><small>{e(X["label"])}</small>{"<br>".join(e(x) for x in X["top"])}</div>'
      f'<div class="row"><button class="btn gold" data-ct="{k}script">대본 복사</button><button class="btn" data-ct="{k}cap">캡션 복사</button><button class="btn" data-ct="{k}pin">고정 댓글 복사</button></div>'
      f'<div class="scs">{rows}</div><pre id="{k}script" hidden>{e(st)}</pre>'
+     + (f'<div class="pl">카톡 그래픽 · 해결 장면에 얹기 (투명 배경 1080x1920 · 길게 눌러 저장)</div>'f'<a href="img/r{n}_kakao.png" download="R{n}_카톡그래픽.png" target="_blank"><img src="img/r{n}_kakao.png" alt="R{n} 카톡 그래픽" style="display:block;width:100%;max-width:300px;aspect-ratio:9/16;object-fit:cover;border-radius:12px;background:#2b2b33"></a>' if os.path.exists(f'/home/user/-/.work/dl/img/r{n}_kakao.png') else '') +
      f'<div class="pl">촬영 메모</div><ul class="shoot">{"".join("<li>"+e(s)+"</li>" for s in X["shoot"])}</ul>'
      f'<div class="pl">캡션</div><pre id="{k}cap">{e(X["caption"])}</pre><div class="pl">고정 댓글</div><pre id="{k}pin">{e(X["pin"])}</pre></details>')
 byday={}; n=7

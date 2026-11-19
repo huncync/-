@@ -20,6 +20,8 @@ def capdet(no):
             f'<pre id="p90cap{no}">{e(c)}</pre><div class="pl">고정 댓글</div><pre id="p90pin{no}">{e(p)}</pre></details>')
 
 import importlib.util, os
+KAKAO = {9: [('r9_kakao2.png', '① 번역 장면 · 그의 마지막 말 3개 (6~33초)'), ('r9_kakao.png', '② 해결 장면 · 보낼 한 줄 (38~50초)')],
+         10: [('r10_kakao.png', '해결 장면 · 그녀 / 그 두 문장 (33~47초)')]}
 def reeldet(n):
     f=f'/home/user/-/reels/R{n}.py'
     if not os.path.exists(f): return ''
@@ -31,7 +33,9 @@ def reeldet(n):
      f'<div class="toptxt"><small>{e(X["label"])}</small>{"<br>".join(e(x) for x in X["top"])}</div>'
      f'<div class="row"><button class="btn gold" data-ct="{k}script">대본 복사</button><button class="btn" data-ct="{k}cap">캡션 복사</button><button class="btn" data-ct="{k}pin">고정 댓글 복사</button></div>'
      f'<div class="scs">{rows}</div><pre id="{k}script" hidden>{e(st)}</pre>'
-     + (f'<div class="pl">카톡 그래픽 · 해결 장면에 얹기 (투명 배경 1080x1920 · 길게 눌러 저장)</div>'f'<a href="img/r{n}_kakao.png" download="R{n}_카톡그래픽.png" target="_blank"><img src="img/r{n}_kakao.png" alt="R{n} 카톡 그래픽" style="display:block;width:100%;max-width:300px;aspect-ratio:9/16;object-fit:cover;border-radius:12px;background:#2b2b33"></a>' if os.path.exists(f'/home/user/-/.work/dl/img/r{n}_kakao.png') else '') +
+     + ((lambda imgs: (f'<div class="pl">카톡 그래픽 {len(imgs)}장 · 영상 위에 얹기 (투명 배경 1080x1920 · 길게 눌러 저장)</div><div style="display:flex;gap:10px;flex-wrap:wrap">'
+        + ''.join(f'<figure style="margin:0;width:46%;max-width:240px"><a href="img/{f}" download target="_blank"><img src="img/{f}" alt="{e(cap)}" style="display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;background:#2b2b33"></a><figcaption style="font-size:12px;opacity:.75;margin-top:4px">{e(cap)}</figcaption></figure>' for f, cap in imgs)
+        + '</div>') if imgs else '')([(f, c) for f, c in KAKAO.get(n, []) if os.path.exists('/home/user/-/.work/dl/img/' + f)])) +
      f'<div class="pl">촬영 메모</div><ul class="shoot">{"".join("<li>"+e(s)+"</li>" for s in X["shoot"])}</ul>'
      f'<div class="pl">캡션</div><pre id="{k}cap">{e(X["caption"])}</pre><div class="pl">고정 댓글</div><pre id="{k}pin">{e(X["pin"])}</pre></details>')
 byday={}; n=7

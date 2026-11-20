@@ -45,17 +45,23 @@ MENU = [
 
 신청은 채팅으로 "C 신청"이라고 남겨주세요.
 먼저 상황을 짧게 들려주시면 C가 맞는지부터 말씀드릴게요.''', '없음'),
- ('m7', 'T. 전화 분석 · 4.9만~', ('글보다 목소리로, 지금 바로', 'T. 전화 분석', '59,000원|49,000원',
-   ['30분: 지금 상황 하나 + 보낼 말 1개', '60분 89,000원 (정가 99,000원): 상황 전체 + 보낼 말 3개', '예약제 · 통화 뒤 요약 3줄 · 주 5건']),
+ ('m7', 'T. 전화 분석 · 4.9만~', ('글보다 목소리로, 지금 바로', 'T. 전화 분석', '30분:59,000원|49,000원;60분:99,000원|89,000원',
+   ['30분: 지금 상황 하나 + 보낼 말 1개', '60분: 상황 전체 + 보낼 말 3개', '예약제 · 통화 뒤 요약 3줄 · 주 5건']),
   '''T. 전화 분석 (예약제 · 주 5건)
-30분 49,000원 (정가 59,000원) · 60분 89,000원 (정가 99,000원) · 12/31까지 오픈가
+
+💰 30분 49,000원 (정가 59,000원)
+💰 60분 89,000원 (정가 99,000원)
+12/31까지 오픈가
 
 · 30분: 지금 상황 하나 + 보낼 말 1개
 · 60분: 상황 전체 + 그의 성향 · 마음 단계 + 보낼 말 3개
-· 통화 전 사전 질문지 + 카톡 캡처 5장
-· 통화 뒤 핵심 요약 3줄을 카톡으로 (녹음은 서로 안 해요)
+· 통화 전: 사전 질문지 + 카톡 캡처 5장
+· 통화 뒤: 핵심 요약 3줄을 카톡으로
+  (녹음은 서로 하지 않아요)
 
-일정 변경은 24시간 전까지 1회 · 연락 없이 불참하면 환불이 어려워요.
+일정 변경은 24시간 전까지 1회
+연락 없이 불참하면 환불이 어려워요
+
 신청은 채팅으로 "전화 신청"이라고 남겨주세요.''', '없음'),
  ('m4', '추가 옵션', ('분석을 받으신 분만', '추가 옵션', '',
    ['카톡 첨삭 1건 2만 · 3건 묶음 5만', '추가 질문 1회 2만 · 24시간 급행 +3만', '답장 왔을 때 긴급 첨삭(6시간) 3만']),
@@ -100,6 +106,12 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
   .pr { position:absolute; right:44px; top:52px; background:#ffcb3d; color:#151515; font-weight:900; font-size:34px; padding:4px 16px; }
   .was { position:absolute; right:46px; top:24px; font-size:20px; color:#a9a39a; } .was s { color:#c9c3b9; }
   .till { position:absolute; right:46px; top:104px; font-size:18px; font-weight:700; color:#ffcb3d; }
+  .prs { position:absolute; right:44px; top:34px; display:grid; gap:8px; justify-items:end; }
+  .pr2 { display:flex; align-items:center; gap:10px; }
+  .pr2 .lb { font-size:24px; font-weight:900; color:#f4f1ea; }
+  .pr2 .w2 { font-size:17px; color:#a9a39a; }
+  .pr2 b { background:#ffcb3d; color:#151515; font-weight:900; font-size:32px; padding:2px 12px; }
+  .till2 { font-size:18px; font-weight:700; color:#ffcb3d; }
   .rec { position:absolute; right:46px; top:132px; font-size:20px; font-weight:900; color:#ffcb3d; letter-spacing:.1em; }
   ul { list-style:none; margin-top:26px; }
   li { font-size:27px; font-weight:500; line-height:1.5; padding-left:26px; position:relative; color:#e6e1d8; }
@@ -112,7 +124,11 @@ def build():
     out = CSS
     for key, name, (top, ti, pr, items), msg, btn in MENU:
         rec = '<div class="rec">★ 추천</div>' if key == 'm2' else ''
-        if '|' in pr:
+        if ';' in pr:  # 시간별 가격 여러 줄 (전화 분석)
+            rows = ''.join(f'<div class="pr2"><span class="lb">{e(lb)}</span><span class="w2">정가 <s>{e(w)}</s></span><b>{e(n)}</b></div>'
+                           for lb, wn in (x.split(':') for x in pr.split(';')) for w, n in [wn.split('|')])
+            prh = f'<div class="prs">{rows}<div class="till2">12/31까지 오픈가</div></div>'
+        elif '|' in pr:
             was, now = pr.split('|'); prh = f'<div class="was">정가 <s>{e(was)}</s></div><div class="pr">{e(now)}</div><div class="till">12/31까지 오픈가</div>'
         else:
             prh = f'<div class="pr">{e(pr)}</div>' if pr else ''

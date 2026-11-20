@@ -19,6 +19,8 @@ def lines_html(text):
         t = e(s.strip())
         if s.startswith('[') and s.endswith(']'): out.append(f'<div class="ttl">{e(s[1:-1])}</div>')
         elif s.startswith('■'): out.append(f'<div class="sec">{e(s[1:].strip())}</div>')
+        elif s.startswith('💰'): out.append(f'<div class="pri">{e(s[1:].strip())}</div>')
+        elif s.startswith('━'): out.append('<div class="hr"></div>')
         elif s.lstrip().startswith('※'): out.append(f'<div class="note">{t}</div>')
         elif s.startswith('   '): out.append(f'<div class="sub">{t}</div>')
         elif s.lstrip().startswith('- '): out.append(f'<div class="li">{e(s.strip()[2:])}</div>')
@@ -85,6 +87,9 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
   .doc:before { content:''; position:absolute; inset:24px; border:2px solid #cdb68a; border-radius:6px; pointer-events:none; }
   .doc .ttl { font-size:44px; font-weight:900; letter-spacing:-0.02em; margin-bottom:10px; }
   .doc .sec { font-size:34px; font-weight:900; margin-top:26px; padding:6px 16px; background:#1d1a16; color:#f4eee3; display:inline-block; }
+  .doc .pri { font-size:34px; font-weight:900; margin-top:10px; color:#151515; background:#ffcb3d; display:table; padding:2px 12px; }
+  .doc .pri + .pri { margin-left:0; }
+  .doc .hr { height:2px; background:#d9d2c4; margin:26px 0 6px; }
   .doc .ln { font-size:30px; line-height:1.6; font-weight:500; }
   .doc .li { font-size:30px; line-height:1.6; padding-left:28px; position:relative; }
   .doc .li:before { content:''; position:absolute; left:4px; top:20px; width:10px; height:10px; background:#9a6a1f; }

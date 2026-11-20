@@ -8,16 +8,23 @@ M, DM, K, L, O = load('menu'), load('dm'), load('kakao'), load('launch'), load('
 
 md = ['# 남자 심리 분석 · 상품 메뉴', '']
 for c, n, p, who, items, cap in M.MAIN:
-    md += [f'## {c}. {n} · {p}', f'{who} (한도: {cap})'] + [f'- {x}' for x in items] + ['']
+    md += [f'## {c}. {n} · {p.replace(chr(10), " / ")}', f'{who} (한도: {cap})'] + [f'- {x}' for x in items] + ['']
 md += ['## 추가 옵션 (신청자 전용)'] + [f'- {n} · {p} — {d}' for n, p, d in M.OPTS] + ['']
 md += ['## 운영 원칙'] + [f'{i}. {x}' for i, x in enumerate(M.NOTES, 1)] + ['']
 for h, body in (('채널 안내문', M.GUIDE), ('신청서', M.FORM), ('결과물 틀', M.REPORT)):
     md += [f'## {h}', '```', body, '```', '']
 open(os.path.join(D, 'menu.md'), 'w', encoding='utf-8').write('\n'.join(md))
 
+import re as _re
+def price_html(p):  # "정가 X → Y"는 정가를 작게 줄긋고, 줄마다 한 줄씩
+    out = []
+    for ln in p.split('\n'):
+        m = _re.match(r'(.*?)정가 ([\d,]+원) → ([\d,]+원)(.*)', ln)
+        out.append(f'{e(m.group(1))}<span style="font-size:14px;font-weight:500;color:var(--muted)">정가 <s>{e(m.group(2))}</s></span> {e(m.group(3))}{e(m.group(4))}' if m else e(ln))
+    return '<br>'.join(out)
 cards = ''.join(
     f'<div class="pc-card{" rec" if c == "B" else ""}"><div class="pc-top"><span class="pc-code">{c}</span><span class="pc-name">{e(n)}</span></div>'
-    f'<div class="pc-price">{e(p)}</div><div class="pc-who">{e(who)}</div><ul>{"".join(f"<li>{e(x)}</li>" for x in items)}</ul><div class="pc-cap">한도 · {e(cap)}</div></div>'
+    f'<div class="pc-price">{price_html(p)}</div><div class="pc-who">{e(who)}</div><ul>{"".join(f"<li>{e(x)}</li>" for x in items)}</ul><div class="pc-cap">한도 · {e(cap)}</div></div>'
     for c, n, p, who, items, cap in M.MAIN)
 opts = ''.join(f'<li><b>{e(n)}</b><span>{e(p)}</span><em>{e(d)}</em></li>' for n, p, d in M.OPTS)
 notes = ''.join(f'<li>{e(x)}</li>' for x in M.NOTES)

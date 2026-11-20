@@ -5,9 +5,9 @@ e = html.escape
 
 # (키, 메뉴명, 이미지: 윗줄 · 제목 · 가격 · 항목들, 응답 메시지, 버튼)
 MENU = [
- ('m1', 'A. 남자 심리 분석 · 5만', ('그가 왜 그러는지 알고 싶을 때', 'A. 남자 심리 분석', '50,000원',
+ ('m1', 'A. 남자 심리 분석 · 4.9만', ('그가 왜 그러는지 알고 싶을 때', 'A. 남자 심리 분석', '69,000원|49,000원',
    ['관상 · 카톡 10장 · 상황을 남자 입장에서', '그의 성향 / 말 번역 / 지금 마음 단계', '서면 리포트 · 72시간 안 · 추가 질문 1회']),
-  '''A. 남자 심리 분석 · 50,000원
+  '''A. 남자 심리 분석 · 49,000원 (정가 69,000원 · 12/31까지 오픈가)
 
 그가 왜 그러는지 알고 싶은 분께 드려요.
 
@@ -17,9 +17,9 @@ MENU = [
 · 주 10건 한정
 
 신청은 채팅으로 "A 신청"이라고 남겨주세요.''', '없음'),
- ('m2', 'B. 분석+대본 · 10만 ★추천', ('그래서 뭐라고 보내야 해?', 'B. 분석 + 대본', '100,000원',
+ ('m2', 'B. 분석+대본 · 9.9만 ★추천', ('그래서 뭐라고 보내야 해?', 'B. 분석 + 대본', '129,000원|99,000원',
    ['A의 모든 내용', '상황별 대본 4종 · 보낼 시간 · 피할 말', '7일 안 피드백 2회 · 주 5건']),
-  '''B. 분석 + 마음을 움직이는 대본 · 100,000원 ★추천
+  '''B. 분석 + 마음을 움직이는 대본 · 99,000원 (정가 129,000원 · 12/31까지 오픈가) ★추천
 
 "그래서 뭐라고 보내야 해?"까지 알고 싶은 분께 드려요.
 
@@ -31,9 +31,9 @@ MENU = [
 
 오픈 첫 주 · B를 신청하신 첫 10분께 카톡 첨삭 2건을 함께 드려요.
 신청은 채팅으로 "B 신청"이라고 남겨주세요.''', '없음'),
- ('m3', 'C. 4주 플랜 · 39만', ('재회 · 관계 회복, 끝까지 같이', 'C. 4주 플랜', '390,000원',
+ ('m3', 'C. 4주 플랜 · 39만', ('재회 · 관계 회복, 끝까지 같이', 'C. 4주 플랜', '490,000원|390,000원',
    ['B의 모든 내용', '4주 동안 주 1회 점검 + 다음 대본', '보내기 전 카톡 첨삭 주 3건 · 월 3명']),
-  '''C. 재회 · 관계 회복 4주 플랜 · 390,000원
+  '''C. 재회 · 관계 회복 4주 플랜 · 390,000원 (정가 490,000원 · 12/31까지 오픈가)
 
 한 번의 답이 아니라, 끝까지 같이 가고 싶은 분께 드려요.
 
@@ -85,8 +85,10 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
   .k:before { content:''; position:absolute; inset:14px; border:1.5px solid #4a3c22; border-radius:6px; }
   .top { font-family:'Nanum Pen Script',cursive; font-size:36px; color:#d6d1c8; line-height:1; }
   .ti { font-size:44px; font-weight:900; letter-spacing:-0.03em; margin-top:10px; line-height:1.15; }
-  .pr { position:absolute; right:44px; top:38px; background:#ffcb3d; color:#151515; font-weight:900; font-size:34px; padding:4px 16px; }
-  .rec { position:absolute; right:46px; top:100px; font-size:20px; font-weight:900; color:#ffcb3d; letter-spacing:.1em; }
+  .pr { position:absolute; right:44px; top:52px; background:#ffcb3d; color:#151515; font-weight:900; font-size:34px; padding:4px 16px; }
+  .was { position:absolute; right:46px; top:24px; font-size:20px; color:#a9a39a; } .was s { color:#c9c3b9; }
+  .till { position:absolute; right:46px; top:104px; font-size:18px; font-weight:700; color:#ffcb3d; }
+  .rec { position:absolute; right:46px; top:132px; font-size:20px; font-weight:900; color:#ffcb3d; letter-spacing:.1em; }
   ul { list-style:none; margin-top:26px; }
   li { font-size:27px; font-weight:500; line-height:1.5; padding-left:26px; position:relative; color:#e6e1d8; }
   li:before { content:''; position:absolute; left:2px; top:17px; width:10px; height:10px; background:#ffcb3d; }
@@ -98,7 +100,10 @@ def build():
     out = CSS
     for key, name, (top, ti, pr, items), msg, btn in MENU:
         rec = '<div class="rec">★ 추천</div>' if key == 'm2' else ''
-        prh = f'<div class="pr">{e(pr)}</div>' if pr else ''
+        if '|' in pr:
+            was, now = pr.split('|'); prh = f'<div class="was">정가 <s>{e(was)}</s></div><div class="pr">{e(now)}</div><div class="till">12/31까지 오픈가</div>'
+        else:
+            prh = f'<div class="pr">{e(pr)}</div>' if pr else ''
         out += (f'<section class="k" id="{key}"><div class="top">{e(top)}</div><div class="ti">{e(ti)}</div>{prh}{rec}'
                 f'<ul>{"".join(f"<li>{e(x)}</li>" for x in items)}</ul>'
                 f'<div class="ft"><span>남자들끼리 하는 말 · 1:1 남자 심리 분석</span><span>@mszexc</span></div></section>\n')
@@ -116,16 +121,16 @@ if __name__ == '__main__':
 
 # 11/1: 이미지를 한 장만 넣을 때 — 메뉴 하나(「상품 · 가격 보기」)에 이 한 장 + 아래 메시지(400자 안)
 ALL_NAME = '상품 · 가격 보기'
-ALL_MSG = '''1:1 남자 심리 분석 · 상품 안내
+ALL_MSG = '''1:1 남자 심리 분석 · 12/31까지 오픈가
 
-A. 남자 심리 분석 · 50,000원
+A. 남자 심리 분석 · 49,000원 (정가 69,000원)
 관상 + 카톡 10장으로 그의 성향 · 말 번역 · 지금 마음 단계 · 72시간 안
 
-B. 분석 + 대본 · 100,000원 ★추천
+B. 분석 + 대본 · 99,000원 (정가 129,000원) ★추천
 A + 상황별 대본 4종 · 7일 안 피드백 2회
-(오픈 첫 주 · B 첫 10분께 카톡 첨삭 2건)
+(B 첫 10분께 카톡 첨삭 2건)
 
-C. 4주 플랜 · 390,000원 · 월 3명
+C. 4주 플랜 · 390,000원 (정가 490,000원) · 월 3명
 B + 4주 동안 주 1회 점검 · 첨삭 주 3건
 
 추가 옵션: 첨삭 1건 2만 · 추가 질문 2만 · 급행 +3만
@@ -143,6 +148,7 @@ ALL_CSS = CSS.replace('</style>', '''
   .one .c.hot { border-color:#ffcb3d; }
   .one .c .t { font-size:21px; font-weight:900; line-height:1.2; }
   .one .c .p { display:inline-block; margin-top:8px; background:#ffcb3d; color:#151515; font-weight:900; font-size:22px; padding:1px 8px; }
+  .one .c .w { font-size:13px; color:#a9a39a; margin-top:6px; }
   .one .c .s { font-size:15.5px; color:#d9d4cb; margin-top:8px; line-height:1.45; }
   .one .c .r { position:absolute; right:10px; top:10px; font-size:13px; font-weight:900; color:#ffcb3d; }
   .one .op { margin-top:12px; font-size:16px; color:#cfcac1; }
@@ -152,11 +158,11 @@ ALL_CSS = CSS.replace('</style>', '''
 </style>''')
 
 def build_one():
-    cols = [('A. 남자 심리 분석', '50,000원', '관상 · 카톡 10장<br>성향 · 말 번역 · 마음 단계<br>72시간 안', ''),
-            ('B. 분석 + 대본', '100,000원', 'A + 상황별 대본 4종<br>7일 안 피드백 2회<br>주 5건', 'hot'),
-            ('C. 4주 플랜', '390,000원', 'B + 주 1회 점검 4번<br>첨삭 주 3건<br>월 3명', '')]
-    c = ''.join(f'<div class="c {r}">' + ('<div class="r">★ 추천</div>' if r else '') + f'<div class="t">{e(t)}</div><div class="p">{e(p)}</div><div class="s">{s}</div></div>' for t, p, s, r in cols)
-    return ALL_CSS + f'''<section class="one" id="all"><div class="hd1"><b>1:1 남자 심리 분석</b><span>남자가 직접, 그 사람 마음을 번역해 드려요</span></div>
+    cols = [('A. 남자 심리 분석', '69,000원|49,000원', '관상 · 카톡 10장<br>성향 · 말 번역 · 마음 단계<br>72시간 안', ''),
+            ('B. 분석 + 대본', '129,000원|99,000원', 'A + 상황별 대본 4종<br>7일 안 피드백 2회<br>주 5건', 'hot'),
+            ('C. 4주 플랜', '490,000원|390,000원', 'B + 주 1회 점검 4번<br>첨삭 주 3건<br>월 3명', '')]
+    c = ''.join(f'<div class="c {r}">' + ('<div class="r">★ 추천</div>' if r else '') + f'<div class="t">{e(t)}</div><div class="w">정가 <s>{e(p.split("|")[0])}</s></div><div class="p">{e(p.split("|")[1])}</div><div class="s">{s}</div></div>' for t, p, s, r in cols)
+    return ALL_CSS + f'''<section class="one" id="all"><div class="hd1"><b>1:1 남자 심리 분석</b><span>12/31까지 오픈가</span></div>
 <div class="cols">{c}</div>
 <div class="op"><b>추가 옵션</b> · 카톡 첨삭 1건 2만 · 추가 질문 2만 · 24시간 급행 +3만</div>
 <div class="op" style="margin-top:6px;font-size:14px;color:#8e8578">결과를 100% 장담하지 않아요 · 분석 시작 전 전액 환불, 시작 후 환불 불가</div>

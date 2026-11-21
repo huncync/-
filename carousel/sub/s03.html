@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@500;700;900&display=block">
+<style>
+  :root { --paper:#f4eee3; --ink:#1d1a16; --dim:#7a7064; --gold:#9a6a1f; --line:#ddd2bf; --night:#17140f; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { word-break:keep-all; background:#555; font-family:'Noto Sans KR',sans-serif; color:var(--ink); }
+  .slide { width:1080px; height:1350px; background:var(--paper); position:relative; overflow:hidden; padding:150px 100px 140px; display:flex; flex-direction:column; justify-content:center; margin-bottom:20px; }
+  .slide:before { content:''; position:absolute; inset:36px; border:2px solid #cdb68a; border-radius:6px; pointer-events:none; }
+  .top { position:absolute; left:72px; right:72px; top:62px; display:flex; justify-content:space-between; font-size:30px; letter-spacing:.14em; color:var(--gold); font-weight:700; }
+  .foot { position:absolute; left:72px; right:72px; bottom:62px; display:flex; justify-content:space-between; font-size:32px; color:var(--dim); }
+  .pen { font-family:'Nanum Pen Script',cursive; -webkit-text-stroke:1.2px currentColor; paint-order:stroke fill; line-height:1.15; }
+  .serif { font-family:'Noto Serif KR',serif; font-weight:900; letter-spacing:-0.02em; line-height:1.22; }
+  .gold { color:var(--gold); } .dim { color:var(--dim); }
+  .kicker { font-size:64px; color:#5b5144; }
+  .h-cover { font-size:128px; margin-top:24px; }
+  .lede { font-size:44px; line-height:1.6; margin-top:48px; color:#3a332b; font-weight:500; }
+  .sign { font-family:'Nanum Pen Script'; font-size:72px; color:var(--gold); -webkit-text-stroke:1px currentColor; }
+  .rule { height:2px; background:var(--line); margin:48px 0; }
+  /* 문장 장 */
+  .prog { display:flex; gap:12px; align-items:center; margin-bottom:36px; }
+  .prog b { font-size:34px; color:var(--gold); margin-right:10px; font-variant-numeric:tabular-nums; }
+  .prog i { flex:1; height:5px; border-radius:3px; background:var(--line); } .prog i.on { background:var(--gold); }
+  .sit { font-family:'Noto Serif KR'; font-weight:700; font-size:50px; line-height:1.35; }
+  .chat { margin-top:40px; display:flex; flex-direction:column; gap:18px; }
+  .me { align-self:flex-end; max-width:86%; background:#fae36b; border-radius:40px 40px 10px 40px; padding:34px 44px; font-size:50px; line-height:1.5; font-weight:500; box-shadow:0 2px 0 #e0c74e; }
+  .him { align-self:flex-start; max-width:80%; background:#fff; border-radius:40px 40px 40px 10px; padding:26px 38px; font-size:42px; line-height:1.45; font-weight:500; box-shadow:0 2px 0 #e3dacb; }
+  .copy { align-self:flex-end; font-size:30px; color:var(--dim); margin-top:-6px; }
+  .why { margin-top:48px; border-left:6px solid var(--gold); padding:6px 0 6px 30px; font-size:42px; line-height:1.55; color:#2d2822; }
+  .why b { color:var(--gold); display:block; font-size:34px; letter-spacing:.06em; margin-bottom:6px; }
+  .avoid { margin-top:34px; font-size:38px; color:#a24a3c; } .avoid s { color:#8a8075; }
+  /* 답장 장 */
+  .rp { margin-top:24px; display:flex; flex-direction:column; gap:18px; }
+  .rp .r { background:#fbf7f0; border:2px solid var(--line); border-radius:28px; padding:22px 30px 20px; }
+  .rp .r .q { display:flex; gap:16px; align-items:flex-start; }
+  .rp .lab { flex:0 0 auto; font-size:30px; font-weight:900; color:var(--dim); padding-top:8px; width:60px; }
+  .rp .t { font-size:40px; line-height:1.4; font-weight:500; }
+  .rp .t.mine { background:#fae36b; border-radius:22px; padding:6px 20px; display:inline-block; }
+  .rp .n { font-size:33px; color:#5b5144; margin:12px 0 0 76px; line-height:1.5; }
+  /* 남자들끼리 장 */
+  .night { background:var(--night) !important; color:#f1ebe0; }
+  .night:before { border-color:#4a3c22 !important; }
+  .night .foot { color:#8e8578; } .night .top { color:#d4a95a; }
+  .grp { margin-top:40px; display:flex; flex-direction:column; gap:26px; }
+  .grp .who { font-size:32px; color:#a99f90; margin-bottom:8px; font-weight:700; }
+  .grp .b { background:#2b261e; border-radius:12px 38px 38px 38px; padding:28px 36px; font-size:44px; line-height:1.5; max-width:92%; }
+  .mean { margin-top:52px; background:#f4eee3; color:#1d1a16; border-radius:28px; padding:36px 40px; font-size:42px; line-height:1.55; }
+  .mean b { color:var(--gold); } .mean small { display:block; font-size:30px; color:var(--gold); font-weight:900; letter-spacing:.08em; margin-bottom:8px; }
+  .note { margin-top:26px; font-size:30px; color:#8e8578; }
+  /* 편지 장 */
+  .letter { font-family:'Nanum Pen Script'; font-size:76px; line-height:1.35; -webkit-text-stroke:1px currentColor; color:#2d2822; }
+  .letter b { color:var(--gold); font-weight:400; }
+  /* 총정리 */
+  .ch { font-family:'Noto Serif KR'; font-weight:900; font-size:64px; line-height:1.2; }
+  .cs { font-size:36px; color:var(--dim); margin-top:10px; }
+  .ents { margin-top:30px; border-top:2px solid var(--line); }
+  .ent { padding:16px 0; border-bottom:2px solid var(--line); }
+  .ent .ph { font-family:'Nanum Pen Script'; font-size:58px; line-height:1.1; -webkit-text-stroke:1.1px currentColor; }
+  .ent .no { font-family:'Noto Sans KR'; -webkit-text-stroke:0; font-size:30px; font-weight:900; color:var(--gold); margin-right:14px; }
+  .ent .mn { font-size:34px; color:#3a332b; margin-top:4px; line-height:1.45; }
+</style></head><body>
+<section class="slide" id="s1"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="pen kicker">보내기 전에, 이 문장</div>
+  <div class="serif h-cover">헤어지고<br>연락하고<br>싶을 때</div>
+  <div class="lede">그대로 보내도 되는 문장 5개,<br>그가 답했을 때 다음 한 줄,<br>남자들끼리 하는 말까지.</div>
+  <div class="sign" style="margin-top:56px">— 지훈이 구독자에게만</div><div class="foot"><span>@mszexc</span><span>남자들끼리 하는 말 · 구독자 전용</span></div></section>
+<section class="slide"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="prog"><b>1 / 5</b><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="sit">헤어지고 처음 연락할 때</div>
+  <div class="chat"><div class="me">잘 지내?<br>갑자기 생각나서.<br>답 안 해도 괜찮아.</div><div class="copy">내 말투로 조금 바꿔도 돼요</div></div>
+  <div class="why"><b>왜 통하냐면</b>첫 문장에 결론이 없어야 답이 와요. "답 안 해도 돼"가 부담을 빼줘요.</div>
+  <div class="avoid">✕ 피할 말 · <s>"우리 다시 얘기해볼 수 있을까?"</s></div><div class="foot"><span>@mszexc</span><span>보내기 전에, 이 문장 · 헤어지고 연락하고 싶을 때</span></div></section>
+<section class="slide"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="prog"><b>2 / 5</b><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="sit">그가 먼저 "잘 지내?" 보냈을 때</div>
+  <div class="chat"><div class="me">응, 잘 지내고 있어.<br>너는? 연락 와서<br>반가웠어.</div><div class="copy">내 말투로 조금 바꿔도 돼요</div></div>
+  <div class="why"><b>왜 통하냐면</b>반가움은 말하되 매달리지 않기. 남자는 문이 열려 있는지만 확인하고 싶어요.</div>
+  <div class="avoid">✕ 피할 말 · <s>"이제 와서 왜?"</s></div><div class="foot"><span>@mszexc</span><span>보내기 전에, 이 문장 · 헤어지고 연락하고 싶을 때</span></div></section>
+<section class="slide"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="prog"><b>3 / 5</b><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></div>
+  <div class="sit">생일에 연락하고 싶을 때</div>
+  <div class="chat"><div class="me">생일 축하해.<br>좋은 하루 보내.</div><div class="copy">내 말투로 조금 바꿔도 돼요</div></div>
+  <div class="why"><b>왜 통하냐면</b>축하만 하고 끝내야 다음이 남아요. 질문을 붙이면 답이 숙제가 돼요.</div>
+  <div class="avoid">✕ 피할 말 · <s>"생일인데 내 생각은 안 나?"</s></div><div class="foot"><span>@mszexc</span><span>보내기 전에, 이 문장 · 헤어지고 연락하고 싶을 때</span></div></section>
+<section class="slide"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="prog"><b>4 / 5</b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></div>
+  <div class="sit">얼굴 보고 얘기하고 싶을 때</div>
+  <div class="chat"><div class="me">시간 되면<br>커피 한잔할래?<br>그냥 얼굴 보고 싶어서.</div><div class="copy">내 말투로 조금 바꿔도 돼요</div></div>
+  <div class="why"><b>왜 통하냐면</b>가벼운 장소, 짧은 시간일수록 남자는 나와요. 무거운 얘기는 만난 다음에요.</div>
+  <div class="avoid">✕ 피할 말 · <s>"우리 왜 헤어졌는지 얘기 좀 해."</s></div><div class="foot"><span>@mszexc</span><span>보내기 전에, 이 문장 · 헤어지고 연락하고 싶을 때</span></div></section>
+<section class="slide"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="prog"><b>5 / 5</b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+  <div class="sit">답이 오지 않을 때</div>
+  <div class="chat"><div class="me">알겠어.<br>잘 지내길 바랄게.</div><div class="copy">내 말투로 조금 바꿔도 돼요</div></div>
+  <div class="why"><b>왜 통하냐면</b>한 번으로 끝내세요. 깔끔한 마지막이 그의 기억에 남는 당신을 정해요.</div>
+  <div class="avoid">✕ 피할 말 · <s>"왜 답 안 해?" (연달아 보내기)</s></div><div class="foot"><span>@mszexc</span><span>보내기 전에, 이 문장 · 헤어지고 연락하고 싶을 때</span></div></section>
+<section class="slide"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="serif" style="font-size:76px">그가 이렇게 답하면</div>
+  <div class="cs" style="margin-top:8px">답장별로 다음 한 줄</div>
+  <div class="rp"><div class="r"><div class="q"><span class="lab">그</span><span class="t">"응 잘 지내" (짧게)</span></div><div class="q" style="margin-top:12px"><span class="lab">나</span><span class="t mine">다행이다. 잘 지내.</span></div><div class="n">더 묻지 마세요. 아직 거리를 두고 싶다는 뜻이에요.</div></div><div class="r"><div class="q"><span class="lab">그</span><span class="t">"너는?" (되물음)</span></div><div class="q" style="margin-top:12px"><span class="lab">나</span><span class="t mine">나도 잘 지내. 언제 커피 한잔해.</span></div><div class="n">이어가고 싶은 거예요. 근황은 짧게, 약속은 가볍게.</div></div><div class="r"><div class="q"><span class="lab">그</span><span class="t">읽고 답이 없음</span></div><div class="q" style="margin-top:12px"><span class="lab">나</span><span class="t">다시 보내지 마세요.</span></div><div class="n">두 번째 연락은 그가 할 몫이에요.</div></div></div><div class="foot"><span>@mszexc</span><span>보내기 전에, 이 문장 · 헤어지고 연락하고 싶을 때</span></div></section>
+<section class="slide night"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="pen" style="font-size:66px;color:#d4a95a">남자들끼리는 이렇게 말해요</div>
+  <div class="grp"><div><div class="who">친구</div><div class="b">전 여친한테 연락 왔다며?</div></div><div><div class="who">그</div><div class="b">어… 잘 지내냐고. 뭐라고 답해야 될지 모르겠어. 괜히 답했다가 또 흔들릴까 봐.</div></div></div>
+  <div class="mean"><small>번역</small>답이 늦다고 마음이 없는 게 아니에요. <b>흔들릴까 봐 고르는 중</b>이에요.</div>
+  <div class="note">흔히 오가는 대화를 예시로 옮겼어요</div><div class="foot"><span>@mszexc</span><span>남자들끼리 하는 말 · 구독자 전용</span></div></section>
+<section class="slide"><div class="top"><span>구독자 전용 · MEMBERS</span><span>No.03 · 11.11</span></div>
+  <div class="letter">답이 올지는 <b>그가</b> 정해요.<br>어떤 사람으로 남을지는<br><b>당신이</b> 정해요.<br>보내기 전에 한 번만 읽어보세요.</div>
+  <div class="sign" style="margin-top:56px;text-align:right">— 지훈</div>
+  <div class="lede" style="font-size:36px;color:#7a7064">저장해두고 보내기 전에 꺼내 보세요.<br>다음 주 수요일에 또 보내드릴게요.</div><div class="foot"><span>@mszexc</span><span>남자들끼리 하는 말 · 구독자 전용</span></div></section>
+</body></html>

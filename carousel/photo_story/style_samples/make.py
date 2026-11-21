@@ -43,7 +43,8 @@ def kt(name, msgs):
         y += 112
     return out + '</section>'
 def film(big, q, cap):
-    return f'<section class="s film"><div class="big">{big}</div><div class="q2">{q}</div><div class="ln"></div><div class="cap">{cap}</div></section>'
+    q2 = f'<div class="q2">{q}</div>' if q else ''
+    return f'<section class="s film"><div class="big">{big}</div>{q2}<div class="ln"></div><div class="cap">{cap}</div></section>'
 S = [
  ('A4', note('"갖고 싶은 거 있어?<br>그냥 말해."', '고르는 수고를 하기 싫은 거예요', '두 번째')),
  ('A7', note('"기념일 챙기기 귀찮아졌으면,<br>끝난 거지."', '남자들끼리 하는 말 · 노트', '진짜')),

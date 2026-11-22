@@ -21,7 +21,8 @@ def capdet(no):
 
 import importlib.util, os
 KAKAO = {9: [('r9_kakao2.png', '① 번역 장면 · 그의 마지막 말 3개 (6~33초)'), ('r9_kakao.png', '② 해결 장면 · 보낼 한 줄 (38~50초)')],
-         10: [('r10_kakao.png', '해결 장면 · 그녀 / 그 두 문장 (33~47초)')]}
+         10: [('r10_kakao.png', '해결 장면 · 그녀 / 그 두 문장 (33~47초)')],
+         32: [('r32_memo.png', '① 해결 장면 · 메모장 날짜 목록 (40~45초)'), ('r32_kakao.png', '② 해결 장면 · 그 / 그녀 한마디 (45~50초)')]}
 def reeldet(n):
     f=f'/home/user/-/reels/R{n}.py'
     if not os.path.exists(f): return ''

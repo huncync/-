@@ -21,6 +21,8 @@ PLAN = {  # 지훈님 사진(보관함) · 표지와 마지막 장은 얼굴 · 
 }
 SHIFT = {1: 6}
 SHIFT14 = {k: 22 for k in ('66', '67', '68', '69', '70')}
+# 영상 장 (11/22): 글 상자만 그리고 영상은 vid68.py가 얹어요
+VIDEO = {('68', 1), ('68', 14)}
 VIVID = {('67', 9), ('68', 1), ('68', 11), ('68', 14), ('69', 9), ('69', 13)}
 
 def prep(no, i, src, crop=None):
@@ -40,7 +42,9 @@ if __name__ == '__main__':
         for i, boxes in enumerate(c, 1):
             sh = SHIFT14.get(no, 0) if i == 14 else SHIFT.get(i, 0)
             boxes = [(k, x, top + sh if top < 80 else top, l) for k, x, top, l in boxes]
-            if i in PLAN[no]:
+            if (no, i) in VIDEO:
+                bg = {'video': True}
+            elif i in PLAN[no]:
                 bg = {'src': prep(no, i, *PLAN[no][i]), 'style': 'inset:0;width:100%;height:100%;object-fit:cover' + (';filter:saturate(.85) brightness(.9)' if (no, i) in VIVID else '')}
             else:
                 g = f'p{no}g/{i:02d}.png'

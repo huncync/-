@@ -106,7 +106,7 @@ def build():
         out += (f'<section class="k" id="{cid}"><div class="top">{e(top)}</div><div class="ti">{e(ti)}</div>'
                 f'<ul>{"".join(f"<li>{e(x)}</li>" for x in items)}</ul>'
                 f'<div class="ft"><span>남자들끼리 하는 말 · 1:1 남자 심리 분석</span><span>@mszexc</span></div></section>\n')
-    for did, text in DOCS:
+    for did, text in []:  # 11/23부터 문서 이미지는 docs_v2.py(새 디자인)가 만들어요 · 여기선 2:1 카드만
         out += f'<section class="doc" id="{did}">{lines_html(text)}<div class="ft2"><span>남자들끼리 하는 말 · 1:1 남자 심리 분석</span><span>@mszexc</span></div></section>\n'
     return out + '</body></html>'
 

@@ -37,6 +37,7 @@ def split(name, out, fit_one=False):
     return n
 
 if __name__ == '__main__':
+    raise SystemExit('11/23부터 카톡 소식용 장은 docs_v2.py → render_docs_v2.js가 새 디자인으로 만들어요')
     os.makedirs(f'{D}/kakao_news', exist_ok=True)
     for f in os.listdir(f'{D}/kakao_news'): os.remove(f'{D}/kakao_news/{f}')
     print(split('doc_guide', 'guide'), split('doc_report', 'report', fit_one=True), split('doc_form', 'form'))

@@ -34,7 +34,7 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 </style></head><body>
 '''
 
-# 11/23 지훈님 결정 · 자막 칸 포인트: 주제별 강조색(노랑 기본 · 코랄 이별/재회/위험 · 초록 진심/좋아할 때(11/23 민트 → 초록) · 라벤더 그녀 편/다른 여자)
+# 11/23 지훈님 결정 · 자막 칸 포인트 · 3색(그리드 3줄): 노랑 기본(신호 · 번역 · 반어 · 그녀 편) · 코랄(이별 · 재회 · 위험 · 다른 여자) · 초록(진심 · 좋아할 때). 라벤더는 안 써요
 # + 캐러셀마다 핵심 한 장만 반전(검은 상자 · 노란 글씨). 흰 상자 · 검은 괄호 상자 · 마지막 장 전자책 상자는 그대로
 ACCENT = {'yellow': '#ffcb3d', 'coral': '#ff8a7a', 'green': '#5fd68a', 'mint': '#7fd8c8', 'lavender': '#c9b2f5'}
 POINT_CSS = ('.slide.pt .bx.G{background:#151515;color:#ffcb3d;border:3px solid #ffcb3d}.slide.pt .bx.g{background:#151515;color:#ffcb3d}'

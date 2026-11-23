@@ -34,8 +34,17 @@ CSS = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 </style></head><body>
 '''
 
-def build(slides, no=None):
+# 11/23 지훈님 결정 · 자막 칸 포인트: 주제별 강조색(노랑 기본 · 코랄 이별/재회/위험 · 민트 진심/좋아할 때 · 라벤더 그녀 편/다른 여자)
+# + 캐러셀마다 핵심 한 장만 반전(검은 상자 · 노란 글씨). 흰 상자 · 검은 괄호 상자 · 마지막 장 전자책 상자는 그대로
+ACCENT = {'yellow': '#ffcb3d', 'coral': '#ff8a7a', 'mint': '#7fd8c8', 'lavender': '#c9b2f5'}
+POINT_CSS = ('.slide.pt .bx.G{background:#151515;color:#ffcb3d;border:3px solid #ffcb3d}.slide.pt .bx.g{background:#151515;color:#ffcb3d}'
+             '.slide.pt .bx.W,.slide.pt .bx.w{background:#ffcb3d;border-color:#ffcb3d}')
+
+def build(slides, no=None, accent=None, point=None):
     out = CSS; n = len(slides)
+    if accent or point:
+        c = ACCENT.get(accent or 'yellow', accent)
+        out = out.replace('</style>', f'.bx.g,.bx.G{{background:{c}}}.bx.q{{border-left-color:{c}}}' + (POINT_CSS if point else '') + '</style>', 1)
     for i, (bg, desc, boxes) in enumerate(slides, 1):
         cls = 'slide'
         if isinstance(bg, dict) and bg.get('video'):  # 영상 장: 글 상자만 투명하게 그려서 영상 위에 얹어요 (vidgen.py)
@@ -53,6 +62,7 @@ def build(slides, no=None):
             pos = f'top:{top}%;' + ('right:6%;' if left == 'r' else f'left:{left}%;')
             bx += f'<div class="bx {kind}" style="{pos}">{e(text)}</div>'
         ser = ('넘겨보세요 →' if i == 1 else f'남자들끼리 하는 말 #{no}') if no else ''
+        if point == i: cls += ' pt'
         out += f'<section class="{cls}" id="s{i}">{b}{bx}<div class="num">{i}/{n}</div><div class="hd">@mszexc</div><div class="ser">{ser}</div></section>\n'
     return out + '</body></html>'
 

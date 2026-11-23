@@ -22,6 +22,9 @@ PLAN = {  # 지훈님 사진(보관함) · 표지와 마지막 장은 얼굴 · 
 SHIFT = {1: 6}
 SHIFT14 = {k: 22 for k in ('66', '67', '68', '69', '70')}
 # 영상 장 (11/22): 글 상자만 그리고 영상은 vid68.py가 얹어요
+# 11/23 자막 칸 포인트 (#69부터): 주제별 강조색 + 핵심 한 장 반전
+ACCENT = {'69': 'mint', '70': 'coral'}
+POINT = {'69': 13, '70': 13}
 VIDEO = {('68', 1), ('68', 14)}
 VIVID = {('67', 9), ('68', 1), ('68', 11), ('68', 14), ('69', 1), ('69', 3), ('69', 5), ('69', 7), ('69', 9), ('69', 11), ('69', 13), ('69', 14)}  # 11/23 크리스마스 사진은 색을 살려요
 
@@ -50,5 +53,5 @@ if __name__ == '__main__':
                 g = f'p{no}g/{i:02d}.png'
                 bg = {'src': g, 'noshade': not bright(g), 'style': 'inset:0;width:100%;height:100%;object-fit:cover;filter:none'}
             sl.append((bg, '', boxes))
-        open(f'c{no}.html', 'w', encoding='utf-8').write(build(sl, no=no))
+        open(f'c{no}.html', 'w', encoding='utf-8').write(build(sl, no=no, accent=ACCENT.get(no), point=POINT.get(no)))
     print('ok')

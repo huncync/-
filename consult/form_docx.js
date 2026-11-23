@@ -75,7 +75,7 @@ const doc = new Document({
 
       ...section('', '신청 정보'),
       table([
-        new TableRow({ height: { value: 520, rule: HeightRule.ATLEAST }, children: [cell([p(r('신청 상품', { bold: true, size: 19 }), { after: 0 })], LW, { fill: SOFT }), cell([p(r(choice(['A · 남자 심리 분석', 'B · 분석 + 보낼 말 대본 ★추천', 'C · 4주 플랜', 'T · 실시간 분석(30분 · 60분)']), { size: 18 }), { after: 0 })], VW)] }),
+        new TableRow({ height: { value: 520, rule: HeightRule.ATLEAST }, children: [cell([p(r('신청 상품', { bold: true, size: 19 }), { after: 0 })], LW, { fill: SOFT }), cell([p(r(choice(['A · 남자 심리 분석', 'B · 분석 + 보낼 말 대본 ★추천', 'C · 4주 플랜', 'T · 실시간 분석(☐ 30분 ☐ 60분 · ☐ 전화 ☐ 카톡)']), { size: 18 }), { after: 0 })], VW)] }),
         field('입금자명', '입금 확인용'),
         field('추가 옵션', '첨삭 · 추가 질문 등 · 없으면 비워두세요'),
       ]),
@@ -132,7 +132,7 @@ const doc = new Document({
           ['(선택) 후기를 남겨주시면 이름과 세부 내용을 바꿔서 소개해도 됩니다. (동의 / 비동의)'],
         ].map(([t], i) => new TableRow({ height: { value: 640, rule: HeightRule.ATLEAST }, children: [cell([p(r(`${15 + i}. ${t}`, { size: 17 }), { after: 0, line: 280 })], W - 1700, { fill: SOFT }), cell([p(r(''))], 1700)] })),
       }),
-      p(r('작성해 주셔서 고마워요. 자료가 모두 도착한 때부터 72시간 안에 결과물을 보내드려요.', { size: 18, bold: true, color: GOLD }), { before: 240, after: 0, align: AlignmentType.CENTER }),
+      p(r('작성해 주셔서 고마워요. A · B는 자료가 모두 도착한 때부터 72시간 안에 결과물을, T는 예약한 시간에 분석 결과를 직접 설명드려요.', { size: 18, bold: true, color: GOLD }), { before: 240, after: 0, align: AlignmentType.CENTER }),
     ],
   }],
 });

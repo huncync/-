@@ -75,7 +75,7 @@ const doc = new Document({
 
       ...section('', '신청 정보'),
       table([
-        new TableRow({ height: { value: 520, rule: HeightRule.ATLEAST }, children: [cell([p(r('신청 상품', { bold: true, size: 19 }), { after: 0 })], LW, { fill: SOFT }), cell([p(r(choice(['A · 남자 심리 분석', 'B · 분석 + 대본 ★추천', 'C · 4주 플랜']), { size: 18 }), { after: 0 })], VW)] }),
+        new TableRow({ height: { value: 520, rule: HeightRule.ATLEAST }, children: [cell([p(r('신청 상품', { bold: true, size: 19 }), { after: 0 })], LW, { fill: SOFT }), cell([p(r(choice(['A · 남자 심리 분석', 'B · 분석 + 보낼 말 대본 ★추천', 'C · 4주 플랜', 'T · 실시간 분석(30분 · 60분)']), { size: 18 }), { after: 0 })], VW)] }),
         field('입금자명', '입금 확인용'),
         field('추가 옵션', '24시간 급행 등 · 없으면 비워두세요'),
       ]),

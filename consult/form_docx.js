@@ -77,7 +77,7 @@ const doc = new Document({
       table([
         new TableRow({ height: { value: 520, rule: HeightRule.ATLEAST }, children: [cell([p(r('신청 상품', { bold: true, size: 19 }), { after: 0 })], LW, { fill: SOFT }), cell([p(r(choice(['A · 남자 심리 분석', 'B · 분석 + 보낼 말 대본 ★추천', 'C · 4주 플랜', 'T · 실시간 분석(30분 · 60분)']), { size: 18 }), { after: 0 })], VW)] }),
         field('입금자명', '입금 확인용'),
-        field('추가 옵션', '24시간 급행 등 · 없으면 비워두세요'),
+        field('추가 옵션', '첨삭 · 추가 질문 등 · 없으면 비워두세요'),
       ]),
 
       ...section('1', '기본 정보'),
@@ -118,7 +118,7 @@ const doc = new Document({
       ...section('5', '내가 원하는 것'),
       table([
         new TableRow({ height: { value: 620, rule: HeightRule.ATLEAST }, children: [cell([p(r('13. 원하는 방향', { bold: true, size: 19 }), { after: 0 })], LW, { fill: SOFT }), cell([p(r(choice(['재회', '관계 회복', '그의 속마음만 알고 싶음']), { size: 18 }), { after: 30 }), p(r(choice(['깔끔하게 정리', '아직 모르겠음']), { size: 18 }), { after: 0 })], VW)] }),
-        ...longField('14. 꼭 답받고 싶은 질문 (1~3개)', [], 1300),
+        ...longField('14. 꼭 답받고 싶은 질문 (최대 5개)', [], 1300),
         field('언제까지 답이 필요한가요?', '예: 이번 주말에 만나기로 함 · 급하지 않음'),
       ]),
 

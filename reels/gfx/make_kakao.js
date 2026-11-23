@@ -4,6 +4,8 @@ const items = {
   R9_solution: [['me', '알겠어. 그동안 고마웠어.']],
   R9_lastwords: [['him', '너는 좋은 사람이야.'], ['him', '내가 부족해서 그래.'], ['him', '잘 지내.']],
   R10_solution: [['her', '화난 거 아니야.\n이 얘기가 나한테 중요해서 그래.'], ['him', '천천히 말해. 다 들을게.']],
+  R10_her: [['her', '화난 거 아니야.\n이 얘기가 나한테 중요해서 그래.']],
+  R10_him: [['him', '천천히 말해. 다 들을게.']],
   R32_solution: [['him', '우리 그만하자.'], ['her', '응, 알겠어.']],
 };
 const only = process.argv.slice(2);
@@ -20,7 +22,7 @@ const css = `body{margin:0;background:transparent;font-family:'Noto Sans KR',san
   for (const [k, rows] of Object.entries(items)) {
     if (only.length && !only.includes(k)) continue;
     const h = rows.map(([w, t]) => (w === 'me' || (w === 'him' && k === 'R9_lastwords' && rows.indexOf(rows.find(r => r[1] === t)) > 0) ? '' : `<div class="who ${w === 'her' ? 'r' : ''}">${w === 'her' ? '그녀' : '그'}</div>`) + `<div class="b ${w}">${t}</div>`).join('');
-    await p.setContent(`<html><head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=block"><style>${css}</style></head><body><div class="wrap"><div class="box">${h}${k.endsWith('_solution') ? '<div class="save">📌 저장해두세요</div>' : ''}</div></div></body></html>`, { waitUntil: 'networkidle' });
+    await p.setContent(`<html><head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=block"><style>${css}</style></head><body><div class="wrap"><div class="box">${h}${(k.endsWith('_solution') || k === 'R10_her' || k === 'R10_him') ? '<div class="save">📌 저장해두세요</div>' : ''}</div></div></body></html>`, { waitUntil: 'networkidle' });
     await p.evaluate(() => document.fonts.ready);
     await p.screenshot({ path: k + '.png', omitBackground: true });
     console.log(k);

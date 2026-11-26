@@ -3,6 +3,7 @@
 const { chromium } = require('/opt/node-tools/node_modules/playwright');
 const items = {
   R32_memo: { title: '"헤어지자"고 한 날', rows: ['○월 ○일 · 헤어지자 → ○일 뒤 돌아옴', '○월 ○일 · 헤어지자 → ○일 뒤 돌아옴', '○월 ○일 · '], foot: '세 번 넘으면, 싸움이 아니라 패턴' },
+  R11_memo: { title: '"잘 지내?" 오면, 먼저 볼 것', rows: ['그 사람 때문에 제일 힘들었던 순간', '○월 ○일 · ', '답하기 전에 이 메모부터'], foot: '답은 그때의 그가 아니라, 지금의 내가' },
 };
 const css = `body{margin:0;background:transparent;font-family:'Noto Sans KR',sans-serif}
 .wrap{width:1080px;height:1920px;position:relative}

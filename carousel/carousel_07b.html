@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=block">
+<style>
+  :root { --bg:#0b0b0c; --ink:#f4f1ea; --dim:#8e8a83; --accent:#e0b46a; --cold:#7fa7c9; --line:#2a2a2d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { word-break:keep-all; background:#222; font-family:'Noto Sans KR', sans-serif; color:var(--ink); }
+  .slide { width:1080px; height:1350px; background:var(--bg); position:relative; overflow:hidden;
+           padding:120px 96px; display:flex; flex-direction:column; justify-content:center; margin-bottom:20px; }
+  .pen { font-family:'Nanum Pen Script', cursive; font-weight:400; line-height:1.15; }
+  .h1 { font-size:150px; }
+  .h2 { font-size:112px; }
+  .h3 { font-size:86px; }
+  .body { font-size:46px; line-height:1.65; font-weight:500; }
+  .small { font-size:34px; color:var(--dim); line-height:1.6; }
+  .dim { color:var(--dim); }
+  .accent { color:var(--accent); }
+  .cold { color:var(--cold); }
+  .series { position:absolute; right:96px; bottom:72px; font-size:28px; color:var(--dim); letter-spacing:.04em; }
+  .handle { position:absolute; left:96px; bottom:72px; font-size:28px; color:var(--dim); }
+  .num { position:absolute; left:96px; top:80px; font-size:30px; color:var(--dim); letter-spacing:.08em; }
+  .swipe { position:absolute; right:96px; top:80px; font-size:30px; color:var(--dim); }
+  .mt-s { margin-top:28px; } .mt-m { margin-top:56px; } .mt-l { margin-top:96px; }
+  .rule { height:2px; background:var(--line); margin:56px 0; }
+  /* cover */
+  .photo { position:absolute; inset:0; background:
+           radial-gradient(ellipse at 50% 38%, #3a3a3e 0%, #161617 55%, #0b0b0c 80%); }
+  .photo-note { position:absolute; top:330px; left:0; right:0; text-align:center; font-size:30px; color:#55555a;
+                border:3px dashed #3a3a3e; margin:0 220px; padding:150px 0; border-radius:24px; }
+  .cover-text { position:absolute; left:96px; right:96px; bottom:200px; }
+  .shade { position:absolute; left:0; right:0; bottom:0; height:700px; background:linear-gradient(transparent, rgba(0,0,0,.92) 45%); }
+  /* compare */
+  .topic { font-size:40px; font-weight:700; color:var(--dim); letter-spacing:.06em; }
+  .row { display:flex; flex-direction:column; gap:36px; margin-top:64px; }
+  .card { border-radius:28px; padding:44px 52px; }
+  .card.cold { background:#111a22; border:2px solid #24384a; }
+  .card.warm { background:#1d1710; border:2px solid #4a3a20; }
+  .tag { font-size:32px; font-weight:900; margin-bottom:16px; }
+  .card .pen { font-size:80px; margin-bottom:20px; color:var(--ink); }
+  .card p { font-size:36px; line-height:1.6; color:#cfcac1; }
+  .key { margin-top:64px; font-size:40px; line-height:1.6; font-weight:700; }
+  /* share slide */
+  .msg { background:#1c1c1f; border-radius:36px; padding:52px 56px; font-size:46px; line-height:1.6; position:relative; }
+  .msg:after { content:''; position:absolute; left:60px; bottom:-26px; border:16px solid transparent; border-top:20px solid #1c1c1f; }
+  .btns { display:flex; gap:24px; margin-top:72px; }
+  .btn { flex:1; text-align:center; padding:34px 0; border-radius:20px; font-size:36px; font-weight:700; }
+  .btn.share { background:var(--accent); color:#111; }
+  .btn.save { border:2px solid #444; color:var(--ink); }
+  .sub { margin-top:60px; font-size:32px; color:var(--dim); line-height:1.6; }
+</style>
+<style>
+  .phrase { font-family:'Nanum Pen Script'; font-size:150px; line-height:1.1; }
+  .tr { margin-top:64px; border-top:2px solid var(--line); }
+  .tr .r { padding:34px 0; border-bottom:2px solid var(--line); }
+  .tr .k { font-size:30px; font-weight:900; letter-spacing:.06em; margin-bottom:12px; }
+  .tr .v { font-size:42px; line-height:1.55; font-weight:500; }
+  .do { margin-top:48px; font-size:36px; line-height:1.6; color:#cfcac1; }
+  .do b { color:var(--accent); }
+</style>
+<style>
+  .xl { list-style:none; margin:56px 0 0; padding:0; }
+  .xl li { padding:30px 0; border-bottom:2px solid var(--line); }
+  .xl .q { font-family:'Nanum Pen Script'; font-size:92px; line-height:1.1; }
+  .xl .q b { color:#d88; font-family:'Noto Sans KR'; font-weight:900; font-size:48px; margin-right:18px; vertical-align:middle; }
+  .xl .w { font-size:34px; color:var(--dim); margin-top:8px; }
+  .mean { font-size:30px; font-weight:900; color:var(--accent); letter-spacing:.08em; }
+  .cover-c { position:absolute; left:96px; right:96px; top:50%; transform:translateY(-55%); }
+  .quote-big { font-family:'Nanum Pen Script'; font-size:120px; line-height:1.12; }
+</style>
+<style>
+  .prog { position:absolute; left:96px; right:96px; top:80px; display:flex; align-items:center; gap:14px; }
+  .prog .lbl { font-size:30px; color:var(--dim); font-weight:700; letter-spacing:.06em; margin-right:8px; font-variant-numeric:tabular-nums; }
+  .prog i { flex:1; height:6px; border-radius:3px; background:#2a2a2d; }
+  .prog i.on { background:var(--accent); }
+  .big-rule { font-family:'Nanum Pen Script'; font-size:118px; line-height:1.12; }
+  .feel2 { margin-top:72px; font-size:46px; line-height:1.6; font-weight:500; color:#d9d4cb; }
+  .feel2 b { color:var(--accent); font-weight:700; }
+  .who { font-size:32px; font-weight:900; color:var(--accent); letter-spacing:.06em; margin-bottom:16px; }
+  .inv { background:#f2ede3 !important; color:#151515; }
+  .inv .dim2 { color:#6b665d; }
+  .inv .accent2 { color:#a8742a; }
+  .inv .series, .inv .handle { color:#8a857b; }
+  .ck { list-style:none; margin:40px 0 0; padding:0; }
+  .ck li { display:flex; gap:24px; align-items:center; padding:14px 0; border-bottom:2px solid var(--line); font-size:36px; font-weight:500; }
+  .ck li span.b { width:44px; height:44px; flex:0 0 44px; border:3px solid var(--accent); border-radius:10px; }
+  .counter { display:inline-flex; align-items:baseline; gap:12px; margin-top:64px; border:3px solid var(--accent); border-radius:28px; padding:20px 40px; }
+  .counter .n { font-size:120px; font-weight:900; color:var(--accent); line-height:1; }
+  .counter .t { font-size:40px; color:var(--dim); font-weight:700; }
+  .howto { margin-top:36px; font-size:34px; line-height:1.6; color:#cfcac1; }
+  .howto b { color:var(--accent); }
+</style>
+</head>
+<body>
+<section class="slide" id="s1">
+  <div class="cover-c">
+    <div class="small">남자가 직접 알려드립니다</div>
+    <div class="pen mt-s" style="font-size:170px; line-height:1.1">남자에게<br><span class="accent">버림받는 법</span></div>
+    <div class="body mt-m" style="color:#d6d1c8">7가지 중 몇 개나 해당되나요?</div>
+  </div>
+  <div class="handle">@mszexc</div>
+  <div class="series">넘겨서 세어보세요 →</div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="pen h2">하나라도 하고 있다면,<br><span class="accent">끝까지 보세요.</span></div>
+  <div class="body mt-m">넘기면서 해당되는 걸<br>하나씩 세어보세요.</div>
+  <div><div class="counter"><span class="n">0</span><span class="t">/ 7</span></div></div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+
+<section class="slide" id="s3">
+  <div class="prog"><span class="lbl">1 / 7</span><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="who">버림받는 법 1</div>
+  <div class="big-rule">확인받기 전엔<br>절대 안심하지 마라.</div>
+  <div class="feel2">"나 사랑해?"가 반복되면 남자는<br><b>'말해도 안 믿는구나'</b>, 무력감부터 와요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+<section class="slide" id="s4">
+  <div class="prog"><span class="lbl">2 / 7</span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="who">버림받는 법 2</div>
+  <div class="big-rule">서운한 건 말하지 말고,<br>알아채길 기다려라.</div>
+  <div class="feel2">단서를 놓친 남자는<br>'또 틀렸다'고 느끼고,<br><b>결국 아무것도 안 하게</b> 돼요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+<section class="slide" id="s5">
+  <div class="prog"><span class="lbl">3 / 7</span><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="who">버림받는 법 3</div>
+  <div class="big-rule">화가 나면<br>침묵으로 벌을 줘라.</div>
+  <div class="feel2">남자는 싸움보다 침묵이 더 힘들어요.<br>풀 방법이 없으니 <b>피하게</b> 돼요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+<section class="slide" id="s6">
+  <div class="prog"><span class="lbl">4 / 7</span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></div>
+  <div class="who">버림받는 법 4</div>
+  <div class="big-rule">해준 것보다<br>안 해준 것을 먼저 말해라.</div>
+  <div class="feel2">인정 없이 지적만 쌓이면<br><b>'해도 소용없다'</b>며 노력을 멈춰요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+<section class="slide" id="s7">
+  <div class="prog"><span class="lbl">5 / 7</span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></div>
+  <div class="who">버림받는 법 5</div>
+  <div class="big-rule">다른 남자와<br>비교해라.</div>
+  <div class="feel2">친구 남자친구, 전 남자친구.<br>비교는 <b>'너는 부족하다'는 판정</b>이에요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+<section class="slide" id="s8">
+  <div class="prog"><span class="lbl">6 / 7</span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></div>
+  <div class="who">버림받는 법 6</div>
+  <div class="big-rule">휴대폰, 동선까지<br>다 알아야 안심해라.</div>
+  <div class="feel2">사랑이 아니라 감시로 느껴지는 순간,<br><b>숨을 곳부터</b> 찾아요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+<section class="slide" id="s9">
+  <div class="prog"><span class="lbl">7 / 7</span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+  <div class="who">버림받는 법 7</div>
+  <div class="big-rule">당신의 세계를<br>전부 그에게 맞춰라.</div>
+  <div class="feel2">처음엔 고맙지만, 곧<br>'이 사람 인생을 책임져야 한다'는<br><b>무게</b>가 돼요. 그 무게에서 도망쳐요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+<section class="slide inv" id="s10">
+  <div class="body dim2">남자는 이런 여자가 싫어서<br>떠나는 게 아니에요.</div>
+  <div class="pen mt-m" style="font-size:112px;line-height:1.15">'나는 늘 부족한 사람'<br>이라고 느낄 때<br><span class="accent2">떠나요.</span></div>
+  <div class="rule" style="background:#d9d2c4"></div>
+  <div class="body">이 일곱 가지는 거의 다<br><b>불안</b>에서 나와요.</div>
+  <div class="body dim2 mt-m">당신이 잘못한 게 아니라,<br>그만큼 불안했던 거예요.</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+
+<section class="slide" id="s11" style="justify-content:flex-start; padding-top:110px">
+  <div class="pen h3">저장해두고,<br><span class="accent">불안할 때 다시 보기</span></div>
+  <ul class="ck"><li><span class="b"></span>확인받기 전엔 안심 못 한다</li><li><span class="b"></span>서운한 건 말 안 하고 기다린다</li><li><span class="b"></span>화나면 침묵으로 벌준다</li><li><span class="b"></span>안 해준 것부터 말한다</li><li><span class="b"></span>다른 남자와 비교한다</li><li><span class="b"></span>휴대폰·동선을 다 알아야 한다</li><li><span class="b"></span>내 세계를 전부 맞춘다</li></ul>
+  <div class="howto">몇 개 해당됐는지 <b>댓글로 숫자만</b> 남겨주세요.<br>떠오른 친구에게는 <b>종이비행기 ➤</b>로 보내주세요.</div>
+  <div class="sub" style="margin-top:28px">남자가 하는 말의 뜻은 전자책 1·2권에 · <span class="accent">프로필 링크에서 무료</span></div>
+  <div class="handle">@mszexc</div>
+  <div class="series">남자들끼리 하는 말 #06</div>
+</section>
+</body></html>

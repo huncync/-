@@ -10,8 +10,8 @@ import stories_76_80 as S
 PLAN = {  # 지훈님 사진(보관함) · 표지와 마지막 장은 얼굴 · (폴더/src_NN, 자르기 또는 None)
  '76': {1: ('p44/src_11', (0.0, 0.1, 1.0, 1.0)), 3: ('p41/src_02', None), 5: ('p47/src_08', None), 7: ('p48/src_05', None),
         9: ('p44/src_10', None), 11: ('p48/src_04', None), 13: ('p47/src_13', None), 14: ('p44/src_11', (0.15, 0.4, 0.85, 0.95))},
- '77': {1: ('p51/src_01', (0.0, 0.05, 1.0, 0.95)), 3: ('p45/src_05', None), 5: ('p39/src_06', None), 7: ('p41/src_14', None),
-        9: ('p49/src_01', None), 11: ('p40/src_07', None), 13: ('p49/src_06', None), 14: ('p51/src_01', (0.15, 0.35, 0.85, 0.9))},
+ '77': {1: ('p77n/src_01', (0.0, 0.25, 0.62, 0.83)), 3: ('p77n/src_02', None), 5: ('p77n/src_03', None), 7: ('p77n/src_04', None),  # 11/27 새 사진
+        9: ('p77n/src_05', None), 11: ('p77n/src_06', None), 13: ('p49/src_06', None), 14: ('p77n/src_01', (0.06, 0.29, 0.46, 0.665))},
  '78': {1: ('p44/src_14', (0.0, 0.05, 1.0, 0.95)), 3: ('p41/src_01', None), 5: ('p42/src_06', None), 7: ('p45/src_09', None),
         9: ('p49/src_03', None), 11: ('p40/src_04', None), 13: ('p51/src_04', None), 14: ('p44/src_14', (0.15, 0.38, 0.85, 0.92))},
  '79': {1: ('p48/src_06', (0.0, 0.1, 1.0, 1.0)), 3: ('p39/src_01', None), 5: ('p43/src_13', None), 7: ('p39/src_12', None),
@@ -26,7 +26,7 @@ SHIFT14 = {k: 22 for k in ('76', '77', '78', '79', '80')}
 ACCENT = {'76': 'coral', '77': 'yellow', '78': 'green', '79': 'coral', '80': 'yellow'}
 POINT = {k: 13 for k in ('76', '77', '78', '79', '80')}
 VIDEO = set()
-VIVID = set()
+VIVID = {('77', 1), ('77', 3), ('77', 9), ('77', 14)}
 
 def prep(no, i, src, crop=None):
     im = ImageOps.exif_transpose(Image.open(f'{src}.jpg')).convert('RGB')
